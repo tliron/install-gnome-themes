@@ -4,15 +4,29 @@ set -e
 RED='\033[0;31m'
 RESET='\033[0m'
 
-GNOME3_VERSION=$(gnome-shell --version | cut -d ' ' -f3 | cut -d '.' -f1,2)
+GNOME_VERSION=$(gnome-shell --version | cut -d ' ' -f3 | cut -d '.' -f1,2)
 
-if [ "$GNOME3_VERSION" != 3.20 ] && [ "$GNOME3_VERSION" != 3.18 ]; then
+if [ "$GNOME_VERSION" != '3.20' ] && [ "$GNOME_VERSION" != '3.18' ]; then
 	echo 'This script only supports GNOME 3.20 and GNOME 3.18'
 	exit 1
 fi
 
-sudo apt remove numix-gtk-theme # Ubuntu GNOME comes with Numix preinstalled
-sudo apt install git autoconf automake pkg-config libgtk-3-dev rubygems-integration gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto
+echo -e "${RED}Detected GNOME $GNOME_VERSION$RESET"
+
+OS=$(lsb_release -si)
+
+echo -e "${RED}Detected $OS operating system$RESET"
+
+echo -e "${RED}Verifying that build requirements are installed$2$RESET"
+
+if [ "$OS" == 'Ubuntu' ] || [ "$OS" == 'Debian' ]; then
+	sudo apt remove numix-gtk-theme # Ubuntu GNOME comes with Numix preinstalled
+	sudo apt install git autoconf automake pkg-config libgtk-3-dev rubygems-integration gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto
+else
+	echo 'This script only supports Ubuntu and Debian'
+	exit 1
+fi
+
 sudo gem install sass
 
 function timestamp()
@@ -22,30 +36,31 @@ function timestamp()
 
 function theme()
 {
+	echo -e "${RED}Fetching latest version of $2$RESET"
 	cd /tmp
-	rm -rf $2
-	rm -rf ~/.themes/$4*
-	git clone https://github.com/$1/$2 -b $3 --depth 1
-	cd $2
-	echo -e "${RED}Installing $2, updated $(timestamp)$RESET"
+	rm -rf "$2"
+	rm -rf "~/.themes/$4"*
+	git clone "https://github.com/$1/$2" -b "$3" --depth 1
+	cd "$2"
+	echo -e "${RED}$2 was last updated on $(timestamp)$RESET"
 }
 
 function theme-cp()
 {
 	theme "$@"
-	cp -r $4 ~/.themes/
+	cp -r "$4" ~/.themes/
 }
 
 function theme-cp-all()
 {
 	theme "$@"
-	cp -r $4* ~/.themes/
+	cp -r "$4"* ~/.themes/
 }
 
 function theme-make()
 {
 	theme "$@"
-	make install INSTALL_DIR=~/.themes/$4
+	make install INSTALL_DIR="~/.themes/$4"
 }
 
 function theme-autogen-prefix()
@@ -70,14 +85,14 @@ theme-autogen-prefix horst3180 vertex-theme master Vertex
 theme-autogen-prefix tista500 Adapta master Adapta
 theme-autogen-destdir snwh paper-gtk-theme master Paper
 
-if [ "$GNOME3_VERSION" = 3.20 ]; then
-	theme-cp lassekongo83 zuki-themes master Zuki*
+if [ "$GNOME_VERSION" = '3.20' ]; then
+	theme-cp-all lassekongo83 zuki-themes master Zuki
 	theme-cp-all killhellokitty Candra-Themes-3.20 master Candra-Theme-3.20
 	theme-cp-all killhellokitty Cloak-3.20 master Cloak-3.20
 fi
 
-if [ "$GNOME3_VERSION" = 3.18 ]; then
-	theme-cp lassekongo83 zuki-themes 3.18 Zuki*
+if [ "$GNOME_VERSION" = '3.18' ]; then
+	theme-cp-all lassekongo83 zuki-themes 3.18 Zuki
 	theme-autogen-prefix horst3180 ceti-2-theme master Ceti-2
 	theme-cp killhellokitty DeLorean-Dark-3.18 master DeLorean-Dark-3.18
 fi

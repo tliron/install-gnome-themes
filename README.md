@@ -29,5 +29,5 @@ TODO
 Please contribute with pull requests!
 
 * Currently designed for Ubuntu/Debian, but should be modified for other free operating systems, with detection.
-* Should check if the version is indeed newer before installing (we can save the SHA-1 of the latest git commit). We can support a `--force` flag to ignore it.
+* Should check if the version is indeed newer before installing. (We can save the SHA-1 of the latest git commit and support a `--force` flag to ignore it.)
 

@@ -27,7 +27,7 @@ function theme()
 	rm -rf ~/.themes/$4*
 	git clone https://github.com/$1/$2 -b $3 --depth 1
 	cd $2
-	echo -e "${RED}Installing $2 updated $(timestamp)$RESET"
+	echo -e "${RED}Installing $2, updated $(timestamp)$RESET"
 }
 
 function theme-cp()

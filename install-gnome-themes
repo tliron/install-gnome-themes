@@ -1,4 +1,17 @@
 #!/bin/bash
+
+#
+# This script installs the latest versions of some fine GNOME themes into the current user's ".themes" folder.
+#
+# Get the most recent version of this script at:
+#
+#     https://github.com/tliron/install-gnome-themes
+#
+# Copyright 2016 by Tal Liron. MIT-style license:
+#
+#     https://github.com/tliron/install-gnome-themes/blob/master/LICENSE
+#
+
 set -e
 
 RED='\033[0;31m'
@@ -34,65 +47,81 @@ function timestamp()
 	git log -1 --date=short --pretty=format:%cd
 }
 
-function theme()
+function prepare()
 {
 	echo -e "${RED}Fetching latest version of $2$RESET"
+	cleanup "$2"
 	cd /tmp
-	rm -rf "$2"
-	rm -rf "~/.themes/$4"*
 	git clone "https://github.com/$1/$2" -b "$3" --depth 1
 	cd "$2"
-	echo -e "${RED}$2 was last updated on $(timestamp)$RESET"
+	echo -e "${RED}Installing $2, last updated on $(timestamp)$RESET"
+	rm -rf "~/.themes/$4"*
+}
+
+function cleanup()
+{
+	rm -rf "/tmp/$1"
 }
 
 function theme-cp()
 {
-	theme "$@"
+	prepare "$@"
 	cp -r "$4" ~/.themes/
+	cleanup "$2"
 }
 
 function theme-cp-all()
 {
-	theme "$@"
+	prepare "$@"
 	cp -r "$4"* ~/.themes/
+	cleanup "$2"
 }
 
 function theme-make()
 {
-	theme "$@"
+	prepare "$@"
 	make install INSTALL_DIR="~/.themes/$4"
+	cleanup "$2"
 }
 
 function theme-autogen-prefix()
 {
-	theme "$@"
+	prepare "$@"
 	./autogen.sh --prefix=$(pwd)
 	make install
 	cp -r share/themes/* ~/.themes/
+	cleanup "$2"
 }
 
 function theme-autogen-destdir()
 {
-	theme "$@"
+	prepare "$@"
 	./autogen.sh
 	make install DESTDIR=$(pwd)
 	cp -r usr/share/themes/* ~/.themes/
+	cleanup "$2"
 }
 
-theme-make numixproject numix-gtk-theme master Numix
-theme-autogen-prefix horst3180 arc-theme master Arc
-theme-autogen-prefix horst3180 vertex-theme master Vertex
 theme-autogen-prefix tista500 Adapta master Adapta
-theme-autogen-destdir snwh paper-gtk-theme master Paper
-
+theme-autogen-prefix horst3180 arc-theme master Arc
 if [ "$GNOME_VERSION" = '3.20' ]; then
-	theme-cp-all lassekongo83 zuki-themes master Zuki
 	theme-cp-all killhellokitty Candra-Themes-3.20 master Candra-Theme-3.20
+fi
+if [ "$GNOME_VERSION" = '3.18' ]; then
+	theme-autogen-prefix horst3180 ceti-2-theme master Ceti-2
+fi
+if [ "$GNOME_VERSION" = '3.20' ]; then
 	theme-cp-all killhellokitty Cloak-3.20 master Cloak-3.20
 fi
-
 if [ "$GNOME_VERSION" = '3.18' ]; then
-	theme-cp-all lassekongo83 zuki-themes 3.18 Zuki
-	theme-autogen-prefix horst3180 ceti-2-theme master Ceti-2
 	theme-cp killhellokitty DeLorean-Dark-3.18 master DeLorean-Dark-3.18
 fi
+theme-make numixproject numix-gtk-theme master Numix
+theme-autogen-destdir snwh paper-gtk-theme master Paper
+theme-autogen-prefix horst3180 vertex-theme master Vertex
+if [ "$GNOME_VERSION" = '3.20' ]; then
+	theme-cp-all lassekongo83 zuki-themes master Zuki
+elif [ "$GNOME_VERSION" = '3.18' ]; then
+	theme-cp-all lassekongo83 zuki-themes 3.18 Zuki
+fi
+

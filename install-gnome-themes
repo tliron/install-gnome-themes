@@ -34,13 +34,14 @@ echo -e "${RED}Verifying that build requirements are installed$2$RESET"
 
 if [ "$OS" == 'Ubuntu' ] || [ "$OS" == 'Debian' ]; then
 	sudo apt remove numix-gtk-theme # Ubuntu GNOME comes with Numix preinstalled
-	sudo apt install git autoconf automake pkg-config libgtk-3-dev rubygems-integration gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto
+	sudo apt install git autoconf automake pkg-config libgtk-3-dev ruby gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto
 else
 	echo 'This script only supports Ubuntu and Debian'
 	exit 1
 fi
 
 sudo gem install sass
+mkdir -p ~/.themes
 
 function timestamp()
 {

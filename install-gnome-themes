@@ -17,15 +17,16 @@ set -e
 #
 # Build output is supressed by default. If you want to see it, set the LOG environment var:
 #
-# LOG=/dev/stdout ./install-gnome-themes
+# 	LOG=/dev/stdout ./install-gnome-themes
 #
 # Or:
 #
-# LOG=output.log ./install-gnome-themes
+# 	LOG=output.log ./install-gnome-themes
 #
 
 RED='\033[0;31m'
 RESET='\033[0m'
+THEMES=~/.themes
 LOG=${LOG:-/dev/null}
 
 #
@@ -57,25 +58,24 @@ write "Verifying that build requirements are installed..."
 
 if [ "$OS" == 'Ubuntu' ] || [ "$OS" == 'Debian' ]; then
 	# Ubuntu GNOME comes with Numix (for 3.18) preinstalled, we will remove it to avoid confusion
-	sudo apt -y remove numix-gtk-theme &>> "$LOG"
+	sudo apt remove numix-gtk-theme
 	# Install our build and usage requirements
-	# Note: Inkscape is required for building Adapta
-	sudo apt -y install \
+	sudo apt install \
 		git autoconf automake pkg-config \
-		libgtk-3-dev libglib2.0-dev libxml2-utils \
+		libgtk-3-dev libglib2.0-dev libxml2-utils libglib2.0-bin libgdk-pixbuf2.0-dev \
 		gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf \
 		ruby ruby-bundler \
 		inkscape \
-		fonts-roboto &>> "$LOG"
+		fonts-roboto
 else
 	write 'This script only supports Ubuntu and Debian.'
 	exit 1
 fi
 
 # SASS is used by many themes to generate CSS
-sudo gem install sass &>> "$LOG"
+sudo gem install sass
 
-mkdir -p ~/.themes
+mkdir -p "$THEMES"
 
 #
 # Utilities
@@ -92,10 +92,10 @@ function prepare()
 	cleanup "$2"
 	cd /tmp
 	# Shallow git clone is faster
-	git clone "https://github.com/$1/$2" -b "$3" --depth 1 --quiet
+	git clone "https://github.com/$1/$2" -b "$3" --depth 1 &>> "$LOG"
 	cd "$2"
-	write "Installing $2, last updated on $(timestamp)..."
-	rm -rf "~/.themes/$4"*
+	write "Building and installing $2, last updated on $(timestamp)..."
+	rm -rf "$THEMES/$4"*
 }
 
 function cleanup()
@@ -106,21 +106,21 @@ function cleanup()
 function theme-cp()
 {
 	prepare "$@"
-	cp -r "$4" ~/.themes/
+	cp -r "$4" "$THEMES/"
 	cleanup "$2"
 }
 
 function theme-cp-all()
 {
 	prepare "$@"
-	cp -r "$4"* ~/.themes/
+	cp -r "$4"* "$THEMES/"
 	cleanup "$2"
 }
 
 function theme-make()
 {
 	prepare "$@"
-	make install INSTALL_DIR="~/.themes/$4" &>> "$LOG"
+	make install INSTALL_DIR="$THEMES/$4" &>> "$LOG"
 	cleanup "$2"
 }
 
@@ -131,7 +131,7 @@ function theme-autogen-prefix()
 	make &>> "$LOG"
 	# Adapta needs to run "make install" separately
 	make install &>> "$LOG"
-	cp -r share/themes/* ~/.themes/
+	cp -r share/themes/* "$THEMES/"
 	cleanup "$2"
 }
 
@@ -140,7 +140,7 @@ function theme-autogen-destdir()
 	prepare "$@"
 	./autogen.sh "${@:5}" &>> "$LOG"
 	make install DESTDIR=$(pwd) &>> "$LOG"
-	cp -r usr/share/themes/* ~/.themes/
+	cp -r usr/share/themes/* "$THEMES/"
 	cleanup "$2"
 }
 
@@ -148,40 +148,77 @@ function theme-autogen-destdir()
 # Themes
 #
 
+# Adapta
+# https://github.com/tista500/Adapta
+# Requirements: autoconf automake pkg-config libglib-2.0-dev libxml2-utils inkscape gtk2-engines-murrine gtk2-engines-pixbuf sass bundler
 #
-# Note that some themes support extra configuration settings.
+# Supports configurations settings, e.g. a variant with colors red500, red300, bluegrey300, bluegrey500:
 #
-# For example, this will create a variant of Adapta with colors red500, red300, bluegrey300, bluegrey500:
-#
-# theme-autogen-prefix tista500 Adapta master Adapta \
-#	--with-selection_color=#F44336 \
-#	--with-second_selection_color=#E57373 \
-#	--with-accent_color=#90A4AE \
-#	--with-suggestion_color=#607D8B
-#
-# This will create a variant of Arc without transparency:
-#
-# theme-autogen-prefix horst3180 arc-theme master Arc \
-#	--disable-transparency
-#
+#	ADAPTA_ARGS=' \
+#		--with-selection_color=#F44336 \
+#		--with-second_selection_color=#E57373 \
+#		--with-accent_color=#90A4AE \
+#		--with-suggestion_color=#607D8B' \
+#	./install-gnome-themes
+theme-autogen-prefix tista500 Adapta master Adapta $ADAPTA_ARGS
 
-theme-autogen-prefix tista500 Adapta master Adapta
-theme-autogen-prefix horst3180 arc-theme master Arc
+# Arc
+# https://github.com/horst3180/arc-theme
+# Requirements: autoconf automake pkg-config libgtk-3-dev gtk2-engines-murrine
+#
+# Supports configurations settings, e.g. a variant with transparency disabled:
+#
+#	ARC_ARGS=' \
+#		--disable-transparency' \
+#	./install-gnome-themes
+theme-autogen-prefix horst3180 arc-theme master Arc $ARC_ARGS
+
+# Candra
+# https://github.com/killhellokitty/Candra-Themes-3.20
+# Requirements: gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf
 if [ "$GNOME_VERSION" = '3.20' ]; then
 	theme-cp-all killhellokitty Candra-Themes-3.20 master Candra-Theme-3.20
 fi
+
+# Ceti-2
+# https://github.com/horst3180/ceti-2-theme
+# Requirements: autoconf automake pkg-config libgtk-3-dev gtk2-engines-murrine
 if [ "$GNOME_VERSION" = '3.18' ]; then
 	theme-autogen-prefix horst3180 ceti-2-theme master Ceti-2
 fi
+
+# Cloak
+# https://github.com/killhellokitty/Cloak-3.20
+# Requirements: gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf
 if [ "$GNOME_VERSION" = '3.20' ]; then
 	theme-cp-all killhellokitty Cloak-3.20 master Cloak-3.20
 fi
+
+# Delorean Dark
+# https://github.com/killhellokitty/DeLorean-Dark-3.18
+# Requirements: gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf
 if [ "$GNOME_VERSION" = '3.18' ]; then
 	theme-cp killhellokitty DeLorean-Dark-3.18 master DeLorean-Dark-3.18
 fi
+
+# Numix
+# https://github.com/numixproject/numix-gtk-theme
+# Requirements: automake libglib2.0-bin libgdk-pixbuf2.0-dev sass
 theme-make numixproject numix-gtk-theme master Numix
+
+# Paper
+# https://github.com/snwh/paper-gtk-theme
+# Requirements: automake automake
 theme-autogen-destdir snwh paper-gtk-theme master Paper
+
+# Vertex
+# https://github.com/horst3180/vertex-theme
+# Requirements: autoconf automake pkg-config libgtk-3-dev gtk2-engines-murrine
 theme-autogen-prefix horst3180 vertex-theme master Vertex
+
+# Zuki
+# https://github.com/lassekongo83/zuki-themes
+# Requirements: gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto
 if [ "$GNOME_VERSION" = '3.20' ]; then
 	theme-cp-all lassekongo83 zuki-themes master Zuki
 elif [ "$GNOME_VERSION" = '3.18' ]; then

@@ -160,6 +160,7 @@ function theme-autogen-destdir()
 #		--with-accent_color=#90A4AE \
 #		--with-suggestion_color=#607D8B' \
 #	./install-gnome-themes
+write "WARNING: Installing Adapta takes an especially long time, please be patient!"
 theme-autogen-prefix tista500 Adapta master Adapta $ADAPTA_ARGS
 
 # Arc

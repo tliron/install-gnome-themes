@@ -20,6 +20,7 @@ Supported Themes
 * [Ceti-2](https://github.com/horst3180/ceti-theme) (GNOME 3.18 only)
 * [Cloak](https://github.com/killhellokitty/Cloak-3.20) (GNOME 3.20 only)
 * [DeLorean Dark](https://github.com/killhellokitty/DeLorean-Dark-3.18) (GNOME 3.18 only)
+* [EvoPop](https://github.com/solus-cold-storage/evopop-gtk-theme)
 * [Numix](https://github.com/numixproject/numix-gtk-theme)
 * [Paper](https://github.com/snwh/paper-gtk-theme)
 * [Vertex](https://github.com/horst3180/vertex-theme)

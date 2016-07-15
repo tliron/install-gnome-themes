@@ -88,13 +88,13 @@ function timestamp()
 
 function prepare()
 {
-	write "Fetching latest version of $2..."
+	write "Fetching latest version of $4..."
 	cleanup "$2"
 	cd /tmp
 	# Shallow git clone is faster
 	git clone "https://github.com/$1/$2" -b "$3" --depth 1 &>> "$LOG"
 	cd "$2"
-	write "Building and installing $2, last updated on $(timestamp)..."
+	write "Building and installing $4, last updated on $(timestamp)..."
 	rm -rf "$THEMES/$4"*
 }
 
@@ -201,6 +201,10 @@ fi
 if [ "$GNOME_VERSION" = '3.18' ]; then
 	theme-cp killhellokitty DeLorean-Dark-3.18 master DeLorean-Dark-3.18
 fi
+
+# EvoPop
+# https://github.com/solus-cold-storage/evopop-gtk-theme
+theme-autogen-destdir solus-cold-storage evopop-gtk-theme master evopop
 
 # Numix
 # https://github.com/numixproject/numix-gtk-theme

@@ -174,6 +174,11 @@ theme-autogen-prefix tista500 Adapta master Adapta $ADAPTA_ARGS
 #	./install-gnome-themes
 theme-autogen-prefix horst3180 arc-theme master Arc $ARC_ARGS
 
+# Breeze
+# https://github.com/dirruk1/gnome-breeze
+# Requirements: gtk2-engines-pixbuf
+theme-cp-all dirruk1 gnome-breeze master Breeze
+
 # Candra
 # https://github.com/killhellokitty/Candra-Themes-3.20
 # Requirements: gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf

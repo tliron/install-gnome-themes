@@ -22,6 +22,8 @@ Supported Themes
 * [Cloak](https://github.com/killhellokitty/Cloak-3.20) (GNOME 3.20 only)
 * [DeLorean Dark](https://github.com/killhellokitty/DeLorean-Dark-3.18) (GNOME 3.18 only)
 * [EvoPop](https://github.com/solus-cold-storage/evopop-gtk-theme)
+* [Flat-Plat](https://github.com/nana-4/Flat-Plat)
+* [Fresh-Finesse](https://github.com/Vistaus/Fresh-Finesse)
 * [Numix](https://github.com/numixproject/numix-gtk-theme)
 * [Paper](https://github.com/snwh/paper-gtk-theme)
 * [Vertex](https://github.com/horst3180/vertex-theme)

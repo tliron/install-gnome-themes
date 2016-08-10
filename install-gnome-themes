@@ -117,6 +117,14 @@ function theme-cp-all()
 	cleanup "$2"
 }
 
+function theme-mv()
+{
+	prepare "$@"
+	cd ..
+	mv "$2" "$THEMES/$4"
+	cleanup "$2"
+}
+
 function theme-make()
 {
 	prepare "$@"
@@ -210,6 +218,14 @@ fi
 # EvoPop
 # https://github.com/solus-cold-storage/evopop-gtk-theme
 theme-autogen-destdir solus-cold-storage evopop-gtk-theme master evopop
+
+# Flat-Plat
+# https://github.com/nana-4/Flat-Plat
+theme-mv nana-4 Flat-Plat master Flat-Plat
+
+# Fresh-Finesse
+# https://github.com/Vistaus/Fresh-Finesse
+theme-cp Vistaus Fresh-Finesse master Fresh-Finesse 
 
 # Numix
 # https://github.com/numixproject/numix-gtk-theme

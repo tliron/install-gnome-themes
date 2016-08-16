@@ -24,6 +24,7 @@ Supported Themes
 * [EvoPop](https://github.com/solus-cold-storage/evopop-gtk-theme)
 * [Flat-Plat](https://github.com/nana-4/Flat-Plat)
 * [Fresh-Finesse](https://github.com/Vistaus/Fresh-Finesse)
+* [Greybird](https://github.com/shimmerproject/Greybird)
 * [Numix](https://github.com/numixproject/numix-gtk-theme)
 * [Paper](https://github.com/snwh/paper-gtk-theme)
 * [Vertex](https://github.com/horst3180/vertex-theme)

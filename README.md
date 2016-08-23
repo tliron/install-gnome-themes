@@ -16,6 +16,7 @@ Supported Themes
 
 * [Adapta](https://github.com/tista500/Adapta)
 * [Arc](https://github.com/horst3180/arc-theme) (Firefox themes: [Arc](https://addons.mozilla.org/en-US/firefox/addon/arc-theme/), [Arc Darker](https://addons.mozilla.org/en-US/firefox/addon/arc-darker-theme/), [Arc Dark](https://addons.mozilla.org/en-US/firefox/addon/arc-dark-theme/))
+* [Arc-Red](https://github.com/mclmza/arc-theme-Red)
 * [Breeze](https://github.com/dirruk1/gnome-breeze)
 * [Candra](https://github.com/killhellokitty/Candra-Themes-3.20) (GNOME 3.20 only)
 * [Ceti-2](https://github.com/horst3180/ceti-theme) (GNOME 3.18 only)

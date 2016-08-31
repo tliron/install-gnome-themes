@@ -168,7 +168,7 @@ function theme-autogen-destdir()
 #		--with-accent_color=#90A4AE \
 #		--with-suggestion_color=#607D8B' \
 #	./install-gnome-themes
-write "WARNING: Installing Adapta takes an especially long time, please be patient!"
+write "WARNING: Installing Adapta takes an especially long time due to rendering of all assets, please be patient!"
 theme-autogen-prefix tista500 Adapta master Adapta $ADAPTA_ARGS
 
 # Arc
@@ -247,6 +247,10 @@ theme-autogen-prefix shimmerproject Greybird master Greybird
 # https://github.com/numixproject/numix-gtk-theme
 # Requirements: automake libglib2.0-bin libgdk-pixbuf2.0-dev sass
 theme-make numixproject numix-gtk-theme master Numix
+
+# OS X El Capitan
+# https://github.com/Elbullazul/OS-X-El-Capitan/tree/master/OS%20X%20El%20Capitan
+theme-cp Elbullazul OS-X-El-Capitan master 'OS X El Capitan'
 
 # Paper
 # https://github.com/snwh/paper-gtk-theme

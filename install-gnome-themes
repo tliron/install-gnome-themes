@@ -35,7 +35,7 @@ LOG=${LOG:-/dev/null}
 
 function write()
 {
-	echo -e "${RED}$1$RESET"
+	echo -e "${RED}$@$RESET"
 	if [ "$LOG" != '/dev/stdout' ]; then
 		echo "$1" >> "$LOG"
 	fi
@@ -88,14 +88,15 @@ function timestamp()
 
 function prepare()
 {
-	write "Fetching latest version of $4..."
+	write "Fetching latest version of ${@:4}..."
 	cleanup "$2"
 	cd /tmp
 	# Shallow git clone is faster
 	git clone "https://github.com/$1/$2" -b "$3" --depth 1 &>> "$LOG"
-	cd "$2"
-	write "Building and installing $4, last updated on $(timestamp)..."
-	rm -rf "$THEMES/$4"*
+	cd "$THEMES"
+	rm -rf "${@:4}"
+	cd "/tmp/$2"
+	write "Building and installing ${@:4}, last updated on $(timestamp)..."
 }
 
 function cleanup()
@@ -106,14 +107,7 @@ function cleanup()
 function theme-cp()
 {
 	prepare "$@"
-	cp -r "$4" "$THEMES/"
-	cleanup "$2"
-}
-
-function theme-cp-all()
-{
-	prepare "$@"
-	cp -r "$4"* "$THEMES/"
+	cp -r "${@:4}" "$THEMES/"
 	cleanup "$2"
 }
 
@@ -135,7 +129,7 @@ function theme-make()
 function theme-autogen-prefix()
 {
 	prepare "$@"
-	./autogen.sh --prefix=$(pwd) "${@:5}" &>> "$LOG"
+	./autogen.sh --prefix=$(pwd) $AUTOGEN_ARGS &>> "$LOG"
 	make &>> "$LOG"
 	# Adapta needs to run "make install" separately
 	make install &>> "$LOG"
@@ -146,7 +140,7 @@ function theme-autogen-prefix()
 function theme-autogen-destdir()
 {
 	prepare "$@"
-	./autogen.sh "${@:5}" &>> "$LOG"
+	./autogen.sh $AUTOGEN_ARGS &>> "$LOG"
 	make install DESTDIR=$(pwd) &>> "$LOG"
 	cp -r usr/share/themes/* "$THEMES/"
 	cleanup "$2"
@@ -162,14 +156,15 @@ function theme-autogen-destdir()
 #
 # Supports configurations settings, e.g. a variant with colors red500, red300, bluegrey300, bluegrey500:
 #
-#	ADAPTA_ARGS=' \
-#		--with-selection_color=#F44336 \
-#		--with-second_selection_color=#E57373 \
-#		--with-accent_color=#90A4AE \
+#	ADAPTA_ARGS='
+#		--with-selection_color=#F44336
+#		--with-second_selection_color=#E57373
+#		--with-accent_color=#90A4AE
 #		--with-suggestion_color=#607D8B' \
 #	./install-gnome-themes
 write "WARNING: Installing Adapta takes an especially long time due to rendering of all assets, please be patient!"
-theme-autogen-prefix tista500 Adapta master Adapta $ADAPTA_ARGS
+AUTOGEN_ARGS=$ADAPTA_ARGS \
+theme-autogen-prefix tista500 Adapta master Adapta Adapta-Eta Adapta-Nokto Adapta-Nokto-Eta
 
 # Arc
 # https://github.com/horst3180/arc-theme
@@ -177,10 +172,11 @@ theme-autogen-prefix tista500 Adapta master Adapta $ADAPTA_ARGS
 #
 # Supports configurations settings, e.g. a variant with transparency disabled:
 #
-#	ARC_ARGS=' \
+#	ARC_ARGS='
 #		--disable-transparency' \
 #	./install-gnome-themes
-theme-autogen-prefix horst3180 arc-theme master Arc $ARC_ARGS
+AUTOGEN_ARGS=$ARC_ARGS \
+theme-autogen-prefix horst3180 arc-theme master Arc Arc-Dark Arc-Darker
 
 # Arc-Red
 # https://github.com/mclmza/arc-theme-Red
@@ -188,21 +184,22 @@ theme-autogen-prefix horst3180 arc-theme master Arc $ARC_ARGS
 #
 # Supports configurations settings, e.g. a variant with transparency disabled:
 #
-#       ARC_RED_ARGS=' \
+#       ARC_RED_ARGS='
 #               --disable-transparency' \
 #       ./install-gnome-themes
-theme-autogen-prefix mclmza arc-theme-Red master Arc-Red $ARC_RED_ARGS
+AUTOGEN_ARGS=$ARC_RED_ARGS \
+theme-autogen-prefix mclmza arc-theme-Red master Arc-Red Arc-Red-Dark Arc-Red-Darker
 
 # Breeze
 # https://github.com/dirruk1/gnome-breeze
 # Requirements: gtk2-engines-pixbuf
-theme-cp-all dirruk1 gnome-breeze master Breeze
+theme-cp dirruk1 gnome-breeze master Breeze-gtk Breeze-dark-gtk
 
 # Candra
 # https://github.com/killhellokitty/Candra-Themes-3.20
 # Requirements: gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf
 if [ "$GNOME_VERSION" = '3.20' ]; then
-	theme-cp-all killhellokitty Candra-Themes-3.20 master Candra-Theme-3.20
+	theme-cp killhellokitty Candra-Themes-3.20 master Candra-Theme-3.20 Candra-Theme-3.20-Dark Candra-Theme-3.20-Darker
 fi
 
 # Ceti-2
@@ -212,11 +209,17 @@ if [ "$GNOME_VERSION" = '3.18' ]; then
 	theme-autogen-prefix horst3180 ceti-2-theme master Ceti-2
 fi
 
+# Chrome-OS
+# https://github.com/Elbullazul/Chrome-OS
+if [ "$GNOME_VERSION" = '3.18' ]; then
+	theme-mv Elbullazul Chrome-OS master Chrome-OS
+fi
+
 # Cloak
 # https://github.com/killhellokitty/Cloak-3.20
 # Requirements: gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf
 if [ "$GNOME_VERSION" = '3.20' ]; then
-	theme-cp-all killhellokitty Cloak-3.20 master Cloak-3.20
+	theme-cp killhellokitty Cloak-3.20 master Cloak-3.20
 fi
 
 # Delorean Dark
@@ -241,34 +244,46 @@ theme-cp Vistaus Fresh-Finesse master Fresh-Finesse
 # Greybird
 # https://github.com/shimmerproject/Greybird
 # Requirements: autoconf automake libgdk-pixbuf2.0-dev libglib2.0-bin sass
-theme-autogen-prefix shimmerproject Greybird master Greybird
+theme-autogen-prefix shimmerproject Greybird master Greybird Greybird-bright Greybird-compact Greybird-accessibility
+
+# macOS-Sierra
+# https://github.com/Elbullazul/macOS-Sierra
+theme-mv Elbullazul macOS-Sierra master macOS-Sierra
 
 # Numix
 # https://github.com/numixproject/numix-gtk-theme
 # Requirements: automake libglib2.0-bin libgdk-pixbuf2.0-dev sass
 theme-make numixproject numix-gtk-theme master Numix
 
-# OS X El Capitan
-# https://github.com/Elbullazul/OS-X-El-Capitan/tree/master/OS%20X%20El%20Capitan
-theme-cp Elbullazul OS-X-El-Capitan master 'OS X El Capitan'
-
 # Paper
 # https://github.com/snwh/paper-gtk-theme
 # Requirements: automake automake
 theme-autogen-destdir snwh paper-gtk-theme master Paper
 
+# Redmond-Themes
+# https://github.com/Elbullazul/Redmond-Themes
+if [ "$GNOME_VERSION" = '3.20' ]; then
+	theme-cp Elbullazul Redmond-Themes master "Windows 3.x" "Windows 9x"
+elif [ "$GNOME_VERSION" = '3.18' ]; then
+	theme-cp Elbullazul Redmond-Themes master "Windows 3.x" "Windows 9x" "Windows XP Embedded" "Windows XP Zune" "Windows Vista"
+fi
+
 # Vertex
 # https://github.com/horst3180/vertex-theme
 # Requirements: autoconf automake pkg-config libgtk-3-dev gtk2-engines-murrine
-theme-autogen-prefix horst3180 vertex-theme master Vertex
+theme-autogen-prefix horst3180 vertex-theme master Vertex Vertex-Light Vertex-Dark
+
+# Windows-10
+# https://github.com/Elbullazul/Windows-10
+theme-cp Elbullazul Windows-10 master "Windows 10 Light" "Windows 10 Dark"
 
 # Zuki
 # https://github.com/lassekongo83/zuki-themes
 # Requirements: gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto
 if [ "$GNOME_VERSION" = '3.20' ]; then
-	theme-cp-all lassekongo83 zuki-themes master Zuki
+	theme-cp lassekongo83 zuki-themes master Zukitre Zukitwo Zuki-shell
 elif [ "$GNOME_VERSION" = '3.18' ]; then
-	theme-cp-all lassekongo83 zuki-themes 3.18 Zuki
+	theme-cp lassekongo83 zuki-themes 3.18 Zukitre Zukitwo Zuki-shell
 fi
 
 write "Done!"

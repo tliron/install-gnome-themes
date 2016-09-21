@@ -28,10 +28,12 @@ Supported Themes
 * [Flat-Plat](https://github.com/nana-4/Flat-Plat)
 * [Fresh-Finesse](https://github.com/Vistaus/Fresh-Finesse)
 * [Greybird](https://github.com/shimmerproject/Greybird)
+* [macOS-Sierra](https://github.com/Elbullazul/macOS-Sierra)
 * [Numix](https://github.com/numixproject/numix-gtk-theme)
-* [OS X El Capitan](https://github.com/Elbullazul/OS-X-El-Capitan/tree/master/OS%20X%20El%20Capitan)
 * [Paper](https://github.com/snwh/paper-gtk-theme)
+* [Redmond-Themes](https://github.com/Elbullazul/Redmond-Themes)
 * [Vertex](https://github.com/horst3180/vertex-theme)
+* [Windows-10](https://github.com/Elbullazul/Windows-10)
 * [Zuki](https://github.com/lassekongo83/zuki-themes)
 
 TODO

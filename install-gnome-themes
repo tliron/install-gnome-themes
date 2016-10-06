@@ -15,6 +15,10 @@
 set -e
 
 #
+# To skip installation of requirements:
+#
+# 	REQUIREMENTS=0 ./install-gnome-themes
+#
 # Build output is supressed by default. If you want to see it, set the LOG environment var:
 #
 # 	LOG=/dev/stdout ./install-gnome-themes
@@ -26,8 +30,10 @@ set -e
 
 RED='\033[0;31m'
 RESET='\033[0m'
-THEMES=~/.themes
 LOG=${LOG:-/dev/null}
+REQUIREMENTS=${REQUIREMENTS:-1}
+THEMES=~/.themes
+CACHE_FILE=${CACHE_FILE:-$THEMES/.install-gnome-themes-cache}
 
 #
 # Preparation
@@ -54,26 +60,28 @@ OS=$(lsb_release -si)
 
 write "Detected $OS operating system."
 
-write "Verifying that build requirements are installed..."
+if [ "$REQUIREMENTS" == 1 ]; then
+	write "Verifying that build requirements are installed..."
 
-if [ "$OS" == 'Ubuntu' ] || [ "$OS" == 'Debian' ]; then
-	# Ubuntu GNOME comes with Numix (for 3.18) preinstalled, we will remove it to avoid confusion
-	sudo apt remove numix-gtk-theme
-	# Install our build and usage requirements
-	sudo apt install \
-		git autoconf automake pkg-config \
-		libgtk-3-dev libglib2.0-dev libxml2-utils libglib2.0-bin libgdk-pixbuf2.0-dev \
-		gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf \
-		ruby ruby-bundler \
-		inkscape \
-		fonts-roboto
-else
-	write 'This script only supports Ubuntu and Debian.'
-	exit 1
+	if [ "$OS" == 'Ubuntu' ] || [ "$OS" == 'Debian' ]; then
+		# Ubuntu GNOME comes with Numix (for 3.18) preinstalled, we will remove it to avoid confusion
+		sudo apt remove numix-gtk-theme
+		# Install our build and usage requirements
+		sudo apt install \
+			git autoconf automake pkg-config \
+			libgtk-3-dev libglib2.0-dev libxml2-utils libglib2.0-bin libgdk-pixbuf2.0-dev \
+			gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf \
+			ruby ruby-bundler \
+			inkscape \
+			fonts-roboto
+	else
+		write 'This script only supports Ubuntu and Debian.'
+		exit 1
+	fi
+
+	# SASS is used by many themes to generate CSS
+	sudo gem install sass
 fi
-
-# SASS is used by many themes to generate CSS
-sudo gem install sass
 
 mkdir -p "$THEMES"
 
@@ -81,22 +89,72 @@ mkdir -p "$THEMES"
 # Utilities
 #
 
-function timestamp()
+function repository-timestamp()
 {
-	git log -1 --date=short --pretty=format:%cd
+	git log -1 --date=short --pretty=format:%cr
+}
+
+function repository-id()
+{
+	git log -1 --pretty=format:%H
+}
+
+function get-value()
+{
+	if [ -f "$2" ]; then
+		sed --quiet "s/^$1 \(.*\)/\1/p" "$2"
+	fi
+}
+
+function set-value()
+{
+	if grep --quiet --no-messages "^$1 " "$3"; then
+		sed --in-place "s/^\($1 \)\(.*\)/\1$2/" "$3"
+	else
+		echo "$1 $2" >> "$3"
+	fi
+}
+
+function comma-separated()
+{
+	local R
+	for A in "$@"; do
+		if [ -z "$R" ]; then
+			R=$1
+		else
+			R="$R, $A"
+		fi
+	done
+	echo $R
 }
 
 function prepare()
 {
-	write "Fetching latest version of ${@:4}..."
+	local NAMES=$(comma-separated "${@:4}")
+	write "Checking repository for: $NAMES..."
+
+	# Shallow git clone
 	cleanup "$2"
 	cd /tmp
-	# Shallow git clone is faster
 	git clone "https://github.com/$1/$2" -b "$3" --depth 1 &>> "$LOG"
-	cd "$THEMES"
-	rm -rf "${@:4}"
 	cd "/tmp/$2"
-	write "Building and installing ${@:4}, last updated on $(timestamp)..."
+
+	local KEY="$1|$2|$3"
+	local CURRENT_ID=$(repository-id)
+	local LAST_ID=$(get-value "$KEY" "$CACHE_FILE")
+
+	if [ "$CURRENT_ID" == "$LAST_ID" ]; then
+		write "Latest version already installed, last updated $(repository-timestamp)."
+		cleanup "$2"
+		return 1
+	else
+		write "Installing new version, last updated $(repository-timestamp)..."
+		set-value "$KEY" "$CURRENT_ID" "$CACHE_FILE"
+		cd "$THEMES"
+		rm -rf "${@:4}"
+		cd "/tmp/$2"
+		return 0
+	fi
 }
 
 function cleanup()
@@ -106,14 +164,18 @@ function cleanup()
 
 function theme-cp()
 {
-	prepare "$@"
+	if ! prepare "$@"; then
+		return
+	fi
 	cp -r "${@:4}" "$THEMES/"
 	cleanup "$2"
 }
 
 function theme-mv()
 {
-	prepare "$@"
+	if ! prepare "$@"; then
+		return
+	fi
 	cd ..
 	mv "$2" "$THEMES/$4"
 	cleanup "$2"
@@ -121,14 +183,18 @@ function theme-mv()
 
 function theme-make()
 {
-	prepare "$@"
+	if ! prepare "$@"; then
+		return
+	fi
 	make install INSTALL_DIR="$THEMES/$4" &>> "$LOG"
 	cleanup "$2"
 }
 
 function theme-autogen-prefix()
 {
-	prepare "$@"
+	if ! prepare "$@"; then
+		return
+	fi
 	./autogen.sh --prefix=$(pwd) $AUTOGEN_ARGS &>> "$LOG"
 	make &>> "$LOG"
 	# Adapta needs to run "make install" separately
@@ -139,7 +205,9 @@ function theme-autogen-prefix()
 
 function theme-autogen-destdir()
 {
-	prepare "$@"
+	if ! prepare "$@"; then
+		return
+	fi
 	./autogen.sh $AUTOGEN_ARGS &>> "$LOG"
 	make install DESTDIR=$(pwd) &>> "$LOG"
 	cp -r usr/share/themes/* "$THEMES/"

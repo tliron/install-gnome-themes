@@ -28,8 +28,11 @@ set -e
 # 	LOG=output.log ./install-gnome-themes
 #
 
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
 RED='\033[0;31m'
 RESET='\033[0m'
+
 LOG=${LOG:-/dev/null}
 REQUIREMENTS=${REQUIREMENTS:-1}
 THEMES=~/.themes
@@ -39,9 +42,10 @@ CACHE_FILE=${CACHE_FILE:-$THEMES/.install-gnome-themes-cache}
 # Preparation
 #
 
-function write()
+function message()
 {
-	echo -e "${RED}$@$RESET"
+	COLOR=${2:-$BLUE}
+	echo -e "${COLOR}$@$RESET"
 	if [ "$LOG" != '/dev/stdout' ]; then
 		echo "$1" >> "$LOG"
 	fi
@@ -50,18 +54,18 @@ function write()
 GNOME_VERSION=$(gnome-shell --version | cut -d ' ' -f3 | cut -d '.' -f1,2)
 
 if [ "$GNOME_VERSION" != '3.20' ] && [ "$GNOME_VERSION" != '3.18' ]; then
-	write 'This script only supports GNOME 3.20 and GNOME 3.18.'
+	message 'This script only supports GNOME 3.20 and GNOME 3.18.'
 	exit 1
 fi
 
-write "Detected GNOME $GNOME_VERSION."
+message "Detected GNOME $GNOME_VERSION."
 
 OS=$(lsb_release -si)
 
-write "Detected $OS operating system."
+message "Detected $OS operating system."
 
 if [ "$REQUIREMENTS" == 1 ]; then
-	write "Verifying that build requirements are installed..."
+	message "Verifying that build requirements are installed..."
 
 	if [ "$OS" == 'Ubuntu' ] || [ "$OS" == 'Debian' ]; then
 		# Ubuntu GNOME comes with Numix (for 3.18) preinstalled, we will remove it to avoid confusion
@@ -75,7 +79,7 @@ if [ "$REQUIREMENTS" == 1 ]; then
 			inkscape \
 			fonts-roboto
 	else
-		write 'This script only supports Ubuntu and Debian.'
+		message 'This script only supports Ubuntu and Debian.' "$RED"
 		exit 1
 	fi
 
@@ -131,7 +135,7 @@ function comma-separated()
 function prepare()
 {
 	local NAMES=$(comma-separated "${@:4}")
-	write "Checking repository for: $NAMES..."
+	message "Checking repository for: $NAMES..."
 
 	# Shallow git clone
 	cleanup "$2"
@@ -144,11 +148,14 @@ function prepare()
 	local LAST_ID=$(get-value "$KEY" "$CACHE_FILE")
 
 	if [ "$CURRENT_ID" == "$LAST_ID" ]; then
-		write "Latest version already installed, last updated $(repository-timestamp)."
+		message "  Latest version already installed, last updated $(repository-timestamp)."
 		cleanup "$2"
 		return 1
 	else
-		write "Installing new version, last updated $(repository-timestamp)..."
+		message "  Installing new version, last updated $(repository-timestamp)..." "$CYAN"
+		if [ "$2" == Adapta ]; then
+			message "  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!" "$CYAN"
+		fi
 		set-value "$KEY" "$CURRENT_ID" "$CACHE_FILE"
 		cd "$THEMES"
 		rm -rf "${@:4}"
@@ -230,7 +237,6 @@ function theme-autogen-destdir()
 #		--with-accent_color=#90A4AE
 #		--with-suggestion_color=#607D8B' \
 #	./install-gnome-themes
-write "WARNING: Installing Adapta takes an especially long time due to rendering of all assets, please be patient!"
 AUTOGEN_ARGS=$ADAPTA_ARGS \
 theme-autogen-prefix tista500 Adapta master Adapta Adapta-Eta Adapta-Nokto Adapta-Nokto-Eta
 
@@ -354,4 +360,4 @@ elif [ "$GNOME_VERSION" = '3.18' ]; then
 	theme-cp lassekongo83 zuki-themes 3.18 Zukitre Zukitwo Zuki-shell
 fi
 
-write "Done!"
+message "Done!"

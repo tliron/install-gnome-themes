@@ -44,7 +44,7 @@ CACHE_FILE=${CACHE_FILE:-$THEMES/.install-gnome-themes-cache}
 
 function message()
 {
-	COLOR=${2:-$BLUE}
+	COLOR=${2:-$CYAN}
 	echo -e "${COLOR}$@$RESET"
 	if [ "$LOG" != '/dev/stdout' ]; then
 		echo "$1" >> "$LOG"
@@ -134,27 +134,33 @@ function comma-separated()
 
 function prepare()
 {
-	local NAMES=$(comma-separated "${@:4}")
-	message "Checking repository for: $NAMES..."
+	local REPO="https://github.com/$1/$2"
+
+	message "Fetching repository: $REPO..."
 
 	# Shallow git clone
 	cleanup "$2"
 	cd /tmp
-	git clone "https://github.com/$1/$2" -b "$3" --depth 1 &>> "$LOG"
+	git clone "$REPO" -b "$3" --depth 1 &>> "$LOG"
 	cd "/tmp/$2"
 
 	local KEY="$1|$2|$3"
 	local CURRENT_ID=$(repository-id)
 	local LAST_ID=$(get-value "$KEY" "$CACHE_FILE")
+	local NAMES=$(comma-separated "${@:4}")
 
 	if [ "$CURRENT_ID" == "$LAST_ID" ]; then
-		message "  Latest version already installed, last updated $(repository-timestamp)."
+		message "$NAMES:"
+		message "  Last updated $(repository-timestamp)."
+		message "  Already installed."
 		cleanup "$2"
 		return 1
 	else
-		message "  Installing new version, last updated $(repository-timestamp)..." "$CYAN"
+		message "$NAMES:" "$BLUE"
+		message "  Last updated $(repository-timestamp)." "$BLUE"
+		message "  Installing..." "$BLUE"
 		if [ "$2" == Adapta ]; then
-			message "  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!" "$CYAN"
+			message "  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!" "$BLUE"
 		fi
 		set-value "$KEY" "$CURRENT_ID" "$CACHE_FILE"
 		cd "$THEMES"

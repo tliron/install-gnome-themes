@@ -324,7 +324,7 @@ theme-cp Vistaus Fresh-Finesse master Fresh-Finesse
 # Greybird
 # https://github.com/shimmerproject/Greybird
 # Requirements: autoconf automake libgdk-pixbuf2.0-dev libglib2.0-bin sass
-theme-autogen-prefix shimmerproject Greybird master Greybird Greybird-bright Greybird-compact Greybird-accessibility
+theme-autogen-prefix shimmerproject Greybird master Greybird
 
 # macOS-Sierra
 # https://github.com/Elbullazul/macOS-Sierra

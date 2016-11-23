@@ -91,8 +91,7 @@ if [ "$REQUIREMENTS" == 1 ]; then
 	# sassc is used specifically by Adapta
 	if [ ! -f /usr/bin/sassc ]; then
 		echo "Building and installing sassc..."
-		cleanup libsass
-		cleanup sassc
+		rm --recursive --force "$WORK/libsass" "$WORK/sassc"
 		mkdir --parents "$WORK"
 		cd "$WORK"
 		git clone https://github.com/sass/libsass.git --depth 1 libsass &>> "$LOG"
@@ -100,8 +99,7 @@ if [ "$REQUIREMENTS" == 1 ]; then
 		cd "$WORK/sassc"
 		SASS_LIBSASS_PATH="$WORK/libsass" make --jobs="$(nproc)" &>> "$LOG"
 		sudo cp "$WORK/sassc/bin/sassc" /usr/bin/
-		cleanup libsass
-		cleanup sassc
+		rm --recursive --force "$WORK/libsass" "$WORK/sassc"
 	fi
 fi
 

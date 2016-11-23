@@ -37,6 +37,7 @@ LOG=${LOG:-/dev/null}
 REQUIREMENTS=${REQUIREMENTS:-1}
 THEMES=~/.themes
 CACHE_FILE=${CACHE_FILE:-$THEMES/.install-gnome-themes-cache}
+WORK=/tmp/install-gnome-themes
 
 #
 # Preparation
@@ -51,16 +52,16 @@ function message()
 	fi
 }
 
-GNOME_VERSION=$(gnome-shell --version | cut -d ' ' -f3 | cut -d '.' -f1,2)
+GNOME_VERSION=$(gnome-shell --version | cut --delimiter=' ' --fields=3 | cut --delimiter='.' --fields=1,2)
 
 if [ "$GNOME_VERSION" != '3.20' ] && [ "$GNOME_VERSION" != '3.18' ]; then
-	message 'This script only supports GNOME 3.20 and GNOME 3.18.'
+	message "This script only supports GNOME 3.20 and GNOME 3.18."
 	exit 1
 fi
 
 message "Detected GNOME $GNOME_VERSION."
 
-OS=$(lsb_release -si)
+OS=$(lsb_release --id --short)
 
 message "Detected $OS operating system."
 
@@ -74,31 +75,37 @@ if [ "$REQUIREMENTS" == 1 ]; then
 		sudo apt install \
 			git autoconf automake pkg-config parallel \
 			libgtk-3-dev libgdk-pixbuf2.0-dev libglib2.0-dev libglib2.0-bin \
-			libxml2-utils libsass0 librsvg2-dev \
+			libxml2-utils librsvg2-dev \
 			gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf \
 			ruby ruby-bundler \
 			inkscape \
 			fonts-roboto-hinted fonts-noto-hinted
 	else
-		message 'This script only supports Ubuntu and Debian.' "$RED"
+		message "This script only supports Ubuntu and Debian." "$RED"
 		exit 1
 	fi
 
-	# SASS is used by many themes to generate CSS
+	# sass is used by many themes to generate CSS
 	sudo gem install sass
 
+	# sassc is used specifically by Adapta
 	if [ ! -f /usr/bin/sassc ]; then
-		cd /tmp
-		rm -rf libsass sassc
-		git clone https://github.com/sass/libsass.git --depth 1
-		git clone https://github.com/sass/sassc.git --depth 1
-		cd sassc
-		SASS_LIBSASS_PATH=/tmp/libsass make -j "$(nproc)"
-		sudo cp bin/sassc /usr/bin/
+		echo "Building and installing sassc..."
+		cleanup libsass
+		cleanup sassc
+		mkdir --parents "$WORK"
+		cd "$WORK"
+		git clone https://github.com/sass/libsass.git --depth 1 libsass &>> "$LOG"
+		git clone https://github.com/sass/sassc.git --depth 1 sassc &>> "$LOG"
+		cd "$WORK/sassc"
+		SASS_LIBSASS_PATH="$WORK/libsass" make --jobs="$(nproc)" &>> "$LOG"
+		sudo cp "$WORK/sassc/bin/sassc" /usr/bin/
+		cleanup libsass
+		cleanup sassc
 	fi
 fi
 
-mkdir -p "$THEMES"
+mkdir --parents "$THEMES"
 
 #
 # Utilities
@@ -106,27 +113,32 @@ mkdir -p "$THEMES"
 
 function repository-timestamp()
 {
-	git log -1 --date=short --pretty=format:%cr
+	git log --max-count=1 --date=short --pretty=format:%cr
 }
 
 function repository-id()
 {
-	git log -1 --pretty=format:%H
+	git log --max-count=1 --pretty=format:%H
 }
 
-function get-value()
+function get-value() # [key] [db]
 {
-	if [ -f "$2" ]; then
-		sed --quiet "s/^$1 \(.*\)/\1/p" "$2"
+	local KEY=$1
+	local DB=$2
+	if [ -f "$DB" ]; then
+		sed --quiet "s/^$KEY \(.*\)/\1/p" "$DB"
 	fi
 }
 
-function set-value()
+function set-value() # [key] [value] [db]
 {
-	if grep --quiet --no-messages "^$1 " "$3"; then
-		sed --in-place "s/^\($1 \)\(.*\)/\1$2/" "$3"
+	local KEY=$1
+	local VALUE=$2
+	local DB=$3
+	if grep --quiet --no-messages "^$KEY " "$DB"; then
+		sed --in-place "s/^\($KEY \)\(.*\)/\1$VALUE/" "$DB"
 	else
-		echo "$1 $2" >> "$3"
+		echo "$KEY $VALUE" >> "$DB"
 	fi
 }
 
@@ -143,79 +155,89 @@ function comma-separated()
 	echo $R
 }
 
-function prepare()
+function prepare() # [account] [repo] [branch] [themes...]
 {
-	local REPO="https://github.com/$1/$2"
+	local ACCOUNT=$1
+	local REPO=$2
+	local BRANCH=$3
 
-	message "Fetching repository: $REPO..."
-
-	# Shallow git clone
-	cleanup "$2"
-	cd /tmp
-	git clone "$REPO" -b "$3" --depth 1 &>> "$LOG"
-	cd "/tmp/$2"
-
-	local KEY="$1|$2|$3"
-	local CURRENT_ID=$(repository-id)
+	local URL="https://github.com/$ACCOUNT/$REPO"
+	local KEY="$ACCOUNT|$REPO|$BRANCH"
 	local LAST_ID=$(get-value "$KEY" "$CACHE_FILE")
 	local NAMES=$(comma-separated "${@:4}")
 
+	message "Fetching repository: $URL..."
+
+	# Shallow git clone
+	cleanup "$REPO"
+	mkdir --parents "$WORK"
+	cd "$WORK"
+	git clone "$URL" --branch "$BRANCH" --depth 1 "$REPO" &>> "$LOG"
+	cd "$WORK/$REPO"
+
+	local CURRENT_ID=$(repository-id)
 	if [ "$CURRENT_ID" == "$LAST_ID" ]; then
 		message "$NAMES:"
 		message "  Last updated $(repository-timestamp)."
 		message "  Already installed."
-		cleanup "$2"
+		cleanup "$REPO"
 		return 1
 	else
 		message "$NAMES:" "$BLUE"
 		message "  Last updated $(repository-timestamp)." "$BLUE"
 		message "  Installing..." "$BLUE"
-		if [ "$2" == Adapta ]; then
+		if [ "$REPO" == Adapta ]; then
 			message "  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!" "$BLUE"
 		fi
 		set-value "$KEY" "$CURRENT_ID" "$CACHE_FILE"
 		cd "$THEMES"
-		rm -rf "${@:4}"
-		cd "/tmp/$2"
+		rm --recursive --force "${@:4}"
+		cd "$WORK/$REPO"
 		return 0
 	fi
 }
 
-function cleanup()
+function cleanup() # [repo]
 {
-	rm -rf "/tmp/$1"
+	local REPO=$1
+	rm --recursive --force "$WORK/$REPO"
 }
 
-function theme-cp()
+function theme-cp() # [account] [repo] [branch] [themes...]
 {
+	local REPO=$2
 	if ! prepare "$@"; then
 		return
 	fi
-	cp -r "${@:4}" "$THEMES/"
-	cleanup "$2"
+	cp --recursive "${@:4}" "$THEMES/"
+	cleanup "$REPO"
 }
 
-function theme-mv()
+function theme-mv() # [account] [repo] [branch] [theme]
 {
+	local REPO=$2
+	local THEME=$4
 	if ! prepare "$@"; then
 		return
 	fi
-	cd ..
-	mv "$2" "$THEMES/$4"
-	cleanup "$2"
+	mv "$WORK/$REPO" "$THEMES/$THEME"
+	cleanup "$REPO"
 }
 
-function theme-make()
+function theme-make() # [account] [repo] [branch] [theme]
 {
+	local REPO=$2
+	local THEME=$4
 	if ! prepare "$@"; then
 		return
 	fi
-	make install INSTALL_DIR="$THEMES/$4" &>> "$LOG"
-	cleanup "$2"
+	make install INSTALL_DIR="$THEMES/$THEME" &>> "$LOG"
+	cleanup "$REPO"
 }
 
-function theme-autogen-prefix()
+function theme-autogen-prefix() # [account] [repo] [branch] [themes...]
 {
+	local REPO=$2
 	if ! prepare "$@"; then
 		return
 	fi
@@ -223,19 +245,20 @@ function theme-autogen-prefix()
 	make &>> "$LOG"
 	# Adapta needs to run "make install" separately
 	make install &>> "$LOG"
-	cp -r share/themes/* "$THEMES/"
-	cleanup "$2"
+	cp --recursive "$WORK/$REPO/share/themes/"* "$THEMES/"
+	cleanup "$REPO"
 }
 
-function theme-autogen-destdir()
+function theme-autogen-destdir() # [account] [repo] [branch] [themes...]
 {
+	local REPO=$2
 	if ! prepare "$@"; then
 		return
 	fi
 	./autogen.sh --enable-parallel $AUTOGEN_ARGS &>> "$LOG"
 	make install DESTDIR=$(pwd) &>> "$LOG"
-	cp -r usr/share/themes/* "$THEMES/"
-	cleanup "$2"
+	cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/"
+	cleanup "$REPO"
 }
 
 #

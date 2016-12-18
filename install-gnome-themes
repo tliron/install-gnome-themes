@@ -275,7 +275,7 @@ function theme-autogen-destdir() # [account] [repo] [branch] [themes...]
 #		--with-accent_color=#90A4AE
 #		--with-suggestion_color=#607D8B' \
 #	./install-gnome-themes
-AUTOGEN_ARGS=$ADAPTA_ARGS \
+AUTOGEN_ARGS="--disable-flashback --disable-unity --disable-xfce --disable-mate --disable-openbox --enable-chrome $ADAPTA_ARGS" \
 theme-autogen-prefix tista500 Adapta master Adapta Adapta-Eta Adapta-Nokto Adapta-Nokto-Eta
 
 # Arc
@@ -347,7 +347,7 @@ theme-autogen-destdir solus-cold-storage evopop-gtk-theme master evopop
 
 # Flat-Plat
 # https://github.com/nana-4/Flat-Plat
-theme-mv nana-4 Flat-Plat master Flat-Plat
+theme-mv nana-4 Flat-Plat "$GNOME_VERSION" Flat-Plat
 
 # Fresh-Finesse
 # https://github.com/Vistaus/Fresh-Finesse

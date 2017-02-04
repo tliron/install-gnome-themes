@@ -387,7 +387,7 @@ theme-autogen-prefix horst3180 vertex-theme master Vertex Vertex-Light Vertex-Da
 
 # Windows-10
 # https://github.com/Elbullazul/Windows-10
-theme-cp Elbullazul Windows-10 master "Windows 10 Light" "Windows 10 Dark"
+theme-mv Elbullazul Windows-10 master "Windows 10"
 
 # Zuki
 # https://github.com/lassekongo83/zuki-themes

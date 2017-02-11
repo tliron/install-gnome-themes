@@ -385,10 +385,6 @@ fi
 # Requirements: autoconf automake pkg-config libgtk-3-dev gtk2-engines-murrine
 theme-autogen-prefix horst3180 vertex-theme master Vertex Vertex-Light Vertex-Dark
 
-# Windows-10
-# https://github.com/Elbullazul/Windows-10
-theme-mv Elbullazul Windows-10 master "Windows 10"
-
 # Zuki
 # https://github.com/lassekongo83/zuki-themes
 # Requirements: gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto

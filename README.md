@@ -33,7 +33,7 @@ Supported Themes
 * [Paper](https://github.com/snwh/paper-gtk-theme)
 * [Redmond-Themes](https://github.com/Elbullazul/Redmond-Themes)
 * [Vertex](https://github.com/horst3180/vertex-theme)
-* [Windows-10](https://github.com/Elbullazul/Windows-10)
+* [Vimix](https://github.com/vinceliuice/vimix-gtk-themes)
 * [Zuki](https://github.com/lassekongo83/zuki-themes)
 
 TODO

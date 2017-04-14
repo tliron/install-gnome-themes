@@ -43,8 +43,8 @@ WORK=/tmp/install-gnome-themes
 
 GNOME_VERSION=$(gnome-shell --version | cut --delimiter=' ' --fields=3 | cut --delimiter='.' --fields=1,2)
 
-if [ "$GNOME_VERSION" != '3.20' ] && [ "$GNOME_VERSION" != '3.18' ]; then
-	message "This script only supports GNOME 3.20 and GNOME 3.18."
+if [ "$GNOME_VERSION" != '3.24' ] && [ "$GNOME_VERSION" != '3.22' ] && [ "$GNOME_VERSION" != '3.20' ] && [ "$GNOME_VERSION" != '3.18' ]; then
+	message "This script only GNOME version 3.18 up to 3.24."
 	exit 1
 fi
 
@@ -157,7 +157,7 @@ theme-cp dirruk1 gnome-breeze master Breeze-gtk Breeze-dark-gtk
 # Candra
 # https://github.com/killhellokitty/Candra-Themes-3.20
 # Requirements: gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf
-if [ "$GNOME_VERSION" = '3.20' ]; then
+if [ "$GNOME_VERSION" != '3.18' ]; then
 	theme-cp killhellokitty Candra-Themes-3.20 master Candra-Theme-3.20 Candra-Theme-3.20-Dark Candra-Theme-3.20-Darker
 fi
 
@@ -177,7 +177,7 @@ fi
 # Cloak
 # https://github.com/killhellokitty/Cloak-3.20
 # Requirements: gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf
-if [ "$GNOME_VERSION" = '3.20' ]; then
+if [ "$GNOME_VERSION" != '3.18' ]; then
 	theme-cp killhellokitty Cloak-3.20 master Cloak-3.20
 fi
 
@@ -194,7 +194,11 @@ theme-autogen-destdir solus-cold-storage evopop-gtk-theme master evopop
 
 # Flat-Plat
 # https://github.com/nana-4/Flat-Plat
-theme-mv nana-4 Flat-Plat "$GNOME_VERSION" Flat-Plat
+if [ "$GNOME_VERSION" != '3.18' ]; then
+	theme-mv nana-4 Flat-Plat 3.20 Flat-Plat
+else
+	theme-mv nana-4 Flat-Plat 3.18 Flat-Plat
+fi
 
 # Flatabulous
 # https://github.com/anmoljagetia/Flatabulous
@@ -227,9 +231,9 @@ theme-autogen-destdir snwh paper-gtk-theme master Paper
 
 # Redmond-Themes
 # https://github.com/Elbullazul/Redmond-Themes
-if [ "$GNOME_VERSION" = '3.20' ]; then
+if [ "$GNOME_VERSION" != '3.18' ]; then
 	theme-cp Elbullazul Redmond-Themes master "Windows 3.x" "Windows 9x"
-elif [ "$GNOME_VERSION" = '3.18' ]; then
+else
 	theme-cp Elbullazul Redmond-Themes master "Windows 3.x" "Windows 9x" "Windows XP Embedded" "Windows XP Zune" "Windows Vista"
 fi
 
@@ -252,9 +256,9 @@ fi
 # Zuki
 # https://github.com/lassekongo83/zuki-themes
 # Requirements: gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto
-if [ "$GNOME_VERSION" = '3.20' ]; then
+if [ "$GNOME_VERSION" != '3.18' ]; then
 	theme-cp lassekongo83 zuki-themes master Zukitre Zukitwo Zuki-shell
-elif [ "$GNOME_VERSION" = '3.18' ]; then
+else
 	theme-cp lassekongo83 zuki-themes 3.18 Zukitre Zukitwo Zuki-shell
 fi
 

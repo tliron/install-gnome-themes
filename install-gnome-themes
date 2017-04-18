@@ -113,6 +113,10 @@ mkdir --parents "$THEMES"
 AUTOGEN_ARGS="--disable-flashback --disable-unity --disable-xfce --disable-mate --disable-openbox --enable-chrome $ADAPTA_ARGS" \
 theme-autogen-prefix tista500 Adapta master Adapta Adapta-Eta Adapta-Nokto Adapta-Nokto-Eta
 
+# Adwaita-compact
+# https://github.com/abihf/adwaita-compact
+theme-mv abihf adwaita-compact master "Adwaita-compact"
+
 # Arc
 # https://github.com/horst3180/arc-theme
 # Requirements: autoconf automake pkg-config libgtk-3-dev gtk2-engines-murrine

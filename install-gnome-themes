@@ -210,6 +210,12 @@ if [ "$GNOME_VERSION" = '3.18' ]; then
 	theme-mv anmoljagetia Flatabulous master Flatabulous
 fi
 
+# Flattiance
+# https://github.com/IonicaBizau/Flattiance
+if [ "$GNOME_VERSION" = '3.18' ]; then
+	theme-cp IonicaBizau Flattiance master Flattiance
+fi
+
 # Fresh-Finesse
 # https://github.com/Vistaus/Fresh-Finesse
 theme-cp Vistaus Fresh-Finesse master Fresh-Finesse 

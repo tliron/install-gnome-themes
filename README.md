@@ -29,6 +29,7 @@ Supported Themes
 * [EvoPop](https://github.com/solus-cold-storage/evopop-gtk-theme)
 * [Flat-Plat](https://github.com/nana-4/Flat-Plat)
 * [Flatabulous](https://github.com/anmoljagetia/Flatabulous) (GNOME 3.18 only)
+* [Flattiance](https://github.com/IonicaBizau/Flattiance) (GNOME 3.18 only)
 * [Fresh-Finesse](https://github.com/Vistaus/Fresh-Finesse)
 * [Greybird](https://github.com/shimmerproject/Greybird)
 * [macOS-Sierra](https://github.com/Elbullazul/macOS-Sierra)

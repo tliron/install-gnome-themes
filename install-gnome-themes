@@ -239,6 +239,13 @@ theme-make numixproject numix-gtk-theme master Numix
 # Requirements: automake automake
 theme-autogen-destdir snwh paper-gtk-theme master Paper
 
+# Plano
+# https://github.com/lassekongo83/plano-theme
+# Requirements: gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto
+if [ "$GNOME_VERSION" != '3.18' ]; then
+	theme-mv lassekongo83 plano-theme master Plano
+fi
+
 # Redmond-Themes
 # https://github.com/Elbullazul/Redmond-Themes
 if [ "$GNOME_VERSION" != '3.18' ]; then

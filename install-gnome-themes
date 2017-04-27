@@ -109,6 +109,7 @@ mkdir --parents "$THEMES"
 #		--with-second_selection_color=#E57373
 #		--with-accent_color=#90A4AE
 #		--with-suggestion_color=#607D8B' \
+#		--with-destruction_color=#FF5252' \
 #	./install-gnome-themes
 AUTOGEN_ARGS="--disable-flashback --disable-unity --disable-xfce --disable-mate --disable-openbox --enable-chrome $ADAPTA_ARGS" \
 theme-autogen-prefix tista500 Adapta master Adapta Adapta-Eta Adapta-Nokto Adapta-Nokto-Eta
@@ -245,6 +246,22 @@ theme-autogen-destdir snwh paper-gtk-theme master Paper
 if [ "$GNOME_VERSION" != '3.18' ]; then
 	theme-mv lassekongo83 plano-theme master Plano
 fi
+
+# Pop
+# https://github.com/system76/pop-gtk-theme
+# Requirements: autoconf automake inkscape libgdk-pixbuf2.0-dev libglib2.0-dev librsvg2-dev libsass0 libxml2-utils pkg-config sassc  
+#
+# Supports configurations settings, e.g. a variant with colors red500, red300, bluegrey300, bluegrey500:
+#
+#	POP_ARGS='
+#		--with-selection_color=#F44336
+#		--with-second_selection_color=#E57373
+#		--with-accent_color=#90A4AE
+#		--with-suggestion_color=#607D8B' \
+#		--with-destruction_color=#FF5252' \
+#	./install-gnome-themes
+AUTOGEN_ARGS="--disable-flashback --disable-unity --disable-xfce --disable-mate --enable-gtk_next --enable-nokto $POP_ARGS" \
+theme-autogen-prefix system76 pop-gtk-theme master Pop Pop-Eta Pop-Nokto Pop-Nokto-Eta
 
 # Redmond-Themes
 # https://github.com/Elbullazul/Redmond-Themes

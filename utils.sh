@@ -103,7 +103,7 @@ function prepare() # [account] [repo] [branch] [themes...]
 		message "$NAMES:" "$BLUE"
 		message "  Last updated $(repository-timestamp)." "$BLUE"
 		message "  Installing..." "$BLUE"
-		if [ "$REPO" == Adapta ]; then
+		if [ "$REPO" == Adapta ] || [ "$REPO" == pop-gtk-theme ]; then
 			message "  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!" "$BLUE"
 		fi
 		set-value "$KEY" "$CURRENT_ID" "$CACHE_FILE"
@@ -172,7 +172,7 @@ function theme-autogen-prefix() # [account] [repo] [branch] [themes...]
 	fi
 	./autogen.sh --enable-parallel --prefix=$(pwd) $AUTOGEN_ARGS &>> "$LOG"
 	make &>> "$LOG"
-	# Adapta needs to run "make install" separately
+	# Adapta/Pop need to run "make install" separately
 	make install &>> "$LOG"
 	cp --recursive "$WORK/$REPO/share/themes/"* "$THEMES/"
 	cleanup "$REPO"

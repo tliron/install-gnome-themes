@@ -30,6 +30,30 @@ function comma-separated()
 }
 
 #
+# Versions
+#
+
+function gnome-version()
+{
+	gnome-shell2 --version 2>/dev/null | cut --delimiter=' ' --fields=3 | cut --delimiter='.' --fields=1,2
+}
+
+function gtk-version()
+{
+	VERSION=$(dpkg-version libgtk-3-0)
+	if [ -z "$VERSION" ]; then
+		VERSION=$(dpkg-version libgtk2.0-0)
+	fi
+	echo "$VERSION"
+}
+
+function dpkg-version()
+{
+	PKG=$1
+	dpkg -s "$PKG" 2>/dev/null | grep '^Version' | cut --delimiter=' ' --fields=2- | cut --delimiter='.' --fields=1,2
+}
+
+#
 # Git repositories
 #
 

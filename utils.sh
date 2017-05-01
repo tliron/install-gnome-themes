@@ -35,7 +35,7 @@ function comma-separated()
 
 function gnome-version()
 {
-	gnome-shell2 --version 2>/dev/null | cut --delimiter=' ' --fields=3 | cut --delimiter='.' --fields=1,2
+	gnome-shell --version 2>/dev/null | cut --delimiter=' ' --fields=3 | cut --delimiter='.' --fields=1,2
 }
 
 function gtk-version()

@@ -62,7 +62,7 @@ message "Detected $OS operating system."
 if [ "$REQUIREMENTS" == 1 ]; then
 	message "Verifying that build requirements are installed..."
 
-	if [ "$OS" == 'Ubuntu' ] || [ "$OS" == 'Debian' ]; then
+	if [ "$OS" == 'Debian' ] || [ "$OS" == 'Ubuntu' ] || [ "$OS" == 'LinuxMint' ]; then
 		# Ubuntu GNOME comes with Numix (for 3.18) preinstalled, we will remove it to avoid confusion
 		sudo apt remove numix-gtk-theme
 		# Install our build and usage requirements
@@ -75,7 +75,7 @@ if [ "$REQUIREMENTS" == 1 ]; then
 			inkscape \
 			fonts-roboto-hinted fonts-noto-hinted
 	else
-		message "This script only supports Ubuntu and Debian." "$RED"
+		message "This script currently only supports Debian, Ubuntu, and LinuxMint." "$RED"
 		exit 1
 	fi
 

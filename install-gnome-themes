@@ -231,6 +231,11 @@ theme-cp Vistaus Fresh-Finesse master Fresh-Finesse
 # Requirements: autoconf automake libgdk-pixbuf2.0-dev libglib2.0-bin sass
 theme-autogen-prefix shimmerproject Greybird master Greybird
 
+# OSX-Arc-Shadow
+# https://github.com/LinxGem33/OSX-Arc-Shadow
+# Requirements: gnome-themes-standard gtk2-engines-murrine
+theme-cp LinxGem33 OSX-Arc-Shadow
+
 # macOS-Sierra
 # https://github.com/Elbullazul/macOS-Sierra
 theme-mv Elbullazul macOS-Sierra master macOS-Sierra

@@ -234,22 +234,22 @@ theme-autogen-prefix shimmerproject Greybird master Greybird
 # OSX-Arc-Darker
 # https://github.com/LinxGem33/OSX-Arc-Darker
 # Requirements: gnome-themes-standard gtk2-engines-murrine
-theme-cp LinxGem33 OSX-Arc-Darker master OSX-Arc-Darker OSX-Arc-Darker
+theme-mv LinxGem33 OSX-Arc-Darker master OSX-Arc-Darker OSX-Arc-Darker
 
 # OSX-Arc-Plus
 # https://github.com/LinxGem33/OSX-Arc-Plus
 # Requirements: gnome-themes-standard gtk2-engines-murrine
-theme-cp LinxGem33 OSX-Arc-Plus master OSX-Arc-Plus OSX-Arc-Plus
+theme-mv LinxGem33 OSX-Arc-Plus master OSX-Arc-Plus OSX-Arc-Plus
 
 # OSX-Arc-Shadow
 # https://github.com/LinxGem33/OSX-Arc-Shadow
 # Requirements: gnome-themes-standard gtk2-engines-murrine
-theme-cp LinxGem33 OSX-Arc-Shadow master OSX-Arc-Shadow OSX-Arc-Shadow
+theme-mv LinxGem33 OSX-Arc-Shadow master OSX-Arc-Shadow OSX-Arc-Shadow
 
 # OSX-Arc-White
 # https://github.com/LinxGem33/OSX-Arc-White
 # Requirements: gnome-themes-standard gtk2-engines-murrine
-theme-cp LinxGem33 OSX-Arc-White master OSX-Arc-White OSX-Arc-White
+theme-mv LinxGem33 OSX-Arc-White master OSX-Arc-White OSX-Arc-White
 
 # macOS-Sierra
 # https://github.com/Elbullazul/macOS-Sierra

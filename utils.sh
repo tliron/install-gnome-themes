@@ -30,8 +30,13 @@ function comma-separated()
 }
 
 #
-# Versions
+# Platform
 #
+
+function os-name()
+{
+	head -1 /etc/issue | cut --delimiter=' ' --fields=1
+}
 
 function gnome-version()
 {
@@ -54,7 +59,7 @@ function dpkg-version()
 }
 
 #
-# Git repositories
+# Git Repositories
 #
 
 function repository-timestamp()

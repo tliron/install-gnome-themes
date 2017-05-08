@@ -35,7 +35,14 @@ function comma-separated()
 
 function os-name()
 {
-	head -1 /etc/issue | cut --delimiter=' ' --fields=1
+	local OS=$(lsb_release --id --short)
+	if [ -z "$OS" ]; then
+		OS=$(cat /etc/*-release | grep '^NAME=' | cut --delimiter='=' --fields=2 | sed -e 's/^"//' -e 's/"$//')
+	fi
+	if [ -z "$OS" ]; then
+		OS=$(head -1 /etc/issue | cut --delimiter=' ' --fields=1)
+	fi
+	echo "$OS"
 }
 
 function gnome-version()
@@ -45,7 +52,7 @@ function gnome-version()
 
 function gtk-version()
 {
-	VERSION=$(dpkg-version libgtk-3-0)
+	local VERSION=$(dpkg-version libgtk-3-0)
 	if [ -z "$VERSION" ]; then
 		VERSION=$(dpkg-version libgtk2.0-0)
 	fi
@@ -54,7 +61,7 @@ function gtk-version()
 
 function dpkg-version()
 {
-	PKG=$1
+	local PKG=$1
 	dpkg -s "$PKG" 2>/dev/null | grep '^Version' | cut --delimiter=' ' --fields=2- | cut --delimiter='.' --fields=1,2
 }
 

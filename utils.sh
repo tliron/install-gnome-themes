@@ -30,7 +30,60 @@ function comma-separated()
 }
 
 #
-# Git repositories
+# Platform
+#
+
+function os-name()
+{
+	local OS=$(lsb_release --id --short)
+	if [ -z "$OS" ]; then
+		OS=$(cat /etc/*-release | grep '^NAME=' | cut --delimiter='=' --fields=2 | sed -e 's/^"//' -e 's/"$//')
+	fi
+	if [ -z "$OS" ]; then
+		OS=$(head -1 /etc/issue | cut --delimiter=' ' --fields=1)
+	fi
+	echo "$OS"
+}
+
+function gnome-version()
+{
+	gnome-shell --version 2>/dev/null | cut --delimiter=' ' --fields=3 | cut --delimiter='.' --fields=1,2
+}
+
+function gtk-version()
+{
+	OS=$(os-name)
+	# echo $OS
+	if [ "$OS" == 'Fedora' ]; then #Fedora
+		local VERSION=$(rpm-version gtk3-devel)
+		if [ -z "$VERSION" ]; then
+			VERSION=$(rpm-version gtk2-devel)
+		fi
+	else #Ubuntu
+		local VERSION=$(dpkg-version libgtk-3-0)
+		if [ -z "$VERSION" ]; then
+			VERSION=$(dpkg-version libgtk2.0-0)
+		fi
+	fi
+
+
+	echo "$VERSION"
+}
+
+function dpkg-version()
+{
+	local PKG=$1
+	dpkg -s "$PKG" 2>/dev/null | grep '^Version' | cut --delimiter=' ' --fields=2- | cut --delimiter='.' --fields=1,2
+}
+
+function rpm-version()
+{
+	local PKG=$1
+	rpm -ql --info $PKG 2>/dev/null | grep '^Version' | cut --delimiter=' ' --fields=7- | cut --delimiter='.' --fields=1,2
+}
+
+#
+# Git Repositories
 #
 
 function repository-timestamp()
@@ -189,4 +242,3 @@ function theme-autogen-destdir() # [account] [repo] [branch] [themes...]
 	cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/"
 	cleanup "$REPO"
 }
-

@@ -17,23 +17,27 @@ set -e
 #
 # To skip installation of requirements:
 #
-# 	REQUIREMENTS=0 ./install-gnome-themes
+#     REQUIREMENTS=0 ./install-gnome-themes
 #
 # Build output is supressed by default. If you want to see it, set the LOG environment var:
 #
-# 	LOG=/dev/stdout ./install-gnome-themes
+#     LOG=/dev/stdout ./install-gnome-themes
 #
 # Or:
 #
-# 	LOG=output.log ./install-gnome-themes
+#     LOG=output.log ./install-gnome-themes
 #
 
 HERE=$(dirname "$(readlink -f "$0")")
 LOG=${LOG:-/dev/null}
 REQUIREMENTS=${REQUIREMENTS:-1}
-THEMES=~/.themes
+THEMES=$HOME/.themes
 CACHE_FILE=${CACHE_FILE:-$THEMES/.install-gnome-themes-cache}
 WORK=/tmp/install-gnome-themes
+OS=$(lsb_release -si)
+ARCH=$(uname -m | sed 's/x86_//;s/i[3-6]86/32/')
+VERSION=$(lsb_release -sr)
+
 
 . "$HERE/utils.sh"
 
@@ -44,73 +48,88 @@ WORK=/tmp/install-gnome-themes
 GNOME_VERSION=$(gnome-shell --version | cut --delimiter=' ' --fields=3 | cut --delimiter='.' --fields=1,2)
 
 if [ "$GNOME_VERSION" != '3.24' ] && [ "$GNOME_VERSION" != '3.22' ] && [ "$GNOME_VERSION" != '3.20' ] && [ "$GNOME_VERSION" != '3.18' ]; then
-	message "This script only GNOME version 3.18 up to 3.24."
-	exit 1
+    message "This script only GNOME version 3.18 up to 3.24."
+    exit 1
 fi
 
 message "Detected GNOME $GNOME_VERSION."
 
-OS=$(lsb_release --id --short)
-
 message "Detected $OS operating system."
 
 if [ "$REQUIREMENTS" == 1 ]; then
-	message "Verifying that build requirements are installed..."
+    message "Verifying that build requirements are installed..."
 
-	if [ "$OS" == 'Ubuntu' ] || [ "$OS" == 'Debian' ]; then
-		# Ubuntu GNOME comes with Numix (for 3.18) preinstalled, we will remove it to avoid confusion
-		sudo apt remove numix-gtk-theme
-		# Install our build and usage requirements
-		sudo apt install \
-			git autoconf automake pkg-config parallel \
-			libgtk-3-dev libgdk-pixbuf2.0-dev libglib2.0-dev libglib2.0-bin \
-			libxml2-utils librsvg2-dev \
-			gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf \
-			ruby ruby-bundler \
-			inkscape \
-			fonts-roboto-hinted fonts-noto-hinted
-	else
-		message "This script only supports Ubuntu and Debian." "$RED"
-		exit 1
-	fi
+    if [ "$OS" == 'Ubuntu' ] || [ "$OS" == 'Debian' ]; then
+        # Ubuntu GNOME comes with Numix (for 3.18) preinstalled, we will remove it to avoid confusion
+        sudo apt remove numix-gtk-theme
+        # Install our build and usage requirements
+        sudo apt install \
+            git autoconf automake pkg-config parallel \
+            libgtk-3-dev libgdk-pixbuf2.0-dev libglib2.0-dev libglib2.0-bin \
+            libxml2-utils librsvg2-dev \
+            gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf \
+            ruby ruby-bundler \
+            inkscape \
+            fonts-roboto-hinted fonts-noto-hinted
+    elif [ "$OS" == 'Fedora' ]; then # we need to make sure to use dnf and not yum
+        THEMES=$HOME/.local/share/themes
+        CACHE_FILE=$THEMES/.install-gnome-themes-cache
+        # Fedora Workstation comes with Numix (for 3.18) preinstalled, we will remove it to avoid confusion
+        sudo dnf remove numix-gtk-theme || true
+        # Install our build and usage requirements
+        # Broken packages
+        sudo dnf install \
+            git autoconf automake  parallel \
+            gtk3-devel gdk-pixbuf2-xlib glib2-devel glib2\
+            libxml2-devel librsvg2-devel \
+            gnome-themes-standard gtk-murrine-engine  \
+            ruby rubygem-bundler\
+            inkscape \
+            gtk2-engines \
+            google-roboto-fonts google-noto-sans-fonts google-noto-mono-fonts || true
+    else
+        message "This script only supports Ubuntu and Debian. AND Fedora > 22" "$RED"
+        exit 1
+    fi
 
-	# sass is used by many themes to generate CSS
-	sudo gem install sass
+    # sass is used by many themes to generate CSS
+    sudo gem install sass
 
-	# sassc is used specifically by Adapta
-	if [ ! -f /usr/bin/sassc ]; then
-		echo "Building and installing sassc..."
-		rm --recursive --force "$WORK/libsass" "$WORK/sassc"
-		mkdir --parents "$WORK"
-		cd "$WORK"
-		git clone https://github.com/sass/libsass.git --depth 1 libsass &>> "$LOG"
-		git clone https://github.com/sass/sassc.git --depth 1 sassc &>> "$LOG"
-		cd "$WORK/sassc"
-		SASS_LIBSASS_PATH="$WORK/libsass" make --jobs="$(nproc)" &>> "$LOG"
-		sudo cp "$WORK/sassc/bin/sassc" /usr/bin/
-		rm --recursive --force "$WORK/libsass" "$WORK/sassc"
-	fi
+    # sassc is used specifically by Adapta
+    if [ ! -f /usr/bin/sassc ]; then
+        echo "Building and installing sassc..."
+        rm --recursive --force "$WORK/libsass" "$WORK/sassc"
+        mkdir --parents "$WORK"
+        cd "$WORK"
+        git clone https://github.com/sass/libsass.git --depth 1 libsass &>> "$LOG"
+        git clone https://github.com/sass/sassc.git --depth 1 sassc &>> "$LOG"
+        cd "$WORK/sassc"
+        SASS_LIBSASS_PATH="$WORK/libsass" make --jobs="$(nproc)" &>> "$LOG"
+        sudo cp "$WORK/sassc/bin/sassc" /usr/bin/
+        rm --recursive --force "$WORK/libsass" "$WORK/sassc"
+    fi
+
 fi
 
 mkdir --parents "$THEMES"
-
+touch "$CACHE_FILE"
 #
 # Themes
 #
 
 # Adapta
 # https://github.com/tista500/Adapta
-# Requirements: autoconf automake inkscape libgdk-pixbuf2.0-dev libglib2.0-dev librsvg2-dev libsass0 libxml2-utils pkg-config sassc  
+# Requirements: autoconf automake inkscape libgdk-pixbuf2.0-dev libglib2.0-dev librsvg2-dev libsass0 libxml2-utils pkg-config sassc
 #
 # Supports configurations settings, e.g. a variant with colors red500, red300, bluegrey300, bluegrey500:
 #
-#	ADAPTA_ARGS='
-#		--with-selection_color=#F44336
-#		--with-second_selection_color=#E57373
-#		--with-accent_color=#90A4AE
-#		--with-suggestion_color=#607D8B' \
-#		--with-destruction_color=#FF5252' \
-#	./install-gnome-themes
+#    ADAPTA_ARGS='
+#        --with-selection_color=#F44336
+#        --with-second_selection_color=#E57373
+#        --with-accent_color=#90A4AE
+#        --with-suggestion_color=#607D8B' \
+#        --with-destruction_color=#FF5252' \
+#    ./install-gnome-themes
 AUTOGEN_ARGS="--disable-flashback --disable-unity --disable-xfce --disable-mate --disable-openbox --enable-chrome $ADAPTA_ARGS" \
 theme-autogen-prefix tista500 Adapta master Adapta Adapta-Eta Adapta-Nokto Adapta-Nokto-Eta
 
@@ -124,9 +143,9 @@ theme-mv abihf adwaita-compact master "Adwaita-compact"
 #
 # Supports configurations settings, e.g. a variant with transparency disabled:
 #
-#	ARC_ARGS='
-#		--disable-transparency' \
-#	./install-gnome-themes
+#    ARC_ARGS='
+#        --disable-transparency' \
+#    ./install-gnome-themes
 AUTOGEN_ARGS=$ARC_ARGS \
 theme-autogen-prefix horst3180 arc-theme master Arc Arc-Dark Arc-Darker
 
@@ -136,9 +155,9 @@ theme-autogen-prefix horst3180 arc-theme master Arc Arc-Dark Arc-Darker
 #
 # Supports configurations settings, e.g. a variant with transparency disabled:
 #
-#	ARC_FLATABULOUS_ARGS='
-#		--disable-transparency' \
-#	./install-gnome-themes
+#    ARC_FLATABULOUS_ARGS='
+#        --disable-transparency' \
+#    ./install-gnome-themes
 AUTOGEN_ARGS=$ARC_FLATABULOUS_ARGS \
 theme-autogen-prefix andreisergiu98 arc-flatabulous-theme master Arc-Flatabulous Arc--FlatabulousDark Arc-Flatabulous-Darker
 
@@ -163,34 +182,34 @@ theme-cp dirruk1 gnome-breeze master Breeze-gtk Breeze-dark-gtk
 # https://github.com/killhellokitty/Candra-Themes-3.20
 # Requirements: gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf
 if [ "$GNOME_VERSION" != '3.18' ]; then
-	theme-cp killhellokitty Candra-Themes-3.20 master Candra-Theme-3.20 Candra-Theme-3.20-Dark Candra-Theme-3.20-Darker
+    theme-cp killhellokitty Candra-Themes-3.20 master Candra-Theme-3.20 Candra-Theme-3.20-Dark Candra-Theme-3.20-Darker
 fi
 
 # Ceti-2
 # https://github.com/horst3180/ceti-2-theme
 # Requirements: autoconf automake pkg-config libgtk-3-dev gtk2-engines-murrine
 if [ "$GNOME_VERSION" = '3.18' ]; then
-	theme-autogen-prefix horst3180 ceti-2-theme master Ceti-2
+    theme-autogen-prefix horst3180 ceti-2-theme master Ceti-2
 fi
 
 # Chrome-OS
 # https://github.com/Elbullazul/Chrome-OS
 if [ "$GNOME_VERSION" = '3.18' ]; then
-	theme-mv Elbullazul Chrome-OS master Chrome-OS
+    theme-mv Elbullazul Chrome-OS master Chrome-OS
 fi
 
 # Cloak
 # https://github.com/killhellokitty/Cloak-3.20
 # Requirements: gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf
 if [ "$GNOME_VERSION" != '3.18' ]; then
-	theme-cp killhellokitty Cloak-3.20 master Cloak-3.20
+    theme-cp killhellokitty Cloak-3.20 master Cloak-3.20
 fi
 
 # Delorean Dark
 # https://github.com/killhellokitty/DeLorean-Dark-3.18
 # Requirements: gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf
 if [ "$GNOME_VERSION" = '3.18' ]; then
-	theme-cp killhellokitty DeLorean-Dark-3.18 master DeLorean-Dark-3.18
+    theme-cp killhellokitty DeLorean-Dark-3.18 master DeLorean-Dark-3.18
 fi
 
 # EvoPop
@@ -200,26 +219,26 @@ theme-autogen-destdir solus-cold-storage evopop-gtk-theme master evopop
 # Flat-Plat
 # https://github.com/nana-4/Flat-Plat
 if [ "$GNOME_VERSION" != '3.18' ]; then
-	theme-mv nana-4 Flat-Plat 3.20 Flat-Plat
+    theme-mv nana-4 Flat-Plat 3.20 Flat-Plat
 else
-	theme-mv nana-4 Flat-Plat 3.18 Flat-Plat
+    theme-mv nana-4 Flat-Plat 3.18 Flat-Plat
 fi
 
 # Flatabulous
 # https://github.com/anmoljagetia/Flatabulous
 if [ "$GNOME_VERSION" = '3.18' ]; then
-	theme-mv anmoljagetia Flatabulous master Flatabulous
+    theme-mv anmoljagetia Flatabulous master Flatabulous
 fi
 
 # Flattiance
 # https://github.com/IonicaBizau/Flattiance
 if [ "$GNOME_VERSION" = '3.18' ]; then
-	theme-cp IonicaBizau Flattiance master Flattiance
+    theme-cp IonicaBizau Flattiance master Flattiance
 fi
 
 # Fresh-Finesse
 # https://github.com/Vistaus/Fresh-Finesse
-theme-cp Vistaus Fresh-Finesse master Fresh-Finesse 
+theme-cp Vistaus Fresh-Finesse master Fresh-Finesse
 
 # Greybird
 # https://github.com/shimmerproject/Greybird
@@ -244,31 +263,31 @@ theme-autogen-destdir snwh paper-gtk-theme master Paper
 # https://github.com/lassekongo83/plano-theme
 # Requirements: gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto
 if [ "$GNOME_VERSION" != '3.18' ]; then
-	theme-mv lassekongo83 plano-theme master Plano
+    theme-mv lassekongo83 plano-theme master Plano
 fi
 
 # Pop
 # https://github.com/system76/pop-gtk-theme
-# Requirements: autoconf automake inkscape libgdk-pixbuf2.0-dev libglib2.0-dev librsvg2-dev libsass0 libxml2-utils pkg-config sassc  
+# Requirements: autoconf automake inkscape libgdk-pixbuf2.0-dev libglib2.0-dev librsvg2-dev libsass0 libxml2-utils pkg-config sassc
 #
 # Supports configurations settings, e.g. a variant with colors red500, red300, bluegrey300, bluegrey500:
 #
-#	POP_ARGS='
-#		--with-selection_color=#F44336
-#		--with-second_selection_color=#E57373
-#		--with-accent_color=#90A4AE
-#		--with-suggestion_color=#607D8B' \
-#		--with-destruction_color=#FF5252' \
-#	./install-gnome-themes
+#    POP_ARGS='
+#        --with-selection_color=#F44336
+#        --with-second_selection_color=#E57373
+#        --with-accent_color=#90A4AE
+#        --with-suggestion_color=#607D8B' \
+#        --with-destruction_color=#FF5252' \
+#    ./install-gnome-themes
 AUTOGEN_ARGS="--disable-flashback --disable-unity --disable-xfce --disable-mate --enable-gtk_next --enable-nokto $POP_ARGS" \
 theme-autogen-prefix system76 pop-gtk-theme master Pop Pop-Eta Pop-Nokto Pop-Nokto-Eta
 
 # Redmond-Themes
 # https://github.com/Elbullazul/Redmond-Themes
 if [ "$GNOME_VERSION" != '3.18' ]; then
-	theme-cp Elbullazul Redmond-Themes master "Windows 3.x" "Windows 9x"
+    theme-cp Elbullazul Redmond-Themes master "Windows 3.x" "Windows 9x"
 else
-	theme-cp Elbullazul Redmond-Themes master "Windows 3.x" "Windows 9x" "Windows XP Embedded" "Windows XP Zune" "Windows Vista"
+    theme-cp Elbullazul Redmond-Themes master "Windows 3.x" "Windows 9x" "Windows XP Embedded" "Windows XP Zune" "Windows Vista"
 fi
 
 # Vertex
@@ -284,16 +303,16 @@ theme-run vinceliuice vimix-gtk-themes master Install
 # Yosembiance
 # https://github.com/bsundman/Yosembiance
 if [ "$GNOME_VERSION" = '3.18' ]; then
-	theme-cp bsundman Yosembiance master Yosembiance-Atomic-Blue Yosembiance-Atomic-Orange Yosembiance-Kraken-Blue Yosembiance-Ubuntu-Blue Yosembiance-Ubuntu-Orange
+    theme-cp bsundman Yosembiance master Yosembiance-Atomic-Blue Yosembiance-Atomic-Orange Yosembiance-Kraken-Blue Yosembiance-Ubuntu-Blue Yosembiance-Ubuntu-Orange
 fi
 
 # Zuki
 # https://github.com/lassekongo83/zuki-themes
 # Requirements: gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto
 if [ "$GNOME_VERSION" != '3.18' ]; then
-	theme-cp lassekongo83 zuki-themes master Zukitre Zukitwo Zuki-shell
+    theme-cp lassekongo83 zuki-themes master Zukitre Zukitwo Zuki-shell
 else
-	theme-cp lassekongo83 zuki-themes 3.18 Zukitre Zukitwo Zuki-shell
+    theme-cp lassekongo83 zuki-themes 3.18 Zukitre Zukitwo Zuki-shell
 fi
 
 message "Done!"

@@ -68,8 +68,6 @@ else
 	GTK_LEGACY=0
 fi
 
-message "Detected GNOME $GNOME_VERSION."
-
 OS=$(os-name)
 
 message "Detected $OS operating system."

@@ -152,7 +152,7 @@ theme-autogen-prefix horst3180 arc-theme master Arc Arc-Dark Arc-Darker
 #		--disable-transparency' \
 #	./install-gnome-themes
 AUTOGEN_ARGS=$ARC_FLATABULOUS_ARGS \
-theme-autogen-prefix andreisergiu98 arc-flatabulous-theme master Arc-Flatabulous Arc--FlatabulousDark Arc-Flatabulous-Darker
+theme-autogen-prefix andreisergiu98 arc-flatabulous-theme master Arc-Flatabulous Arc-FlatabulousDark Arc-Flatabulous-Darker
 
 # Arc-Red
 # https://github.com/mclmza/arc-theme-Red

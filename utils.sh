@@ -29,6 +29,11 @@ function comma-separated()
 	echo $R
 }
 
+function sed-escape()
+{
+	echo $1 | sed 's/[\/&]/\\&/g'
+}
+
 #
 # Platform
 #
@@ -98,7 +103,7 @@ function set-value() # [key] [value] [db]
 	local VALUE=$2
 	local DB=$3
 	if grep --quiet --no-messages "^$KEY " "$DB"; then
-		sed --in-place "s/^\($KEY \)\(.*\)/\1$VALUE/" "$DB"
+		sed --in-place "s/^\($KEY \)\(.*\)/\1$(sed-escape "$VALUE")/" "$DB" &>> "$LOG"
 	else
 		echo "$KEY $VALUE" >> "$DB"
 	fi
@@ -123,7 +128,7 @@ function prepare() # [account] [repo] [branch] [themes...]
 
 	# Shallow git clone
 	cleanup "$REPO"
-	mkdir --parents "$WORK"
+	mkdir --parents "$WORK" &>> "$LOG"
 	cd "$WORK"
 	git clone "$URL" --branch "$BRANCH" --depth 1 "$REPO" &>> "$LOG"
 	cd "$WORK/$REPO"
@@ -144,7 +149,7 @@ function prepare() # [account] [repo] [branch] [themes...]
 		fi
 		set-value "$KEY" "$CURRENT_ID" "$CACHE_FILE"
 		cd "$THEMES"
-		rm --recursive --force "${@:4}"
+		rm --recursive --force "${@:4}" &>> "$LOG"
 		cd "$WORK/$REPO"
 		return 0
 	fi
@@ -153,7 +158,7 @@ function prepare() # [account] [repo] [branch] [themes...]
 function cleanup() # [repo]
 {
 	local REPO=$1
-	rm --recursive --force "$WORK/$REPO"
+	rm --recursive --force "$WORK/$REPO" &>> "$LOG"
 }
 
 function theme-cp() # [account] [repo] [branch] [themes...]
@@ -162,7 +167,7 @@ function theme-cp() # [account] [repo] [branch] [themes...]
 	if ! prepare "$@"; then
 		return
 	fi
-	cp --recursive "${@:4}" "$THEMES/"
+	cp --recursive "${@:4}" "$THEMES/" &>> "$LOG"
 	cleanup "$REPO"
 }
 
@@ -173,19 +178,32 @@ function theme-mv() # [account] [repo] [branch] [theme]
 	if ! prepare "$@"; then
 		return
 	fi
-	mv "$WORK/$REPO" "$THEMES/$THEME"
+	mv "$WORK/$REPO" "$THEMES/$THEME" &>> "$LOG"
 	cleanup "$REPO"
 }
 
-function theme-run() # [account] [repo] [branch] [cmd]
+function theme-execute() # [account] [repo] [branch] [file] [themes...]
 {
 	local REPO=$2
-	local COMMAND=$4
-	if ! prepare "$@"; then
+	local FILE=$4
+	if ! prepare "$1" "$2" "$3" "${@:5}" ; then
 		return
 	fi
 	cd "$WORK/$REPO"
-	"./$COMMAND" &>> "$LOG"
+	chmod +x "$FILE" &>> "$LOG"
+	"./$FILE" &>> "$LOG"
+	cleanup "$REPO"
+}
+
+function theme-script() # [account] [repo] [branch] [script] [themes...]
+{
+	local REPO=$2
+	local SCRIPT=$4
+	if ! prepare "$1" "$2" "$3" "${@:5}" ; then
+		return
+	fi
+	cd "$WORK/$REPO"
+	eval $SCRIPT
 	cleanup "$REPO"
 }
 

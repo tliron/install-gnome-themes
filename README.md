@@ -58,6 +58,7 @@ Supported Themes
 * [Plano](https://github.com/lassekongo83/plano-theme) (GNOME 3.20+ only)
 * [Pop](https://github.com/system76/pop-gtk-theme)
 * [Redmond-Themes](https://github.com/Elbullazul/Redmond-Themes)
+* [United GNOME](https://github.com/godlyranchdressing/United-GNOME) (GNOME 3.20+ only)
 * [Vertex](https://github.com/horst3180/vertex-theme)
 * [Vimix](https://github.com/vinceliuice/vimix-gtk-themes)
 * [Yosembiance](https://github.com/bsundman/Yosembiance) (GNOME 3.18 only)

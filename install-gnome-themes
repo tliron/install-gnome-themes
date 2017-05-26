@@ -168,7 +168,7 @@ theme-autogen-prefix mclmza arc-theme-Red master Arc-Red Arc-Red-Dark Arc-Red-Da
 
 # Blue-Face
 # https://github.com/Vistaus/Blue-Face
-theme-cp Vistaus Blue-Face master oomox-Blue oomox-Darkblue
+theme-mv Vistaus Blue-Face master Blue-Face
 
 # Breeze
 # https://github.com/dirruk1/gnome-breeze
@@ -311,6 +311,15 @@ else
 	theme-cp Elbullazul Redmond-Themes master "Windows 3.x" "Windows 9x" "Windows XP Embedded" "Windows XP Zune" "Windows Vista"
 fi
 
+# United GNOME
+# https://github.com/godlyranchdressing/United-GNOME
+if [ "$GTK_LEGACY" = 0 ]; then
+	theme-script godlyranchdressing United-GNOME master "
+tar xf Compiled.tar.xz &>> "$LOG" &&
+cp --recursive "Compiled/United-$OS/"* "$THEMES/" &>> "$LOG"
+" "United-$OS" "United-$OS-Darker" "United-$OS-Dark"
+fi
+
 # Vertex
 # https://github.com/horst3180/vertex-theme
 # Requirements: autoconf automake pkg-config libgtk-3-dev gtk2-engines-murrine
@@ -319,7 +328,23 @@ theme-autogen-prefix horst3180 vertex-theme master Vertex Vertex-Light Vertex-Da
 # Vimix
 # https://github.com/vinceliuice/vimix-gtk-themes
 # Requirements: gtk2-engines-murrine gtk2-engines-pixbuf
-theme-run vinceliuice vimix-gtk-themes master Install
+theme-execute vinceliuice vimix-gtk-themes master Install \
+	VimixDark \
+	VimixDark-Beryl \
+	VimixDark-Doder \
+	VimixDark-Laptop \
+	VimixDark-Laptop-Beryl \
+	VimixDark-Laptop-Doder \
+	VimixDark-Laptop-Ruby \
+	VimixDark-Ruby \
+	VimixLight \
+	VimixLight-Beryl \
+	VimixLight-Doder \
+	VimixLight-Laptop \
+	VimixLight-Laptop-Beryl \
+	VimixLight-Laptop-Doder \
+	VimixLight-Laptop-Ruby \
+	VimixLight-Ruby
 
 # Yosembiance
 # https://github.com/bsundman/Yosembiance

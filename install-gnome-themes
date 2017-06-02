@@ -95,16 +95,20 @@ if [ "$REQUIREMENTS" == 1 ]; then
 
 	# sassc is used specifically by Adapta
 	if [ ! -f /usr/bin/sassc ]; then
-		echo "Building and installing sassc..."
-		rm --recursive --force "$WORK/libsass" "$WORK/sassc"
-		mkdir --parents "$WORK"
-		cd "$WORK"
-		git clone https://github.com/sass/libsass.git --depth 1 libsass &>> "$LOG"
-		git clone https://github.com/sass/sassc.git --depth 1 sassc &>> "$LOG"
-		cd "$WORK/sassc"
-		SASS_LIBSASS_PATH="$WORK/libsass" make --jobs="$(nproc)" &>> "$LOG"
-		sudo cp "$WORK/sassc/bin/sassc" /usr/bin/
-		rm --recursive --force "$WORK/libsass" "$WORK/sassc"
+		if apt show sassc &>> /dev/null; then
+			sudo apt install sassc
+		else
+			echo "Building and installing sassc..."
+			rm --recursive --force "$WORK/libsass" "$WORK/sassc"
+			mkdir --parents "$WORK"
+			cd "$WORK"
+			git clone https://github.com/sass/libsass.git --depth 1 libsass &>> "$LOG"
+			git clone https://github.com/sass/sassc.git --depth 1 sassc &>> "$LOG"
+			cd "$WORK/sassc"
+			SASS_LIBSASS_PATH="$WORK/libsass" make --jobs="$(nproc)" &>> "$LOG"
+			sudo cp "$WORK/sassc/bin/sassc" /usr/bin/
+			rm --recursive --force "$WORK/libsass" "$WORK/sassc"
+		fi
 	fi
 fi
 
@@ -129,6 +133,10 @@ mkdir --parents "$THEMES"
 #	./install-gnome-themes
 AUTOGEN_ARGS="--disable-flashback --disable-unity --disable-xfce --disable-mate --disable-openbox --enable-chrome $ADAPTA_ARGS" \
 theme-autogen-prefix tista500 Adapta master Adapta Adapta-Eta Adapta-Nokto Adapta-Nokto-Eta
+
+# Adwaita Tweaks
+# https://github.com/Jazqa/adwaita-tweaks
+theme-mv Jazqa adwaita-tweaks master Adwaita-tweaks
 
 # Arc
 # https://github.com/horst3180/arc-theme

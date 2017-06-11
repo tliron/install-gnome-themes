@@ -108,7 +108,7 @@ if [ "$REQUIREMENTS" == 1 ]; then
 			cd "$WORK/sassc"
 			SASS_LIBSASS_PATH="$WORK/libsass" make --jobs="$(nproc)" &>> "$LOG"
 			sudo cp "$WORK/sassc/bin/sassc" /usr/bin/
-			rm --rf "$WORK/libsass" "$WORK/sassc"
+			rm -rf "$WORK/libsass" "$WORK/sassc"
 		fi
 	fi
 fi

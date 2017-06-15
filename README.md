@@ -43,7 +43,7 @@ Supported Themes
 * [Breeze](https://github.com/dirruk1/gnome-breeze)
 * [Candra](https://github.com/killhellokitty/Candra-Themes-3.20) (GNOME 3.20+ only)
 * [Ceti-2](https://github.com/horst3180/ceti-theme) (GNOME 3.18 only)
-* [Chrome-OS](https://github.com/Elbullazul/Chrome-OS) (GNOME 3.18 only)
+* [Chrome-OS](https://github.com/Elbullazul/Chrome-OS)
 * [Ciliora-Secunda](https://github.com/zagortenay333/ciliora-secunda-shell)
 * [Ciliora-Tertia](https://github.com/zagortenay333/ciliora-tertia-shell)
 * [Cloak](https://github.com/killhellokitty/Cloak-3.20) (GNOME 3.20+ only)

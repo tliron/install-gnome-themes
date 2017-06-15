@@ -199,9 +199,7 @@ fi
 
 # Chrome-OS
 # https://github.com/Elbullazul/Chrome-OS
-if [ "$GTK_LEGACY" = 1 ]; then
-	theme-mv Elbullazul Chrome-OS master Chrome-OS
-fi
+theme-mv Elbullazul Chrome-OS master Chrome-OS
 
 # Ciliora-Secunda
 # https://github.com/zagortenay333/ciliora-secunda-shell

@@ -329,7 +329,7 @@ fi
 # https://github.com/godlyranchdressing/United-GNOME
 if [ "$GTK_LEGACY" = 0 ]; then
 	theme-script godlyranchdressing United-GNOME master "
-tar xf Compiled.tar.xz &>> "$LOG" &&
+tar xf Compiled.tar.gz &>> "$LOG" &&
 cp --recursive "Compiled/United-$OS/"* "$THEMES/" &>> "$LOG"
 " "United-$OS" "United-$OS-Darker" "United-$OS-Dark"
 fi

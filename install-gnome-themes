@@ -73,7 +73,8 @@ if [ "$REQUIREMENTS" == 1 ]; then
 
 	if [ "$OS" == 'Debian' ] ||
            [ "$OS" == 'Ubuntu' ] ||
-           [ "$OS" == 'LinuxMint' ]; then
+           [ "$OS" == 'LinuxMint' ] ||
+           [ "$OS" == 'SPERIX-OS' ]; then
 		# Ubuntu GNOME comes with Numix (for 3.18) preinstalled, we will remove it to avoid confusion
 		sudo apt remove numix-gtk-theme
 		# Install our build and usage requirements
@@ -82,7 +83,7 @@ if [ "$REQUIREMENTS" == 1 ]; then
 			libgtk-3-dev libgdk-pixbuf2.0-dev libglib2.0-dev libglib2.0-bin \
 			libxml2-utils librsvg2-dev \
 			gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf \
-			ruby ruby-bundler ruby-dev \
+			ruby ruby-bundler \
 			inkscape \
 			fonts-roboto-hinted fonts-noto-hinted
 	else
@@ -91,14 +92,15 @@ if [ "$REQUIREMENTS" == 1 ]; then
 	fi
 
 	# sass is used by many themes to generate CSS
-	export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 	gem install --user-install sass
-
+	export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+	
 	# sassc is used specifically by Adapta
 	if [ ! -f /usr/bin/sassc ]; then
 		if apt show sassc &>> /dev/null; then
 			sudo apt install sassc
 		else
+			# Older versions of Ubuntu do not have sassc
 			echo "Building and installing sassc..."
 			rm --recursive --force "$WORK/libsass" "$WORK/sassc"
 			mkdir --parents "$WORK"

@@ -82,7 +82,7 @@ if [ "$REQUIREMENTS" == 1 ]; then
 			libgtk-3-dev libgdk-pixbuf2.0-dev libglib2.0-dev libglib2.0-bin \
 			libxml2-utils librsvg2-dev \
 			gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf \
-			ruby ruby-bundler \
+			ruby ruby-bundler ruby-dev \
 			inkscape \
 			fonts-roboto-hinted fonts-noto-hinted
 	else
@@ -91,7 +91,8 @@ if [ "$REQUIREMENTS" == 1 ]; then
 	fi
 
 	# sass is used by many themes to generate CSS
-	sudo gem install sass
+	export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+	gem install --user-install sass
 
 	# sassc is used specifically by Adapta
 	if [ ! -f /usr/bin/sassc ]; then
@@ -120,7 +121,7 @@ mkdir --parents "$THEMES"
 
 # Adapta
 # https://github.com/tista500/Adapta
-# Requirements: autoconf automake inkscape libgdk-pixbuf2.0-dev libglib2.0-dev librsvg2-dev libsass0 libxml2-utils pkg-config sassc  
+# Requirements: autoconf automake inkscape libgdk-pixbuf2.0-dev libglib2.0-dev librsvg2-dev libsass0 libxml2-utils pkg-config sassc
 #
 # Supports configurations settings, e.g. a variant with colors red500, red300, bluegrey300, bluegrey500:
 #
@@ -249,7 +250,7 @@ fi
 
 # Fresh-Finesse
 # https://github.com/Vistaus/Fresh-Finesse
-theme-cp Vistaus Fresh-Finesse master Fresh-Finesse 
+theme-cp Vistaus Fresh-Finesse master Fresh-Finesse
 
 # Greybird
 # https://github.com/shimmerproject/Greybird
@@ -303,7 +304,7 @@ fi
 
 # Pop
 # https://github.com/system76/pop-gtk-theme
-# Requirements: autoconf automake inkscape libgdk-pixbuf2.0-dev libglib2.0-dev librsvg2-dev libsass0 libxml2-utils pkg-config sassc  
+# Requirements: autoconf automake inkscape libgdk-pixbuf2.0-dev libglib2.0-dev librsvg2-dev libsass0 libxml2-utils pkg-config sassc
 #
 # Supports configurations settings, e.g. a variant with colors red500, red300, bluegrey300, bluegrey500:
 #

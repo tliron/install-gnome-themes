@@ -330,8 +330,8 @@ fi
 if [ "$GTK_LEGACY" = 0 ]; then
 	theme-script godlyranchdressing United-GNOME master "
 tar xf Compiled.tar.gz &>> "$LOG" &&
-cp --recursive "Compiled/United-$OS/"* "$THEMES/" &>> "$LOG"
-" "United-$OS" "United-$OS-Darker" "United-$OS-Dark"
+cp --recursive "Compiled/United-$OS/"* "Compiled/United-$OS-alt/"*  "$THEMES/" &>> "$LOG"
+" "United-$OS" "United-$OS-Light" "United-$OS-Darker" "United-$OS-Dark" "United-$OS-alt" "United-$OS-alt-Light" "United-$OS-alt-Darker" "United-$OS-alt-Dark" 
 fi
 
 # Unity7

@@ -83,7 +83,7 @@ if [ "$REQUIREMENTS" == 1 ]; then
 			libgtk-3-dev libgdk-pixbuf2.0-dev libglib2.0-dev libglib2.0-bin \
 			libxml2-utils librsvg2-dev \
 			gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf \
-			ruby ruby-bundler \
+			ruby ruby-bundler ruby-dev \
 			inkscape \
 			fonts-roboto-hinted fonts-noto-hinted
 	else

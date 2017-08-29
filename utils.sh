@@ -144,7 +144,7 @@ function prepare() # [account] [repo] [branch] [themes...]
 		message "$NAMES:" "$BLUE"
 		message "  Last updated $(repository-timestamp)." "$BLUE"
 		message "  Installing..." "$BLUE"
-		if [ "$REPO" == Adapta ] || [ "$REPO" == pop-gtk-theme ]; then
+		if [ "$REPO" == Adapta ]; then
 			message "  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!" "$BLUE"
 		fi
 		set-value "$KEY" "$CURRENT_ID" "$CACHE_FILE"
@@ -215,6 +215,20 @@ function theme-make() # [account] [repo] [branch] [theme]
 		return
 	fi
 	make install INSTALL_DIR="$THEMES/$THEME" &>> "$LOG"
+	cleanup "$REPO"
+}
+
+function theme-make-destdir() # [account] [repo] [branch] [theme]
+{
+	local REPO=$2
+	local THEME=$4
+	if ! prepare "$@"; then
+		return
+	fi
+	mkdir --parents "$WORK/$REPO/usr/share/themes" &>> "$LOG"
+	make &>> "$LOG"
+	make install DESTDIR="$WORK/$REPO" &>> "$LOG"
+	cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/"
 	cleanup "$REPO"
 }
 

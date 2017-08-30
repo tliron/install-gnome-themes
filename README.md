@@ -46,7 +46,7 @@ Supported Themes
 * [Chrome-OS](https://github.com/Elbullazul/Chrome-OS)
 * [Ciliora-Secunda](https://github.com/zagortenay333/ciliora-secunda-shell)
 * [Ciliora-Tertia](https://github.com/zagortenay333/ciliora-tertia-shell)
-* [Cloak](https://github.com/killhellokitty/Cloak-3.20) (GNOME 3.20+ only)
+* [Cloak](https://github.com/killhellokitty/Cloak-3.22) (GNOME 3.22+ only)
 * [DeLorean Dark](https://github.com/killhellokitty/DeLorean-Dark-3.18) (GNOME 3.18 only)
 * [EvoPop](https://github.com/solus-cold-storage/evopop-gtk-theme)
 * [Flat-Plat](https://github.com/nana-4/Flat-Plat)

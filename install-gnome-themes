@@ -213,10 +213,10 @@ theme-cp zagortenay333 ciliora-secunda-shell master Ciliora-Secunda
 theme-cp zagortenay333 ciliora-tertia-shell master Ciliora-Tertia
 
 # Cloak
-# https://github.com/killhellokitty/Cloak-3.20
+# https://github.com/killhellokitty/Cloak-3.22
 # Requirements: gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf
 if [ "$GTK_LEGACY" = 0 ]; then
-	theme-cp killhellokitty Cloak-3.20 master Cloak-3.20
+	theme-cp killhellokitty Cloak-3.22 master Cloak-3.22
 fi
 
 # Delorean Dark

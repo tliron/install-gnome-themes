@@ -141,6 +141,10 @@ theme-autogen-prefix tista500 Adapta master Adapta Adapta-Eta Adapta-Nokto Adapt
 # https://github.com/Jazqa/adwaita-tweaks
 theme-mv Jazqa adwaita-tweaks master Adwaita-tweaks
 
+# Ant
+# https://github.com/EliverLara/Ant
+theme-mv EliverLara Ant master Ant
+
 # Arc
 # https://github.com/horst3180/arc-theme
 # Requirements: autoconf automake pkg-config libgtk-3-dev gtk2-engines-murrine

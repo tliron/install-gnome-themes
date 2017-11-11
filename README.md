@@ -70,12 +70,3 @@ Supported Themes
 * [Vimix](https://github.com/vinceliuice/vimix-gtk-themes)
 * [Yosembiance](https://github.com/bsundman/Yosembiance) (GNOME 3.18 only)
 * [Zuki](https://github.com/lassekongo83/zuki-themes)
-
-
-TODO
-----
-
-Please contribute with pull requests! Especially needed:
-
-* Currently designed for Ubuntu/Debian, but should be modified for other free operating systems.
-

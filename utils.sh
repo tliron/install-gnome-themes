@@ -1,40 +1,4 @@
-#
-# Messaging
-#
 
-BLUE='\033[0;34m'
-CYAN='\033[0;36m'
-RED='\033[0;31m'
-RESET='\033[0m'
-
-function message()
-{
-    COLOR=${2:-$CYAN}
-    echo -e "${COLOR}$@$RESET"
-    if [ "$LOG" != '/dev/stdout' ]; then
-        echo "$1" >> "$LOG"
-    fi
-}
-
-function comma-separated()
-{
-    local R
-    for A in "$@"; do
-        if [ -z "$R" ]; then
-            R=$1
-        else
-            R="$R, $A"
-        fi
-    done
-    echo $R
-}
-
-function sed-escape()
-{
-    echo $1 | sed 's/[\/&]/\\&/g'
-}
-
-#
 # Platform
 #
 
@@ -86,7 +50,7 @@ function rpm-version()
     rpm -ql --info $PKG 2>/dev/null | grep '^Version' | cut --delimiter=' ' --fields=7- | cut --delimiter='.' --fields=1,2
 }
 
-#
+
 # Git Repositories
 #
 
@@ -115,14 +79,14 @@ function get-value() # [key] [db]
 
 function set-value() # [key] [value] [db]
 {
-    local KEY=$1
-    local VALUE=$2
-    local DB=$3
-    if grep --quiet --no-messages "^$KEY " "$DB"; then
-        sed --in-place "s/^\($KEY \)\(.*\)/\1$(sed-escape "$VALUE")/" "$DB" &>> "$LOG"
-    else
-        echo "$KEY $VALUE" >> "$DB"
-    fi
+	local KEY=$1
+	local VALUE=$2
+	local DB=$3
+	if grep --quiet --no-messages "^$KEY " "$DB"; then
+		sed --in-place "s/^\($KEY \)\(.*\)/\1$(sed-escape "$VALUE")/" "$DB" &>> "$LOG"
+	else
+		echo "$KEY $VALUE" >> "$DB"
+	fi
 }
 
 #
@@ -131,6 +95,7 @@ function set-value() # [key] [value] [db]
 
 function prepare() # [account] [repo] [branch] [themes...]
 {
+
     local ACCOUNT=$1
     local REPO=$2
     local BRANCH=$3
@@ -173,8 +138,8 @@ function prepare() # [account] [repo] [branch] [themes...]
 
 function cleanup() # [repo]
 {
-    local REPO=$1
-    rm --recursive --force "$WORK/$REPO" &>> "$LOG"
+	local REPO=$1
+	rm --recursive --force "$WORK/$REPO" &>> "$LOG"
 }
 
 function theme-cp() # [account] [repo] [branch] [themes...]
@@ -189,38 +154,38 @@ function theme-cp() # [account] [repo] [branch] [themes...]
 
 function theme-mv() # [account] [repo] [branch] [theme]
 {
-    local REPO=$2
-    local THEME=$4
-    if ! prepare "$@"; then
-        return
-    fi
-    mv "$WORK/$REPO" "$THEMES/$THEME" &>> "$LOG"
-    cleanup "$REPO"
+	local REPO=$2
+	local THEME=$4
+	if ! prepare "$@"; then
+		return
+	fi
+	mv "$WORK/$REPO" "$THEMES/$THEME" &>> "$LOG"
+	cleanup "$REPO"
 }
 
 function theme-execute() # [account] [repo] [branch] [file] [themes...]
 {
-    local REPO=$2
-    local FILE=$4
-    if ! prepare "$1" "$2" "$3" "${@:5}" ; then
-        return
-    fi
-    cd "$WORK/$REPO"
-    chmod +x "$FILE" &>> "$LOG"
-    "./$FILE" &>> "$LOG"
-    cleanup "$REPO"
+	local REPO=$2
+	local FILE=$4
+	if ! prepare "$1" "$2" "$3" "${@:5}" ; then
+		return
+	fi
+	cd "$WORK/$REPO"
+	chmod +x "$FILE" &>> "$LOG"
+	"./$FILE" &>> "$LOG"
+	cleanup "$REPO"
 }
 
 function theme-script() # [account] [repo] [branch] [script] [themes...]
 {
-    local REPO=$2
-    local SCRIPT=$4
-    if ! prepare "$1" "$2" "$3" "${@:5}" ; then
-        return
-    fi
-    cd "$WORK/$REPO"
-    eval $SCRIPT
-    cleanup "$REPO"
+	local REPO=$2
+	local SCRIPT=$4
+	if ! prepare "$1" "$2" "$3" "${@:5}" ; then
+		return
+	fi
+	cd "$WORK/$REPO"
+	eval $SCRIPT
+	cleanup "$REPO"
 }
 
 function theme-make() # [account] [repo] [branch] [theme]
@@ -246,6 +211,20 @@ function theme-make-destdir() # [account] [repo] [branch] [theme]
     make install DESTDIR="$WORK/$REPO" &>> "$LOG"
     cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/"
     cleanup "$REPO"
+}
+
+function theme-make-destdir() # [account] [repo] [branch] [theme]
+{
+	local REPO=$2
+	local THEME=$4
+	if ! prepare "$@"; then
+		return
+	fi
+	mkdir --parents "$WORK/$REPO/usr/share/themes" &>> "$LOG"
+	make &>> "$LOG"
+	make install DESTDIR="$WORK/$REPO" &>> "$LOG"
+	cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/"
+	cleanup "$REPO"
 }
 
 function theme-autogen-prefix() # [account] [repo] [branch] [themes...]

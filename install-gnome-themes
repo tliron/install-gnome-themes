@@ -45,23 +45,23 @@ GNOME_VERSION=$(gnome-version)
 GTK_VERSION=$(gtk-version)
 
 if [ -z "$GNOME_VERSION" ]; then
-    message "Detected GTK $GTK_VERSION."
+	message "Detected GTK $GTK_VERSION."
 else
-    message "Detected GNOME $GNOME_VERSION, GTK $GTK_VERSION."
+	message "Detected GNOME $GNOME_VERSION, GTK $GTK_VERSION."
 fi
 
 if [ "$GTK_VERSION" != '3.24' ] &&
    [ "$GTK_VERSION" != '3.22' ] &&
    [ "$GTK_VERSION" != '3.20' ] &&
    [ "$GTK_VERSION" != '3.18' ]; then
-    message "This script only GTK version 3.18 up to 3.24."
-    exit 1
+	message "This script only GTK version 3.18 up to 3.24."
+	exit 1
 fi
 
 if [ "$GTK_VERSION" = '3.18' ]; then
-    GTK_LEGACY=1
+	GTK_LEGACY=1
 else
-    GTK_LEGACY=0
+	GTK_LEGACY=0
 fi
 
 OS=$(os-name)
@@ -123,7 +123,6 @@ if [ "$REQUIREMENTS" == 1 ]; then
         sudo cp "$WORK/sassc/bin/sassc" /usr/bin/
         rm --recursive --force "$WORK/libsass" "$WORK/sassc"
     fi
-
 fi
 
 mkdir --parents "$THEMES"
@@ -328,7 +327,8 @@ theme-make-destdir system76 pop-gtk-theme master Pop Pop-compact Pop-dark Pop-da
 # Redmond-Themes
 # https://github.com/Elbullazul/Redmond-Themes
 if [ "$GTK_LEGACY" = 0 ]; then
-    theme-cp Elbullazul Redmond-Themes master "Windows 3.x" "Windows 9x"
+	theme-cp Elbullazul Redmond-Themes master "Windows 3.x" "Windows 9x"
+
 else
     theme-cp Elbullazul Redmond-Themes master "Windows 3.x" "Windows 9x" "Windows XP Embedded" "Windows XP Zune" "Windows Vista"
 fi
@@ -341,7 +341,14 @@ if [ "$GTK_LEGACY" = 0 ]; then
     cp --recursive "Compiled/United-$OS/"* "Compiled/United-$OS-alt/"*  "$THEMES/" &>> "$LOG"
     " "United-$OS" "United-$OS-Light" "United-$OS-Darker" "United-$OS-Dark" "United-$OS-alt" "United-$OS-alt-Light" "United-$OS-alt-Darker" "United-$OS-alt-Dark"
 fi
-
+# United GNOME
+# https://github.com/godlyranchdressing/United-GNOME
+if [ "$GTK_LEGACY" = 0 ]; then
+	theme-script godlyranchdressing United-GNOME master "
+tar xf Compiled.tar.gz &>> "$LOG" &&
+cp --recursive "Compiled/United-$OS/"* "Compiled/United-$OS-alt/"*  "$THEMES/" &>> "$LOG"
+" "United-$OS" "United-$OS-Light" "United-$OS-Darker" "United-$OS-Dark" "United-$OS-alt" "United-$OS-alt-Light" "United-$OS-alt-Darker" "United-$OS-alt-Dark" 
+fi
 # Unity7
 # https://github.com/B00merang-Project/unity7
 theme-mv B00merang-Project unity7 master Unity7
@@ -359,36 +366,36 @@ theme-autogen-prefix horst3180 vertex-theme master Vertex Vertex-Light Vertex-Da
 # https://github.com/vinceliuice/vimix-gtk-themes
 # Requirements: gtk2-engines-murrine gtk2-engines-pixbuf
 theme-execute vinceliuice vimix-gtk-themes master Install \
-    VimixDark \
-    VimixDark-Beryl \
-    VimixDark-Doder \
-    VimixDark-Laptop \
-    VimixDark-Laptop-Beryl \
-    VimixDark-Laptop-Doder \
-    VimixDark-Laptop-Ruby \
-    VimixDark-Ruby \
-    VimixLight \
-    VimixLight-Beryl \
-    VimixLight-Doder \
-    VimixLight-Laptop \
-    VimixLight-Laptop-Beryl \
-    VimixLight-Laptop-Doder \
-    VimixLight-Laptop-Ruby \
-    VimixLight-Ruby
+	VimixDark \
+	VimixDark-Beryl \
+	VimixDark-Doder \
+	VimixDark-Laptop \
+	VimixDark-Laptop-Beryl \
+	VimixDark-Laptop-Doder \
+	VimixDark-Laptop-Ruby \
+	VimixDark-Ruby \
+	VimixLight \
+	VimixLight-Beryl \
+	VimixLight-Doder \
+	VimixLight-Laptop \
+	VimixLight-Laptop-Beryl \
+	VimixLight-Laptop-Doder \
+	VimixLight-Laptop-Ruby \
+	VimixLight-Ruby
+
 
 # Yosembiance
 # https://github.com/bsundman/Yosembiance
 if [ "$GTK_LEGACY" = 1 ]; then
-    theme-cp bsundman Yosembiance master Yosembiance-Atomic-Blue Yosembiance-Atomic-Orange Yosembiance-Kraken-Blue Yosembiance-Ubuntu-Blue Yosembiance-Ubuntu-Orange
+	theme-cp bsundman Yosembiance master Yosembiance-Atomic-Blue Yosembiance-Atomic-Orange Yosembiance-Kraken-Blue Yosembiance-Ubuntu-Blue Yosembiance-Ubuntu-Orange
 fi
 
 # Zuki
 # https://github.com/lassekongo83/zuki-themes
 # Requirements: gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto
 if [ "$GTK_LEGACY" = 0 ]; then
-    theme-cp lassekongo83 zuki-themes master Zukitre Zukitwo Zuki-shell
+	theme-cp lassekongo83 zuki-themes master Zukitre Zukitwo Zuki-shell
 else
     theme-cp lassekongo83 zuki-themes 3.18 Zukitre Zukitwo Zuki-shell
 fi
-
 message "Done!"

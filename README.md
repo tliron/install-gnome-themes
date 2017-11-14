@@ -7,7 +7,7 @@ It supports GNOME versions 3.18 to 3.24, and will install the correct version ac
 
 All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and many also provide a shell theme. You are free to mix and match GTK+ themes with shell themes! Some themes also provide application theming (Firefox, Chrome, etc.) though you will have to install that separately. For Firefox, note that there is also a generic [GNOME 3 theme](https://addons.mozilla.org/en-US/firefox/addon/adwaita/) that might improve its appearance for some themes, though your mileage will vary.
 
-To change your theme, run the GNOME Tweak Tool and go to the Appearance tab.
+To change your theme, run the GNOME Tweak Tool and go to the Appearance tab. You must also have the [User Themes extension](https://extensions.gnome.org/extension/19/user-themes/) enabled: it's usually bundled in most GNOME-based operating systems, but might not be enabled by default.
 
 To avoid rebuilding themes if there was no change, the script caches identifiers in the file `.install-gnome-themes-cache` in the current user's `.themes` folder. Delete it to force rebuilding all themes.
 
@@ -70,3 +70,12 @@ Supported Themes
 * [Vimix](https://github.com/vinceliuice/vimix-gtk-themes)
 * [Yosembiance](https://github.com/bsundman/Yosembiance) (GNOME 3.18 only)
 * [Zuki](https://github.com/lassekongo83/zuki-themes)
+
+
+TODO
+----
+
+Please contribute with pull requests! Especially needed:
+
+* Currently designed for Ubuntu/Debian, but should be modified for other free operating systems.
+

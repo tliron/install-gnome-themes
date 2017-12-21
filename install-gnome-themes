@@ -74,7 +74,8 @@ if [ "$REQUIREMENTS" == 1 ]; then
 	if [ "$OS" == 'Debian' ] ||
            [ "$OS" == 'Ubuntu' ] ||
            [ "$OS" == 'LinuxMint' ] ||
-           [ "$OS" == 'SPERIX-OS' ]; then
+           [ "$OS" == 'SPERIX-OS' ] ||
+					 [ "$OS" == 'elementary']; then
 		# Ubuntu GNOME comes with Numix (for 3.18) preinstalled, we will remove it to avoid confusion
 		sudo apt remove numix-gtk-theme
 		# Install our build and usage requirements
@@ -109,7 +110,7 @@ if [ "$REQUIREMENTS" == 1 ]; then
 	# sass is used by many themes to generate CSS
 	gem install --user-install sass
 	export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
-	
+
 	# sassc is used specifically by Adapta
 	if [ ! -f /usr/bin/sassc ]; then
 		if apt show sassc &>> /dev/null; then
@@ -343,7 +344,7 @@ if [ "$GTK_LEGACY" = 0 ]; then
 	theme-script godlyranchdressing United-GNOME master "
 tar xf Compiled.tar.gz &>> "$LOG" &&
 cp --recursive "Compiled/United-$OS/"* "Compiled/United-$OS-alt/"*  "$THEMES/" &>> "$LOG"
-" "United-$OS" "United-$OS-Light" "United-$OS-Darker" "United-$OS-Dark" "United-$OS-alt" "United-$OS-alt-Light" "United-$OS-alt-Darker" "United-$OS-alt-Dark" 
+" "United-$OS" "United-$OS-Light" "United-$OS-Darker" "United-$OS-Dark" "United-$OS-alt" "United-$OS-alt-Light" "United-$OS-alt-Darker" "United-$OS-alt-Dark"
 fi
 
 # Unity7

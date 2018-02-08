@@ -15,10 +15,6 @@
 set -e
 
 #
-# To skip installation of requirements:
-#
-# 	REQUIREMENTS=0 ./install-gnome-themes
-#
 # Build output is supressed by default. If you want to see it, set the LOG environment var:
 #
 # 	LOG=/dev/stdout ./install-gnome-themes
@@ -30,7 +26,6 @@ set -e
 
 HERE=$(dirname "$(readlink -f "$0")")
 LOG=${LOG:-/dev/null}
-REQUIREMENTS=${REQUIREMENTS:-1}
 THEMES=~/.themes
 CACHE_FILE=${CACHE_FILE:-$THEMES/.install-gnome-themes-cache}
 WORK=/tmp/install-gnome-themes
@@ -50,11 +45,12 @@ else
 	message "Detected GNOME $GNOME_VERSION, GTK $GTK_VERSION."
 fi
 
-if [ "$GTK_VERSION" != '3.24' ] &&
+if [ "$GTK_VERSION" != '3.26' ] &&
+   [ "$GTK_VERSION" != '3.24' ] &&
    [ "$GTK_VERSION" != '3.22' ] &&
    [ "$GTK_VERSION" != '3.20' ] &&
    [ "$GTK_VERSION" != '3.18' ]; then
-	message "This script only GTK version 3.18 up to 3.24."
+	message "This script only GTK version 3.18 up to 3.26."
 	exit 1
 fi
 
@@ -68,68 +64,9 @@ OS=$(os-name)
 
 message "Detected $OS operating system."
 
-if [ "$REQUIREMENTS" == 1 ]; then
-	message "Verifying that build requirements are installed..."
-
-	if [ "$OS" == 'Debian' ] ||
-           [ "$OS" == 'Ubuntu' ] ||
-           [ "$OS" == 'LinuxMint' ] ||
-           [ "$OS" == 'SPERIX-OS' ]; then
-		# Ubuntu GNOME comes with Numix (for 3.18) preinstalled, we will remove it to avoid confusion
-		sudo apt remove numix-gtk-theme
-		# Install our build and usage requirements
-		sudo apt install \
-			git autoconf automake pkg-config parallel \
-			libgtk-3-dev libgdk-pixbuf2.0-dev libglib2.0-dev libglib2.0-bin \
-			libxml2-utils librsvg2-dev \
-			gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf \
-			ruby ruby-bundler ruby-dev \
-			inkscape \
-			fonts-roboto-hinted fonts-noto-hinted
-    elif [ "$OS" == 'Fedora' ]; then
-        THEMES=$HOME/.local/share/themes
-        CACHE_FILE=$THEMES/.install-gnome-themes-cache
-        # Fedora Workstation comes with Numix (for 3.18) preinstalled, we will remove it to avoid confusion
-        sudo dnf remove numix-gtk-theme numix-icon-theme numix-icon-theme-circle || true
-        # Install our build and usage requirements
-        sudo dnf install \
-            git autoconf automake  parallel \
-            gtk3-devel gdk-pixbuf2-xlib glib2-devel glib2\
-            libxml2-devel librsvg2-devel \
-            gnome-themes-standard gtk-murrine-engine  \
-            ruby rubygem-bundler\
-            inkscape \
-            gtk2-engines \
-            google-roboto-fonts google-noto-sans-fonts google-noto-mono-fonts
-    else
-        message "This script currently only supports Debian, Ubuntu, LinuxMint, Fedora, SPERIX-OS" "$RED"
-        exit 1
-    fi
-
-	# sass is used by many themes to generate CSS
-	gem install --user-install sass
-	export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+# sass is used by many themes to generate CSS
+export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 	
-	# sassc is used specifically by Adapta
-	if [ ! -f /usr/bin/sassc ]; then
-		if apt show sassc &>> /dev/null; then
-			sudo apt install sassc
-		else
-			# Older versions of Ubuntu do not have sassc
-			echo "Building and installing sassc..."
-			rm --recursive --force "$WORK/libsass" "$WORK/sassc"
-			mkdir --parents "$WORK"
-			cd "$WORK"
-			git clone https://github.com/sass/libsass.git --depth 1 libsass &>> "$LOG"
-			git clone https://github.com/sass/sassc.git --depth 1 sassc &>> "$LOG"
-			cd "$WORK/sassc"
-			SASS_LIBSASS_PATH="$WORK/libsass" make --jobs="$(nproc)" &>> "$LOG"
-			sudo cp "$WORK/sassc/bin/sassc" /usr/bin/
-			rm --recursive --force "$WORK/libsass" "$WORK/sassc"
-		fi
-	fi
-fi
-
 mkdir --parents "$THEMES"
 
 #

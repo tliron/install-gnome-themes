@@ -21,7 +21,10 @@ Run it:
 
 To avoid rebuilding themes if there was no change, the script caches identifiers in the file `.install-gnome-themes-cache` in the current user's `.themes` folder. Delete it to force rebuilding all themes.
 
-To change your theme, run the GNOME Tweak Tool and go to the Appearance tab.
+To change your theme, run the GNOME Tweak Tool and go to the Appearance tab. Or, you can use the command line:
+
+    gsettings set org.gnome.desktop.interface gtk-theme "gtk theme name"
+    gsettings set org.gnome.desktop.wm.preferences theme "shell theme name"
 
 To update this script to its latest version:
 

@@ -149,6 +149,12 @@ if [ "$GTK_LEGACY" = 0 ]; then
 	theme-cp killhellokitty Candra-Themes-3.20 master Candra-Theme-3.20 Candra-Theme-3.20-Dark Candra-Theme-3.20-Darker
 fi
 
+# Canta
+# https://github.com/vinceliuice/Canta-theme
+theme-script vinceliuice Canta-theme master "
+./install.sh --dest \"$THEMES\"
+" Canta Canta-compact Canta-dark Canta-dark-compact Canta-light Canta-light-compact
+
 # Ceti-2
 # https://github.com/horst3180/ceti-2-theme
 # Requirements: autoconf automake pkg-config libgtk-3-dev gtk2-engines-murrine
@@ -186,14 +192,6 @@ fi
 # https://github.com/solus-cold-storage/evopop-gtk-theme
 theme-autogen-destdir solus-cold-storage evopop-gtk-theme master evopop
 
-# Flat-Plat
-# https://github.com/nana-4/Flat-Plat
-if [ "$GTK_LEGACY" = 0 ]; then
-	theme-mv nana-4 Flat-Plat 3.20 Flat-Plat
-else
-	theme-mv nana-4 Flat-Plat 3.18 Flat-Plat
-fi
-
 # Flatabulous
 # https://github.com/anmoljagetia/Flatabulous
 if [ "$GTK_LEGACY" = 1 ]; then
@@ -218,6 +216,12 @@ theme-autogen-prefix shimmerproject Greybird master Greybird
 # macOS-Sierra
 # https://github.com/Elbullazul/macOS-Sierra
 theme-mv Elbullazul macOS-Sierra master macOS-Sierra
+
+# Materia (formerly Flat-Plat)
+# https://github.com/nana-4/materia-theme
+theme-script nana-4 materia-theme master "
+./install.sh --dest \"$THEMES\"
+" Materia Materia-compact Materia-dark Materia-dark-compact Materia-light Materia-light-compact
 
 # Minwaita
 # https://github.com/godlyranchdressing/Minwaita
@@ -279,7 +283,7 @@ fi
 if [ "$GTK_LEGACY" = 0 ]; then
 	theme-script godlyranchdressing United-GNOME master "
 tar xf Compiled.tar.gz &>> "$LOG" &&
-cp --recursive "Compiled/United-$OS/"* "Compiled/United-$OS-alt/"*  "$THEMES/" &>> "$LOG"
+cp --recursive \"Compiled/United-$OS/\"* \"Compiled/United-$OS-alt/\"*  \"$THEMES/\" &>> \"$LOG\"
 " "United-$OS" "United-$OS-Light" "United-$OS-Darker" "United-$OS-Dark" "United-$OS-alt" "United-$OS-alt-Light" "United-$OS-alt-Darker" "United-$OS-alt-Dark" 
 fi
 

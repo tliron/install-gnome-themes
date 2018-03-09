@@ -139,18 +139,18 @@ function prepare() # [account] [repo] [branch] [themes...]
 	message "Fetching repository: $URL..."
 
 	# Shallow git clone
-	cleanup "$REPO"
+	cleanup "$@"
 	mkdir --parents "$WORK" &>> "$LOG"
 	cd "$WORK"
 	git clone "$URL" --branch "$BRANCH" --depth 1 "$REPO" &>> "$LOG"
 	cd "$WORK/$REPO"
 
-	local CURRENT_ID=$(repository-id)
+	CURRENT_ID=$(repository-id)
 	if [ "$CURRENT_ID" == "$LAST_ID" ]; then
 		message "$NAMES:"
 		message "  Last updated $(repository-timestamp)."
 		message "  Already installed."
-		cleanup "$REPO"
+		cleanup "$@"
 		return 1
 	else
 		message "$NAMES:" "$BLUE"
@@ -159,7 +159,6 @@ function prepare() # [account] [repo] [branch] [themes...]
 		if [ "$REPO" == Adapta ]; then
 			message "  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!" "$BLUE"
 		fi
-		set-value "$KEY" "$CURRENT_ID" "$CACHE_FILE"
 		cd "$THEMES"
 		rm --recursive --force "${@:4}" &>> "$LOG"
 		cd "$WORK/$REPO"
@@ -167,10 +166,16 @@ function prepare() # [account] [repo] [branch] [themes...]
 	fi
 }
 
-function cleanup() # [repo]
+function cleanup() # [account] [repo] [branch]
 {
-	local REPO=$1
+	local ACCOUNT=$1
+	local REPO=$2
+	local BRANCH=$3
+
+	local KEY="$ACCOUNT|$REPO|$BRANCH"
+
 	rm --recursive --force "$WORK/$REPO" &>> "$LOG"
+	set-value "$KEY" "$CURRENT_ID" "$CACHE_FILE"
 }
 
 function theme-cp() # [account] [repo] [branch] [themes...]
@@ -180,7 +185,7 @@ function theme-cp() # [account] [repo] [branch] [themes...]
 		return
 	fi
 	cp --recursive "${@:4}" "$THEMES/" &>> "$LOG"
-	cleanup "$REPO"
+	cleanup "$@"
 }
 
 function theme-mv() # [account] [repo] [branch] [theme]
@@ -191,7 +196,7 @@ function theme-mv() # [account] [repo] [branch] [theme]
 		return
 	fi
 	mv "$WORK/$REPO" "$THEMES/$THEME" &>> "$LOG"
-	cleanup "$REPO"
+	cleanup "$@"
 }
 
 function theme-execute() # [account] [repo] [branch] [file] [themes...]
@@ -204,7 +209,7 @@ function theme-execute() # [account] [repo] [branch] [file] [themes...]
 	cd "$WORK/$REPO"
 	chmod +x "$FILE" &>> "$LOG"
 	"./$FILE" &>> "$LOG"
-	cleanup "$REPO"
+	cleanup "$@"
 }
 
 function theme-script() # [account] [repo] [branch] [script] [themes...]
@@ -216,7 +221,7 @@ function theme-script() # [account] [repo] [branch] [script] [themes...]
 	fi
 	cd "$WORK/$REPO"
 	eval $SCRIPT
-	cleanup "$REPO"
+	cleanup "$@"
 }
 
 function theme-make() # [account] [repo] [branch] [theme]
@@ -227,7 +232,7 @@ function theme-make() # [account] [repo] [branch] [theme]
 		return
 	fi
 	make install INSTALL_DIR="$THEMES/$THEME" &>> "$LOG"
-	cleanup "$REPO"
+	cleanup "$@"
 }
 
 function theme-make-destdir() # [account] [repo] [branch] [theme]
@@ -241,7 +246,7 @@ function theme-make-destdir() # [account] [repo] [branch] [theme]
 	make &>> "$LOG"
 	make install DESTDIR="$WORK/$REPO" &>> "$LOG"
 	cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/"
-	cleanup "$REPO"
+	cleanup "$@"
 }
 
 function theme-autogen-prefix() # [account] [repo] [branch] [themes...]
@@ -255,7 +260,7 @@ function theme-autogen-prefix() # [account] [repo] [branch] [themes...]
 	# Adapta/Pop need to run "make install" separately
 	make install &>> "$LOG"
 	cp --recursive "$WORK/$REPO/share/themes/"* "$THEMES/"
-	cleanup "$REPO"
+	cleanup "$@"
 }
 
 function theme-autogen-destdir() # [account] [repo] [branch] [themes...]
@@ -267,5 +272,5 @@ function theme-autogen-destdir() # [account] [repo] [branch] [themes...]
 	./autogen.sh --enable-parallel $AUTOGEN_ARGS &>> "$LOG"
 	make install DESTDIR=$(pwd) &>> "$LOG"
 	cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/"
-	cleanup "$REPO"
+	cleanup "$@"
 }

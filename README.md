@@ -42,7 +42,7 @@ Debian world:
 
     sudo apt remove numix-gtk-theme
     sudo apt install \
-      git autoconf automake pkg-config parallel sassc \
+      git autoconf automake pkg-config parallel sassc optipng \
       ruby ruby-bundler ruby-dev \
       inkscape \
       libgtk-3-dev libgdk-pixbuf2.0-dev libglib2.0-dev libglib2.0-bin \
@@ -54,7 +54,7 @@ Fedora world:
 
     sudo dnf remove numix-gtk-theme numix-icon-theme numix-icon-theme-circle
     sudo dnf install \
-      git autoconf automake parallel sassc \
+      git autoconf automake parallel sassc optipng \
       ruby ruby-devel rubygem-bundler libffi-devel gcc redhat-rpm-config \
       inkscape \
       gtk3-devel gdk-pixbuf2-xlib glib2-devel glib2 \
@@ -114,6 +114,7 @@ All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and
 * [Paper](https://github.com/snwh/paper-gtk-theme)
 * [Plano](https://github.com/lassekongo83/plano-theme) (GNOME 3.20+ only)
 * [Pop](https://github.com/system76/pop-gtk-theme)
+* [Pocillo](https://github.com/UbuntuBudgie/pocillo-gtk-theme)
 * [Redmond-Themes](https://github.com/Elbullazul/Redmond-Themes)
 * [United GNOME](https://github.com/godlyranchdressing/United-GNOME) (GNOME 3.20+ only)
 * [Unity7](https://github.com/B00merang-Project/unity7)

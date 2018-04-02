@@ -66,7 +66,7 @@ message "Detected $OS operating system."
 
 # sass is used by many themes to generate CSS
 export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
-	
+
 mkdir --parents "$THEMES"
 
 #
@@ -263,6 +263,11 @@ theme-autogen-destdir snwh paper-gtk-theme master Paper
 if [ "$GTK_LEGACY" = 0 ]; then
 	theme-mv lassekongo83 plano-theme master Plano
 fi
+
+# Pocillo
+# https://github.com/UbuntuBudgie/pocillo-gtk-theme
+# Requirements: automake inkscape optipng ...
+theme-make-destdir UbuntuBudgie pocillo-gtk-theme master Pocillo Pocillo-dark Pocillo-dark-slim Pocillo-light Pocillo-light-slim Pocillo-slim     
 
 # Pop
 # https://github.com/system76/pop-gtk-theme

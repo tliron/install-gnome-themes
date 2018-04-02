@@ -52,7 +52,7 @@ function os-name()
 
 function gnome-version()
 {
-	gnome-shell --version 2>/dev/null | cut --delimiter=' ' --fields=3 | cut --delimiter='.' --fields=1,2
+	gnome-shell --version 2> /dev/null | cut --delimiter=' ' --fields=3 | cut --delimiter='.' --fields=1,2
 }
 
 function gtk-version()
@@ -73,13 +73,13 @@ function gtk-version()
 function dpkg-version()
 {
 	local PKG=$1
-	dpkg -s "$PKG" 2>/dev/null | grep '^Version' | cut --delimiter=' ' --fields=2- | cut --delimiter='.' --fields=1,2
+	dpkg -s "$PKG" 2> /dev/null | grep '^Version' | cut --delimiter=' ' --fields=2- | cut --delimiter='.' --fields=1,2
 }
 
 function rpm-version()
 {
 	local PKG=$1
-	rpm --query --queryformat %{VERSION} "$PKG" 2>/dev/null | cut --delimiter='.' --fields=1,2
+	rpm --query --queryformat %{VERSION} "$PKG" 2> /dev/null | cut --delimiter='.' --fields=1,2
 }
 
 #
@@ -136,7 +136,9 @@ function prepare() # [account] [repo] [branch] [themes...]
 	local LAST_ID=$(get-value "$KEY" "$CACHE_FILE")
 	local NAMES=$(comma-separated "${@:4}")
 
-	message "Fetching repository: $URL..."
+	message "$NAMES:"
+
+	message "  Fetching repository: $URL..."
 
 	# Shallow git clone
 	cleanup "$@"
@@ -147,13 +149,11 @@ function prepare() # [account] [repo] [branch] [themes...]
 
 	CURRENT_ID=$(repository-id)
 	if [ "$CURRENT_ID" == "$LAST_ID" ]; then
-		message "$NAMES:"
 		message "  Last updated $(repository-timestamp)."
 		message "  Already installed."
 		cleanup "$@"
 		return 1
 	else
-		message "$NAMES:" "$BLUE"
 		message "  Last updated $(repository-timestamp)." "$BLUE"
 		message "  Installing..." "$BLUE"
 		if [ "$REPO" == Adapta ]; then

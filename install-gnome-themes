@@ -220,7 +220,7 @@ theme-mv Elbullazul macOS-Sierra master macOS-Sierra
 # Materia (formerly Flat-Plat)
 # https://github.com/nana-4/materia-theme
 theme-script nana-4 materia-theme master "
-./install.sh --dest \"$THEMES\"
+./install.sh --dest "$THEMES" &>> "$LOG"
 " Materia Materia-compact Materia-dark Materia-dark-compact Materia-light Materia-light-compact
 
 # Minwaita
@@ -288,7 +288,7 @@ fi
 if [ "$GTK_LEGACY" = 0 ]; then
 	theme-script godlyranchdressing United-GNOME master "
 tar xf Compiled.tar.gz &>> "$LOG" &&
-cp --recursive \"Compiled/United-$OS/\"* \"Compiled/United-$OS-alt/\"*  \"$THEMES/\" &>> \"$LOG\"
+cp --recursive "Compiled/United-$OS/"* "Compiled/United-$OS-alt/"*  "$THEMES/" &>> "$LOG"
 " "United-$OS" "United-$OS-Light" "United-$OS-Darker" "United-$OS-Dark" "United-$OS-alt" "United-$OS-alt-Light" "United-$OS-alt-Darker" "United-$OS-alt-Dark" 
 fi
 

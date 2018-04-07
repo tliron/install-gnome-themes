@@ -7,7 +7,7 @@ CYAN='\033[0;36m'
 RED='\033[0;31m'
 RESET='\033[0m'
 
-function message()
+message ()
 {
 	COLOR=${2:-$CYAN}
 	echo -e "${COLOR}$@$RESET"
@@ -16,7 +16,7 @@ function message()
 	fi
 }
 
-function comma-separated()
+comma-separated ()
 {
 	local R
 	for A in "$@"; do
@@ -29,7 +29,7 @@ function comma-separated()
 	echo $R
 }
 
-function sed-escape()
+sed-escape ()
 {
 	echo $1 | sed 's/[\/&]/\\&/g'
 }
@@ -38,7 +38,7 @@ function sed-escape()
 # Platform
 #
 
-function os-name()
+os-name ()
 {
 	local OS=$(lsb_release --id --short)
 	if [ -z "$OS" ]; then
@@ -50,12 +50,12 @@ function os-name()
 	echo "$OS"
 }
 
-function gnome-version()
+gnome-version ()
 {
 	gnome-shell --version 2> /dev/null | cut --delimiter=' ' --fields=3 | cut --delimiter='.' --fields=1,2
 }
 
-function gtk-version()
+gtk-version ()
 {
 	local VERSION=$(dpkg-version libgtk-3-0)
 	if [ -z "$VERSION" ]; then
@@ -70,13 +70,13 @@ function gtk-version()
 	echo "$VERSION"
 }
 
-function dpkg-version()
+dpkg-version ()
 {
 	local PKG=$1
 	dpkg -s "$PKG" 2> /dev/null | grep '^Version' | cut --delimiter=' ' --fields=2- | cut --delimiter='.' --fields=1,2
 }
 
-function rpm-version()
+rpm-version ()
 {
 	local PKG=$1
 	rpm --query --queryformat %{VERSION} "$PKG" 2> /dev/null | cut --delimiter='.' --fields=1,2
@@ -86,12 +86,12 @@ function rpm-version()
 # Git Repositories
 #
 
-function repository-timestamp()
+repository-timestamp ()
 {
 	git log --max-count=1 --date=short --pretty=format:%cr
 }
 
-function repository-id()
+repository-id ()
 {
 	git log --max-count=1 --pretty=format:%H
 }
@@ -100,7 +100,7 @@ function repository-id()
 # Key-value
 #
 
-function get-value() # [key] [db]
+get-value () # [key] [db]
 {
 	local KEY=$1
 	local DB=$2
@@ -109,7 +109,7 @@ function get-value() # [key] [db]
 	fi
 }
 
-function set-value() # [key] [value] [db]
+set-value () # [key] [value] [db]
 {
 	local KEY=$1
 	local VALUE=$2
@@ -125,7 +125,7 @@ function set-value() # [key] [value] [db]
 # Themes
 #
 
-function prepare() # [account] [repo] [branch] [themes...]
+prepare () # [account] [repo] [branch] [themes...]
 {
 	local ACCOUNT=$1
 	local REPO=$2
@@ -166,7 +166,7 @@ function prepare() # [account] [repo] [branch] [themes...]
 	fi
 }
 
-function cleanup() # [account] [repo] [branch]
+cleanup () # [account] [repo] [branch]
 {
 	local ACCOUNT=$1
 	local REPO=$2
@@ -178,7 +178,7 @@ function cleanup() # [account] [repo] [branch]
 	set-value "$KEY" "$CURRENT_ID" "$CACHE_FILE"
 }
 
-function theme-cp() # [account] [repo] [branch] [themes...]
+theme-cp () # [account] [repo] [branch] [themes...]
 {
 	local REPO=$2
 	if ! prepare "$@"; then
@@ -188,7 +188,7 @@ function theme-cp() # [account] [repo] [branch] [themes...]
 	cleanup "$@"
 }
 
-function theme-mv() # [account] [repo] [branch] [theme]
+theme-mv () # [account] [repo] [branch] [theme]
 {
 	local REPO=$2
 	local THEME=$4
@@ -199,7 +199,7 @@ function theme-mv() # [account] [repo] [branch] [theme]
 	cleanup "$@"
 }
 
-function theme-execute() # [account] [repo] [branch] [file] [themes...]
+theme-execute () # [account] [repo] [branch] [file] [themes...]
 {
 	local REPO=$2
 	local FILE=$4
@@ -212,7 +212,7 @@ function theme-execute() # [account] [repo] [branch] [file] [themes...]
 	cleanup "$@"
 }
 
-function theme-script() # [account] [repo] [branch] [script] [themes...]
+theme-script () # [account] [repo] [branch] [script] [themes...]
 {
 	local REPO=$2
 	local SCRIPT=$4
@@ -224,7 +224,7 @@ function theme-script() # [account] [repo] [branch] [script] [themes...]
 	cleanup "$@"
 }
 
-function theme-make() # [account] [repo] [branch] [theme]
+theme-make () # [account] [repo] [branch] [theme]
 {
 	local REPO=$2
 	local THEME=$4
@@ -235,7 +235,7 @@ function theme-make() # [account] [repo] [branch] [theme]
 	cleanup "$@"
 }
 
-function theme-make-destdir() # [account] [repo] [branch] [theme]
+theme-make-destdir () # [account] [repo] [branch] [theme]
 {
 	local REPO=$2
 	local THEME=$4
@@ -249,7 +249,7 @@ function theme-make-destdir() # [account] [repo] [branch] [theme]
 	cleanup "$@"
 }
 
-function theme-autogen-prefix() # [account] [repo] [branch] [themes...]
+theme-autogen-prefix () # [account] [repo] [branch] [themes...]
 {
 	local REPO=$2
 	if ! prepare "$@"; then
@@ -263,7 +263,7 @@ function theme-autogen-prefix() # [account] [repo] [branch] [themes...]
 	cleanup "$@"
 }
 
-function theme-autogen-destdir() # [account] [repo] [branch] [themes...]
+theme-autogen-destdir () # [account] [repo] [branch] [themes...]
 {
 	local REPO=$2
 	if ! prepare "$@"; then

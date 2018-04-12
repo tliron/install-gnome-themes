@@ -285,11 +285,17 @@ fi
 
 # United GNOME
 # https://github.com/godlyranchdressing/United-GNOME
+#
+# Supports variants, e.g. choosing the Manjaro variant:
+#
+#       UNITED_GNOME_VARIANT=Manjaro \
+#       ./install-gnome-themes
 if [ "$GTK_LEGACY" = 0 ]; then
+	UNITED_GNOME_VARIANT=${UNITED_GNOME_VARIANT:-$OS}
 	theme-script godlyranchdressing United-GNOME master "
 tar xf Compiled.tar.gz &>> "$LOG" &&
-cp --recursive "Compiled/United-$OS/"* "Compiled/United-$OS-alt/"*  "$THEMES/" &>> "$LOG"
-" "United-$OS" "United-$OS-Light" "United-$OS-Darker" "United-$OS-Dark" "United-$OS-alt" "United-$OS-alt-Light" "United-$OS-alt-Darker" "United-$OS-alt-Dark" 
+cp --recursive "Compiled/United-$UNITED_GNOME_VARIANT/"* "$THEMES/" &>> "$LOG"
+" "United-$UNITED_GNOME_VARIANT" "United-$UNITED_GNOME_VARIANT-Light" "United-$UNITED_GNOME_VARIANT-Darker" "United-$UNITED_GNOME_VARIANT-Dark" "United-$UNITED_GNOME_VARIANT-alt" "United-$UNITED_GNOME_VARIANT-alt-Light" "United-$UNITED_GNOME_VARIANT-alt-Darker" "United-$UNITED_GNOME_VARIANT-alt-Dark" 
 fi
 
 # Unity7

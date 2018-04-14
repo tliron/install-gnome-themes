@@ -113,7 +113,7 @@ All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and
 * [OSX-Arc Collection](https://github.com/LinxGem33/OSX-Arc-Darker)
 * [Paper](https://github.com/snwh/paper-gtk-theme)
 * [Plano](https://github.com/lassekongo83/plano-theme) (GNOME 3.20+ only)
-* [Pop](https://github.com/system76/pop-gtk-theme)
+* [Pop](https://github.com/pop-os/gtk-theme)
 * [Pocillo](https://github.com/UbuntuBudgie/pocillo-gtk-theme)
 * [Redmond-Themes](https://github.com/Elbullazul/Redmond-Themes)
 * [United GNOME](https://github.com/godlyranchdressing/United-GNOME) (GNOME 3.20+ only)

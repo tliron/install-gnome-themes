@@ -270,10 +270,9 @@ fi
 theme-make-destdir UbuntuBudgie pocillo-gtk-theme master Pocillo Pocillo-dark Pocillo-dark-slim Pocillo-light Pocillo-light-slim Pocillo-slim     
 
 # Pop
-# https://github.com/system76/pop-gtk-theme
+# https://github.com/pop-os/gtk-theme
 # Requirements: automake sassc
-#
-theme-make-destdir system76 pop-gtk-theme master Pop Pop-compact Pop-dark Pop-dark-compact Pop-light Pop-light-compact
+theme-make-destdir pop-os gtk-theme master_bionic Pop Pop-compact Pop-dark Pop-dark-compact Pop-light Pop-light-compact
 
 # Redmond-Themes
 # https://github.com/Elbullazul/Redmond-Themes

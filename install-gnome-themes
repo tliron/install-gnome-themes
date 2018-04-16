@@ -244,7 +244,7 @@ theme-make-destdir pop-os gtk-theme master_bionic Pop Pop-compact Pop-dark Pop-d
 
 # Redmond-Themes
 # https://github.com/B00merang-Project/Redmond-Themes
-theme-cp B00merang-Project Redmond-Themes master "Windows 3.11" "Windows 3.x" "Windows 8.1" "Windows 95" "Windows 9x" "Windows Se7en Basic" "Windows Vista"
+theme-cp B00merang-Project Redmond-Themes master "Windows 3.11" "Windows 3.x" "Windows 8.1" "Windows 95" "Windows 9x" "Windows Vista"
 
 # United GNOME
 # https://github.com/godlyranchdressing/United-GNOME

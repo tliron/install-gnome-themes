@@ -56,15 +56,11 @@ All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and
 * [Breeze](https://github.com/dirruk1/gnome-breeze)
 * [Candra](https://github.com/killhellokitty/Candra-Themes-3.20) (GNOME 3.20+ only)
 * [Canta](https://github.com/vinceliuice/Canta-theme)
-* [Ceti-2](https://github.com/horst3180/ceti-theme) (GNOME 3.18 only)
 * [Chrome-OS](https://github.com/Elbullazul/Chrome-OS)
 * [Ciliora-Secunda](https://github.com/zagortenay333/ciliora-secunda-shell)
 * [Ciliora-Tertia](https://github.com/zagortenay333/ciliora-tertia-shell)
 * [Cloak](https://github.com/killhellokitty/Cloak-3.22) (GNOME 3.22+ only)
-* [DeLorean Dark](https://github.com/killhellokitty/DeLorean-Dark-3.18) (GNOME 3.18 only)
 * [EvoPop](https://github.com/solus-cold-storage/evopop-gtk-theme)
-* [Flatabulous](https://github.com/anmoljagetia/Flatabulous) (GNOME 3.18 only)
-* [Flattiance](https://github.com/IonicaBizau/Flattiance) (GNOME 3.18 only)
 * [Fresh-Finesse](https://github.com/Vistaus/Fresh-Finesse)
 * [Greybird](https://github.com/shimmerproject/Greybird)
 * [macOS-Sierra](https://github.com/Elbullazul/macOS-Sierra)
@@ -76,11 +72,22 @@ All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and
 * [Plano](https://github.com/lassekongo83/plano-theme) (GNOME 3.20+ only)
 * [Pop](https://github.com/pop-os/gtk-theme)
 * [Pocillo](https://github.com/UbuntuBudgie/pocillo-gtk-theme)
-* [Redmond-Themes](https://github.com/Elbullazul/Redmond-Themes)
+* [Redmond-Themes](https://github.com/B00merang-Project/Redmond-Themes)
 * [United GNOME](https://github.com/godlyranchdressing/United-GNOME) (GNOME 3.20+ only)
 * [Unity7](https://github.com/B00merang-Project/unity7)
 * [Unity8](https://github.com/B00merang-Project/unity8)
 * [Vertex](https://github.com/horst3180/vertex-theme)
 * [Vimix](https://github.com/vinceliuice/vimix-gtk-themes)
-* [Yosembiance](https://github.com/bsundman/Yosembiance) (GNOME 3.18 only)
 * [Zuki](https://github.com/lassekongo83/zuki-themes)
+
+
+Unsupported Themes
+------------------
+
+These themes only work for GNOME 3.18, which used a different theme system.
+
+* [Ceti-2](https://github.com/horst3180/ceti-theme)
+* [DeLorean Dark](https://github.com/killhellokitty/DeLorean-Dark-3.18)
+* [Flatabulous](https://github.com/anmoljagetia/Flatabulous)
+* [Flattiance](https://github.com/IonicaBizau/Flattiance)
+* [Yosembiance](https://github.com/bsundman/Yosembiance) (GNOME 3.18 only)

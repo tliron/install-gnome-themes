@@ -199,14 +199,29 @@ theme-mv () # [account] [repo] [branch] [theme]
 	cleanup "$@"
 }
 
+theme-tarball () # [account] [repo] [branch] [file] [dir] [themes...]
+{
+	local REPO=$2
+	local FILE=$4
+	local DIR=$5
+	if ! prepare "$1" "$2" "$3" "${@:6}"; then
+		return
+	fi
+	cd "$WORK/$REPO" &>> "$LOG"
+	tar xvf "$FILE" "$DIR" &>> "$LOG"
+	cd "$DIR" &>> "$LOG"
+	mv * "$THEMES/" &>> "$LOG" 
+	cleanup "$@"
+}
+
 theme-execute () # [account] [repo] [branch] [file] [themes...]
 {
 	local REPO=$2
 	local FILE=$4
-	if ! prepare "$1" "$2" "$3" "${@:5}" ; then
+	if ! prepare "$1" "$2" "$3" "${@:5}"; then
 		return
 	fi
-	cd "$WORK/$REPO"
+	cd "$WORK/$REPO" &>> "$LOG"
 	chmod +x "$FILE" &>> "$LOG"
 	"./$FILE" &>> "$LOG"
 	cleanup "$@"
@@ -216,11 +231,11 @@ theme-script () # [account] [repo] [branch] [script] [themes...]
 {
 	local REPO=$2
 	local SCRIPT=$4
-	if ! prepare "$1" "$2" "$3" "${@:5}" ; then
+	if ! prepare "$1" "$2" "$3" "${@:5}"; then
 		return
 	fi
-	cd "$WORK/$REPO"
-	eval $SCRIPT
+	cd "$WORK/$REPO" &>> "$LOG"
+	eval $SCRIPT &>> "$LOG"
 	cleanup "$@"
 }
 
@@ -245,7 +260,7 @@ theme-make-destdir () # [account] [repo] [branch] [theme]
 	mkdir --parents "$WORK/$REPO/usr/share/themes" &>> "$LOG"
 	make &>> "$LOG"
 	make install DESTDIR="$WORK/$REPO" &>> "$LOG"
-	cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/"
+	cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/" &>> "$LOG"
 	cleanup "$@"
 }
 
@@ -259,7 +274,7 @@ theme-autogen-prefix () # [account] [repo] [branch] [themes...]
 	make &>> "$LOG"
 	# Adapta/Pop need to run "make install" separately
 	make install &>> "$LOG"
-	cp --recursive "$WORK/$REPO/share/themes/"* "$THEMES/"
+	cp --recursive "$WORK/$REPO/share/themes/"* "$THEMES/" &>> "$LOG"
 	cleanup "$@"
 }
 
@@ -271,6 +286,6 @@ theme-autogen-destdir () # [account] [repo] [branch] [themes...]
 	fi
 	./autogen.sh --enable-parallel $AUTOGEN_ARGS &>> "$LOG"
 	make install DESTDIR=$(pwd) &>> "$LOG"
-	cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/"
+	cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/" &>> "$LOG"
 	cleanup "$@"
 }

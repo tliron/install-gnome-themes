@@ -15,7 +15,7 @@ Get it:
 
 If you already have themes of the same names installed in your `.themes` folder, they will be deleted, so backup the folder first if you want to keep them. Other themes will _not_ be touched.
 
-Run it:
+As long as you have the requirements (see below), you can run it:
     
     ~/install-gnome-themes/install-gnome-themes
 
@@ -34,50 +34,11 @@ To update this script to its latest version:
 Requirements
 ------------
 
-Building some of the themes is heavy work for (example, SASS is used to compile CSS and InkScape is used to render images) and thus this script requires some big requirements. That's the price of living on the cutting edge.
+Building some of the themes is heavy work for (FOR example, SASS is used to compile CSS and InkScape is used to render images) and thus this script requires some big requirements. That's the price of living on the cutting edge.
 
-Note: some operating systems come with the Numix theme pre-installed. We will remove it to avoid conflict with our more up-to-date version.
+See [install-requirements-fedora](install-requirements-fedora) and [install-requirements-debian](install-requirements-debian).
 
-Debian world:
-
-    sudo apt remove numix-gtk-theme
-    sudo apt install \
-      git autoconf automake pkg-config parallel sassc optipng \
-      ruby ruby-bundler ruby-dev \
-      inkscape \
-      libgtk-3-dev libgdk-pixbuf2.0-dev libglib2.0-dev libglib2.0-bin \
-      libxml2-utils librsvg2-dev \
-      gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf \
-      fonts-roboto-hinted fonts-noto-hinted
-
-Fedora world:
-
-    sudo dnf remove numix-gtk-theme numix-icon-theme numix-icon-theme-circle
-    sudo dnf install \
-      git autoconf automake parallel sassc optipng \
-      ruby ruby-devel rubygem-bundler libffi-devel gcc redhat-rpm-config \
-      inkscape \
-      gtk3-devel gdk-pixbuf2-xlib glib2-devel glib2 \
-      libxml2-devel librsvg2-devel \
-      gnome-themes-standard gtk-murrine-engine gtk2-engines \
-      google-roboto-fonts google-noto-sans-fonts google-noto-mono-fonts
-
-And you'll need SASS:
-
-     gem install --user-install sass
-
-In case your operating system doesn't have a `sassc` package, you can build it manually:
-
-    export WORK=/tmp/install-gnome-themes
-    rm --recursive --force "$WORK/libsass" "$WORK/sassc"
-    mkdir --parents "$WORK"
-    cd "$WORK"
-    git clone https://github.com/sass/libsass.git --depth 1 libsass
-    git clone https://github.com/sass/sassc.git --depth 1 sassc
-    cd "$WORK/sassc"
-    SASS_LIBSASS_PATH="$WORK/libsass" make --jobs="$(nproc)"
-    sudo cp "$WORK/sassc/bin/sassc" /usr/bin/
-    rm --recursive --force "$WORK/libsass" "$WORK/sassc"
+In case your operating system doesn't have a `sassc` package, you can build it manually with [install-sassc](install-sassc).
 
 
 Supported Themes

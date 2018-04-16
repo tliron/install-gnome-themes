@@ -1,0 +1,13 @@
+#!/bin/bash
+
+WORK=/tmp/install-gnome-themes
+
+rm --recursive --force "$WORK/libsass" "$WORK/sassc"
+mkdir --parents "$WORK"
+cd "$WORK"
+git clone https://github.com/sass/libsass.git --depth 1 libsass
+git clone https://github.com/sass/sassc.git --depth 1 sassc
+cd "$WORK/sassc"
+SASS_LIBSASS_PATH="$WORK/libsass" make --jobs="$(nproc)"
+sudo cp "$WORK/sassc/bin/sassc" /usr/bin/
+rm --recursive --force "$WORK/libsass" "$WORK/sassc"

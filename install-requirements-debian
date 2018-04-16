@@ -1,0 +1,16 @@
+#!/bin/bash
+
+sudo apt install \
+	git autoconf automake pkg-config parallel sassc optipng \
+	ruby ruby-bundler ruby-dev \
+	inkscape \
+	libgtk-3-dev libgdk-pixbuf2.0-dev libglib2.0-dev libglib2.0-bin \
+	libxml2-utils librsvg2-dev \
+	gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf \
+	fonts-roboto-hinted fonts-noto-hinted
+
+gem install --user-install sass
+
+# Note: some operating systems come with the Numix theme pre-installed.
+# We will remove it to avoid conflict with our more up-to-date version.
+sudo apt remove numix-gtk-theme

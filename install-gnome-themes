@@ -59,7 +59,7 @@ OS=$(os-name)
 message "Detected $OS operating system."
 
 # sass is used by many themes to generate CSS
-export PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 
 mkdir --parents "$THEMES"
 

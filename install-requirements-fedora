@@ -1,15 +1,17 @@
 #!/bin/bash
 
 sudo dnf install \
-	git autoconf automake parallel sassc optipng \
-	ruby ruby-devel rubygem-bundler libffi-devel gcc redhat-rpm-config \
+	git autoconf automake parallel rubygem-sass sassc optipng \
+	libffi-devel gcc redhat-rpm-config \
 	inkscape \
 	gtk3-devel gdk-pixbuf2-xlib glib2-devel glib2 \
 	libxml2-devel librsvg2-devel \
 	gnome-themes-standard gtk-murrine-engine gtk2-engines \
 	google-roboto-fonts google-noto-sans-fonts google-noto-mono-fonts
 
-gem install --user-install sass
+# Some older operating systems don't have sass, in which case you can manually install:
+# sudo dnf install ruby rubygem-bundler ruby-devel
+# gem install --user-install sass
 
 # Note: some operating systems come with the Numix theme pre-installed.
 # We will remove it to avoid conflict with our more up-to-date version.

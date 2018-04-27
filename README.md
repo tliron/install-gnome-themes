@@ -3,7 +3,7 @@ Install GNOME Themes
 
 This script installs the latest GitHub versions of some fine [GNOME](https://www.gnome.org/) themes into the current user's `.themes` folder. Run the script again whenever you want to get the latest theme updates. Many of these themes are updated frequently with bugfixes and enhancements.
 
-It supports GNOME versions 3.18 and above, and will install the correct version according to your system. So if, for example, you upgrade from GNOME 3.18 to GNOME 3.20, you would want to run the script again. (GNOME 3.20 completely overhauled the theming system, so older themes are incompatible.)
+It supports GNOME versions 3.20 and above.
 
 
 Basic Usage
@@ -15,26 +15,21 @@ Get it:
 
 If you already have themes of the same names installed in your `.themes` folder, they will be deleted, so backup the folder first if you want to keep them. Other themes will _not_ be touched.
 
-As long as you have the requirements (see below), you can run it:
+As long as you have the requirements (see below), you can update it to its latest version and run it like so:
     
+    git -C ~/install-gnome-themes pull
     ~/install-gnome-themes/install-gnome-themes
 
 To avoid rebuilding themes if there was no change, the script caches identifiers in the file `.install-gnome-themes-cache` in the current user's `.themes` folder. Delete it to force rebuilding all themes.
 
 To change your theme, run the GNOME Tweak Tool and go to the Appearance tab. Or, you can use the command line:
 
-    gsettings set org.gnome.desktop.interface gtk-theme "gtk theme name"
-    gsettings set org.gnome.desktop.wm.preferences theme "shell theme name"
-
-To update this script to its latest version:
-
-    git -C ~/install-gnome-themes pull
+    gsettings set org.gnome.desktop.interface gtk-theme "GTK theme name"
+    gsettings set org.gnome.desktop.wm.preferences theme "Shell theme name"
 
 
 Requirements
 ------------
-
-Building some of the themes is heavy work for (FOR example, SASS is used to compile CSS and InkScape is used to render images) and thus this script requires some big requirements. That's the price of living on the cutting edge.
 
 See [install-requirements-fedora](install-requirements-fedora) and [install-requirements-debian](install-requirements-debian).
 

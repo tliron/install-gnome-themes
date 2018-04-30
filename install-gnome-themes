@@ -48,9 +48,8 @@ fi
 if [ "$GTK_VERSION" != '3.28' ] &&
    [ "$GTK_VERSION" != '3.26' ] &&
    [ "$GTK_VERSION" != '3.24' ] &&
-   [ "$GTK_VERSION" != '3.22' ] &&
-   [ "$GTK_VERSION" != '3.20' ]; then
-	message "This script only support GTK versions 3.20 and up."
+   [ "$GTK_VERSION" != '3.22' ]; then
+	message "This script only support GTK versions 3.22 and up."
 	exit 1
 fi
 

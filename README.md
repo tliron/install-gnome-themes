@@ -3,7 +3,7 @@ Install GNOME Themes
 
 This script installs the latest GitHub versions of some fine [GNOME](https://www.gnome.org/) themes into the current user's `.themes` folder. Run the script again whenever you want to get the latest theme updates. Many of these themes are updated frequently with bugfixes and enhancements.
 
-It supports GNOME versions 3.20 and above.
+It supports GNOME versions 3.22 and above.
 
 
 Basic Usage
@@ -49,12 +49,12 @@ All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and
 * [Arc-Red](https://github.com/mclmza/arc-theme-Red)
 * [Blue-Face](https://github.com/Vistaus/Blue-Face)
 * [Breeze](https://github.com/dirruk1/gnome-breeze)
-* [Candra](https://github.com/killhellokitty/Candra-Themes-3.20) (GNOME 3.20+ only)
+* [Candra](https://github.com/killhellokitty/Candra-Themes-3.20)
 * [Canta](https://github.com/vinceliuice/Canta-theme)
 * [Chrome-OS](https://github.com/Elbullazul/Chrome-OS)
 * [Ciliora-Secunda](https://github.com/zagortenay333/ciliora-secunda-shell)
 * [Ciliora-Tertia](https://github.com/zagortenay333/ciliora-tertia-shell)
-* [Cloak](https://github.com/killhellokitty/Cloak-3.22) (GNOME 3.22+ only)
+* [Cloak](https://github.com/killhellokitty/Cloak-3.22)
 * [EvoPop](https://github.com/solus-cold-storage/evopop-gtk-theme)
 * [Fresh-Finesse](https://github.com/Vistaus/Fresh-Finesse)
 * [Greybird](https://github.com/shimmerproject/Greybird)
@@ -64,11 +64,11 @@ All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and
 * [Numix](https://github.com/numixproject/numix-gtk-theme)
 * [OSX-Arc Collection](https://github.com/LinxGem33/OSX-Arc-Darker)
 * [Paper](https://github.com/snwh/paper-gtk-theme)
-* [Plano](https://github.com/lassekongo83/plano-theme) (GNOME 3.20+ only)
+* [Plano](https://github.com/lassekongo83/plano-theme)
 * [Pop](https://github.com/pop-os/gtk-theme)
 * [Pocillo](https://github.com/UbuntuBudgie/pocillo-gtk-theme)
 * [Redmond-Themes](https://github.com/B00merang-Project/Redmond-Themes)
-* [United GNOME](https://github.com/godlyranchdressing/United-GNOME) (GNOME 3.20+ only)
+* [United GNOME](https://github.com/godlyranchdressing/United-GNOME)
 * [Unity7](https://github.com/B00merang-Project/unity7)
 * [Unity8](https://github.com/B00merang-Project/unity8)
 * [Vertex](https://github.com/horst3180/vertex-theme)
@@ -85,4 +85,4 @@ These themes only work for GNOME 3.18, which used a different theme system.
 * [DeLorean Dark](https://github.com/killhellokitty/DeLorean-Dark-3.18)
 * [Flatabulous](https://github.com/anmoljagetia/Flatabulous)
 * [Flattiance](https://github.com/IonicaBizau/Flattiance)
-* [Yosembiance](https://github.com/bsundman/Yosembiance) (GNOME 3.18 only)
+* [Yosembiance](https://github.com/bsundman/Yosembiance)

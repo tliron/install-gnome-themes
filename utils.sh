@@ -199,6 +199,17 @@ theme-mv () # [account] [repo] [branch] [theme]
 	cleanup "$@"
 }
 
+theme-mv-dir () # [account] [repo] [branch] [dir]
+{
+	local REPO=$2
+	local DIR=$4
+	if ! prepare "$@"; then
+		return
+	fi
+	mv "$WORK/$REPO/$DIR" "$THEMES/" &>> "$LOG"
+	cleanup "$@"
+}
+
 theme-tarball () # [account] [repo] [branch] [file] [dir] [themes...]
 {
 	local REPO=$2

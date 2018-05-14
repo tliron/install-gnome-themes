@@ -292,6 +292,10 @@ theme-execute vinceliuice vimix-gtk-themes master Install \
 	VimixLight-Laptop-Ruby \
 	VimixLight-Ruby
 
+# Xenlism-Minimalism
+# https://github.com/xenlism/minimalism
+theme-mv-dir xenlism Minimalism master themes/Xenlism-Minimalism
+
 # Zuki
 # https://github.com/lassekongo83/zuki-themes
 # Requirements: gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto

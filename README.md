@@ -73,6 +73,7 @@ All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and
 * [Unity8](https://github.com/B00merang-Project/unity8)
 * [Vertex](https://github.com/horst3180/vertex-theme)
 * [Vimix](https://github.com/vinceliuice/vimix-gtk-themes)
+* [Xenlism-Minimalism](https://github.com/xenlism/minimalism)
 * [Zuki](https://github.com/lassekongo83/zuki-themes)
 
 

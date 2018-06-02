@@ -203,7 +203,7 @@ theme-mv-dir () # [account] [repo] [branch] [dir]
 {
 	local REPO=$2
 	local DIR=$4
-	if ! prepare "$@"; then
+	if ! prepare "$1" "$2" "$3" "$(basename "$4")"; then
 		return
 	fi
 	mv "$WORK/$REPO/$DIR" "$THEMES/" &>> "$LOG"

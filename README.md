@@ -62,7 +62,7 @@ All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and
 * [Materia](https://github.com/nana-4/materia-theme) (formerly Flat-Plat)
 * [Minwaita](https://github.com/godlyranchdressing/Minwaita)
 * [Numix](https://github.com/numixproject/numix-gtk-theme)
-* [OSX-Arc Collection](https://github.com/LinxGem33/OSX-Arc-Darker)
+* [OSX-Arc Collection](https://github.com/rufkeya/OSX-Arc-Darker)
 * [Paper](https://github.com/snwh/paper-gtk-theme)
 * [Plano](https://github.com/lassekongo83/plano-theme)
 * [Pop](https://github.com/pop-os/gtk-theme)

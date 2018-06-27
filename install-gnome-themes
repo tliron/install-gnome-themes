@@ -63,9 +63,6 @@ mkdir --parents "$THEMES"
 # Themes
 #
 
-
-#exit
-
 # Adapta
 # https://github.com/tista500/Adapta
 # Requirements: autoconf automake inkscape libgdk-pixbuf2.0-dev libglib2.0-dev librsvg2-dev libsass0 libxml2-utils pkg-config sassc
@@ -205,21 +202,6 @@ theme-make numixproject numix-gtk-theme master Numix
 # https://github.com/rufkeya/OSX-Arc-Darker
 # Requirements: gnome-themes-standard gtk2-engines-murrine
 theme-mv rufkeya OSX-Arc-Darker master OSX-Arc-Darker
-
-# OSX-Arc-Plus
-# https://github.com/rufkeya/OSX-Arc-Plus
-# Requirements: gnome-themes-standard gtk2-engines-murrine
-theme-mv rufkeya OSX-Arc-Plus master OSX-Arc-Plus OSX-Arc-Plus
-
-# OSX-Arc-Shadow
-# https://github.com/rufkeya/OSX-Arc-Shadow
-# Requirements: gnome-themes-standard gtk2-engines-murrine
-theme-mv rufkeya OSX-Arc-Shadow master OSX-Arc-Shadow OSX-Arc-Shadow
-
-# OSX-Arc-White
-# https://github.com/rufkeya/OSX-Arc-White
-# Requirements: gnome-themes-standard gtk2-engines-murrine
-theme-mv rufkeya OSX-Arc-White master OSX-Arc-White OSX-Arc-White
 
 # Paper
 # https://github.com/snwh/paper-gtk-theme

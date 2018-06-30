@@ -1,7 +1,7 @@
 Install GNOME Themes
 ====================
 
-This script installs the latest GitHub versions of some fine [GNOME](https://www.gnome.org/) themes into the current user's `.themes` folder. Run the script again whenever you want to get the latest theme updates. Many of these themes are updated frequently with bugfixes and enhancements.
+This script installs the latest git versions of some fine [GNOME](https://www.gnome.org/) themes into the current user's `.themes` folder. Run the script again whenever you want to get the latest theme updates. Many of these themes are updated frequently with bugfixes and enhancements.
 
 It supports GNOME versions 3.22 and above.
 
@@ -62,11 +62,13 @@ All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and
 * [Materia](https://github.com/nana-4/materia-theme) (formerly Flat-Plat)
 * [Minwaita](https://github.com/godlyranchdressing/Minwaita)
 * [Numix](https://github.com/numixproject/numix-gtk-theme)
+* [Numix-Base16-Ocean](https://gitlab.com/commonacc/numix-base16-ocean)
 * [OSX-Arc-Darker](https://github.com/rufkeya/OSX-Arc-Darker)
 * [Paper](https://github.com/snwh/paper-gtk-theme)
 * [Plano](https://github.com/lassekongo83/plano-theme)
 * [Pop](https://github.com/pop-os/gtk-theme)
 * [Pocillo](https://github.com/UbuntuBudgie/pocillo-gtk-theme)
+* [Qogir](https://github.com/vinceliuice/Qogir-theme)
 * [Redmond-Themes](https://github.com/B00merang-Project/Redmond-Themes)
 * [United GNOME](https://github.com/godlyranchdressing/United-GNOME)
 * [Unity7](https://github.com/B00merang-Project/unity7)

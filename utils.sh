@@ -67,6 +67,9 @@ gtk-version ()
 	if [ -z "$VERSION" ]; then
 		VERSION=$(rpm-version gtk2)
 	fi
+	if [ -z  "$VERSION" ]; then
+		VERSION=$(pacman-version gtk3)
+	fi
 	echo "$VERSION"
 }
 
@@ -81,6 +84,13 @@ rpm-version ()
 	local PKG=$1
 	rpm --query --queryformat %{VERSION} "$PKG" 2> /dev/null | cut --delimiter='.' --fields=1,2
 }
+
+pacman-version ()
+{
+	local PKG=$1
+	pacman -Si "$PKG" | grep Version | awk '{ print $3; }' | cut --delimiter='.' --fields=1,2
+}
+
 
 #
 # Git Repositories
@@ -125,16 +135,17 @@ set-value () # [key] [value] [db]
 # Themes
 #
 
-prepare () # [account] [repo] [branch] [themes...]
+prepare () # [site] [account] [repo] [branch] [themes...]
 {
-	local ACCOUNT=$1
-	local REPO=$2
-	local BRANCH=$3
+	local SITE=$1
+	local ACCOUNT=$2
+	local REPO=$3
+	local BRANCH=$4
 
-	local URL="https://github.com/$ACCOUNT/$REPO"
-	local KEY="$ACCOUNT|$REPO|$BRANCH"
+	local URL="https://$SITE.com/$ACCOUNT/$REPO"
+	local KEY="$SITE|$ACCOUNT|$REPO|$BRANCH"
 	local LAST_ID=$(get-value "$KEY" "$CACHE_FILE")
-	local NAMES=$(comma-separated "${@:4}")
+	local NAMES=$(comma-separated "${@:5}")
 
 	message "$NAMES:"
 
@@ -160,38 +171,41 @@ prepare () # [account] [repo] [branch] [themes...]
 			message "  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!" "$BLUE"
 		fi
 		cd "$THEMES"
-		rm --recursive --force "${@:4}" &>> "$LOG"
+		rm --recursive --force "${@:5}" &>> "$LOG"
 		cd "$WORK/$REPO"
 		return 0
 	fi
 }
 
-cleanup () # [account] [repo] [branch]
+cleanup () # [site] [account] [repo] [branch]
 {
-	local ACCOUNT=$1
-	local REPO=$2
-	local BRANCH=$3
+	local SITE=$1
+	local ACCOUNT=$2
+	local REPO=$3
+	local BRANCH=$4
 
-	local KEY="$ACCOUNT|$REPO|$BRANCH"
+	local KEY="$SITE|$ACCOUNT|$REPO|$BRANCH"
 
 	rm --recursive --force "$WORK/$REPO" &>> "$LOG"
 	set-value "$KEY" "$CURRENT_ID" "$CACHE_FILE"
 }
 
-theme-cp () # [account] [repo] [branch] [themes...]
+theme-cp () # [site] [account] [repo] [branch] [themes...]
 {
-	local REPO=$2
+	local SITE=$1
+	local REPO=$3
 	if ! prepare "$@"; then
 		return
 	fi
-	cp --recursive "${@:4}" "$THEMES/" &>> "$LOG"
+	cp --recursive "${@:5}" "$THEMES/" &>> "$LOG"
 	cleanup "$@"
 }
 
-theme-mv () # [account] [repo] [branch] [theme]
+theme-mv () # [site] [account] [repo] [branch] [theme]
 {
-	local REPO=$2
-	local THEME=$4
+	local SITE=$1
+	local REPO=$3
+	local THEME=$5
 	if ! prepare "$@"; then
 		return
 	fi
@@ -199,23 +213,25 @@ theme-mv () # [account] [repo] [branch] [theme]
 	cleanup "$@"
 }
 
-theme-mv-dir () # [account] [repo] [branch] [dir]
+theme-mv-dir () # [site] [account] [repo] [branch] [theme]
 {
-	local REPO=$2
-	local DIR=$4
-	if ! prepare "$1" "$2" "$3" "$(basename "$4")"; then
+	local SITE=$1
+	local REPO=$3
+	local THEME=$5
+	if ! prepare "$1" "$2" "$3" "$4" "$(basename "$THEME")"; then
 		return
 	fi
-	mv "$WORK/$REPO/$DIR" "$THEMES/" &>> "$LOG"
+	mv "$WORK/$REPO/$THEME" "$THEMES/" &>> "$LOG"
 	cleanup "$@"
 }
 
-theme-tarball () # [account] [repo] [branch] [file] [dir] [themes...]
+theme-tarball () # [site] [account] [repo] [branch] [file] [dir] [themes...]
 {
-	local REPO=$2
-	local FILE=$4
-	local DIR=$5
-	if ! prepare "$1" "$2" "$3" "${@:6}"; then
+	local SITE=$1
+	local REPO=$3
+	local FILE=$5
+	local DIR=$6
+	if ! prepare "$1" "$2" "$3" "$4" "${@:7}"; then
 		return
 	fi
 	cd "$WORK/$REPO" &>> "$LOG"
@@ -225,11 +241,12 @@ theme-tarball () # [account] [repo] [branch] [file] [dir] [themes...]
 	cleanup "$@"
 }
 
-theme-execute () # [account] [repo] [branch] [file] [themes...]
+theme-execute () # [site] [account] [repo] [branch] [file] [themes...]
 {
-	local REPO=$2
-	local FILE=$4
-	if ! prepare "$1" "$2" "$3" "${@:5}"; then
+	local SITE=$1
+	local REPO=$3
+	local FILE=$5
+	if ! prepare "$1" "$2" "$3" "$4" "${@:6}"; then
 		return
 	fi
 	cd "$WORK/$REPO" &>> "$LOG"
@@ -238,11 +255,12 @@ theme-execute () # [account] [repo] [branch] [file] [themes...]
 	cleanup "$@"
 }
 
-theme-script () # [account] [repo] [branch] [script] [themes...]
+theme-script () # [site] [account] [repo] [branch] [script] [themes...]
 {
-	local REPO=$2
-	local SCRIPT=$4
-	if ! prepare "$1" "$2" "$3" "${@:5}"; then
+	local SITE=$1
+	local REPO=$3
+	local SCRIPT=$5
+	if ! prepare "$1" "$2" "$3" "$4" "${@:6}"; then
 		return
 	fi
 	cd "$WORK/$REPO" &>> "$LOG"
@@ -250,10 +268,11 @@ theme-script () # [account] [repo] [branch] [script] [themes...]
 	cleanup "$@"
 }
 
-theme-make () # [account] [repo] [branch] [theme]
+theme-make () # [site] [account] [repo] [branch] [theme]
 {
-	local REPO=$2
-	local THEME=$4
+	local SITE=$1
+	local REPO=$3
+	local THEME=$5
 	if ! prepare "$@"; then
 		return
 	fi
@@ -261,10 +280,11 @@ theme-make () # [account] [repo] [branch] [theme]
 	cleanup "$@"
 }
 
-theme-make-destdir () # [account] [repo] [branch] [theme]
+theme-make-destdir () # [site] [account] [repo] [branch] [theme]
 {
-	local REPO=$2
-	local THEME=$4
+	local SITE=$1
+	local REPO=$3
+	local THEME=$5
 	if ! prepare "$@"; then
 		return
 	fi
@@ -275,9 +295,10 @@ theme-make-destdir () # [account] [repo] [branch] [theme]
 	cleanup "$@"
 }
 
-theme-autogen-prefix () # [account] [repo] [branch] [themes...]
+theme-autogen-prefix () # [site] [account] [repo] [branch] [themes...]
 {
-	local REPO=$2
+	local SITE=$1
+	local REPO=$3
 	if ! prepare "$@"; then
 		return
 	fi
@@ -289,9 +310,10 @@ theme-autogen-prefix () # [account] [repo] [branch] [themes...]
 	cleanup "$@"
 }
 
-theme-autogen-destdir () # [account] [repo] [branch] [themes...]
+theme-autogen-destdir () # [site] [account] [repo] [branch] [themes...]
 {
-	local REPO=$2
+	local SITE=$1
+	local REPO=$3
 	if ! prepare "$@"; then
 		return
 	fi

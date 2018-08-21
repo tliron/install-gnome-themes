@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo dnf install \
-	git autoconf automake parallel rubygem-sass sassc optipng \
+	git autoconf automake meson ninja-build parallel rubygem-sass sassc optipng \
 	libffi-devel gcc redhat-rpm-config \
 	inkscape \
 	gtk3-devel gdk-pixbuf2-xlib glib2-devel glib2 \

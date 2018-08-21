@@ -45,7 +45,8 @@ else
 	message "Detected GNOME $GNOME_VERSION, GTK $GTK_VERSION."
 fi
 
-if [ "$GTK_VERSION" != '3.28' ] &&
+if [ "$GTK_VERSION" != '3.30' ] &&
+   [ "$GTK_VERSION" != '3.28' ] &&
    [ "$GTK_VERSION" != '3.26' ] &&
    [ "$GTK_VERSION" != '3.24' ] &&
    [ "$GTK_VERSION" != '3.22' ]; then
@@ -86,6 +87,10 @@ theme-mv github Jazqa adwaita-tweaks master Adwaita-tweaks
 # Ant
 # https://github.com/EliverLara/Ant
 theme-mv github EliverLara Ant master Ant
+
+# Aqua
+# https://github.com/EliverLara/Aqua
+theme-mv github EliverLara Aqua master Aqua
 
 # Arc
 # https://github.com/horst3180/arc-theme
@@ -238,6 +243,11 @@ theme-script github vinceliuice Qogir-theme master "
 # https://github.com/B00merang-Project/Redmond-Themes
 theme-cp github B00merang-Project Redmond-Themes master "Windows 3.11" "Windows 3.x" "Windows 8.1" "Windows 95" "Windows 9x" "Windows Vista"
 
+# Typewriter
+# https://github.com/logico-dev/typewriter-gtk/
+#theme-cp github logico-dev typewriter-gtk master Typewriter
+# See: https://github.com/logico-dev/typewriter-gtk/issues/1
+
 # United GNOME
 # https://github.com/godlyranchdressing/United-GNOME
 #
@@ -288,6 +298,17 @@ theme-execute github vinceliuice vimix-gtk-themes master Install \
 # Xenlism-Minimalism
 # https://github.com/xenlism/minimalism
 theme-mv-dir github xenlism Minimalism master themes/Xenlism-Minimalism
+
+# Yaru
+# https://github.com/ubuntu/yaru
+theme-script github ubuntu yaru master "
+meson _build --prefix \"\$PWD\"/_deploy &&
+cd _build &&
+ninja install &&
+cd ../_deploy/share &&
+mv themes/Yaru \"$THEMES\" &&
+mv gnome-shell/theme/Yaru \"$THEMES\"/Yaru/gnome-shell
+" Yaru
 
 # Zuki
 # https://github.com/lassekongo83/zuki-themes

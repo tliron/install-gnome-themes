@@ -78,7 +78,11 @@ mkdir --parents "$THEMES"
 #		--with-destruction_color=#FF5252' \
 #	./install-gnome-themes
 AUTOGEN_ARGS="--disable-flashback --disable-unity --disable-xfce --disable-mate --disable-openbox --enable-chrome $ADAPTA_ARGS" \
-theme-autogen-prefix github tista500 Adapta master Adapta Adapta-Eta Adapta-Nokto Adapta-Nokto-Eta
+theme-autogen-prefix github tista500 Adapta master \
+	Adapta \
+	Adapta-Eta \
+	Adapta-Nokto \
+	Adapta-Nokto-Eta
 
 # Adwaita Tweaks
 # https://github.com/Jazqa/adwaita-tweaks
@@ -102,7 +106,10 @@ theme-mv github EliverLara Aqua master Aqua
 #		--disable-transparency' \
 #	./install-gnome-themes
 AUTOGEN_ARGS=$ARC_ARGS \
-theme-autogen-prefix github horst3180 arc-theme master Arc Arc-Dark Arc-Darker
+theme-autogen-prefix github horst3180 arc-theme master \
+	Arc \
+	Arc-Dark \
+	Arc-Darker
 
 # Arc-Flatabulous
 # https://github.com/andreisergiu98/arc-flatabulous-theme
@@ -114,7 +121,10 @@ theme-autogen-prefix github horst3180 arc-theme master Arc Arc-Dark Arc-Darker
 #		--disable-transparency' \
 #	./install-gnome-themes
 AUTOGEN_ARGS=$ARC_FLATABULOUS_ARGS \
-theme-autogen-prefix github andreisergiu98 arc-flatabulous-theme master Arc-Flatabulous Arc-FlatabulousDark Arc-Flatabulous-Darker
+theme-autogen-prefix github andreisergiu98 arc-flatabulous-theme master \
+	Arc-Flatabulous \
+	Arc-FlatabulousDark \
+	Arc-Flatabulous-Darker
 
 # Arc-Red
 # https://github.com/mclmza/arc-theme-Red
@@ -126,7 +136,10 @@ theme-autogen-prefix github andreisergiu98 arc-flatabulous-theme master Arc-Flat
 #               --disable-transparency' \
 #       ./install-gnome-themes
 AUTOGEN_ARGS=$ARC_RED_ARGS \
-theme-autogen-prefix github mclmza arc-theme-Red master Arc-Red Arc-Red-Dark Arc-Red-Darker
+theme-autogen-prefix github mclmza arc-theme-Red master \
+	Arc-Red \
+	Arc-Red-Dark \
+	Arc-Red-Darker
 
 # Blue-Face
 # https://github.com/Vistaus/Blue-Face
@@ -135,18 +148,34 @@ theme-mv github Vistaus Blue-Face master Blue-Face
 # Breeze
 # https://github.com/dirruk1/gnome-breeze
 # Requirements: gtk2-engines-pixbuf
-theme-cp github dirruk1 gnome-breeze master Breeze-gtk Breeze-dark-gtk
+theme-cp github dirruk1 gnome-breeze master \
+	Breeze-gtk \
+	Breeze-dark-gtk
 
 # Candra
 # https://github.com/killhellokitty/Candra-Themes-3.20
 # Requirements: gnome-themes-standard gtk2-engines-murrine gtk2-engines-pixbuf
-theme-cp github killhellokitty Candra-Themes-3.20 master Candra-Theme-3.20 Candra-Theme-3.20-Dark Candra-Theme-3.20-Darker
+theme-cp github killhellokitty Candra-Themes-3.20 master \
+	Candra-Theme-3.20 \
+	Candra-Theme-3.20-Dark \
+	Candra-Theme-3.20-Darker
 
 # Canta
 # https://github.com/vinceliuice/Canta-theme
 theme-script github vinceliuice Canta-theme master "
 ./install.sh --dest \"$THEMES\"
-" Canta Canta-compact Canta-compact-square Canta-dark Canta-dark-square Canta-dark-compact Canta-dark-compact-square Canta-light Canta-light-square Canta-light-compact Canta-light-compact-square
+" \
+	Canta \
+	Canta-compact \
+	Canta-compact-square \
+	Canta-dark \
+	Canta-dark-square \
+	Canta-dark-compact \
+	Canta-dark-compact-square \
+	Canta-light \
+	Canta-light-square \
+	Canta-light-compact \
+	Canta-light-compact-square
 
 # Chrome-OS
 # https://github.com/Elbullazul/Chrome-OS
@@ -185,8 +214,14 @@ theme-mv github Elbullazul macOS-Sierra master macOS-Sierra
 # Materia (formerly Flat-Plat)
 # https://github.com/nana-4/materia-theme
 theme-script github nana-4 materia-theme master "
-./install.sh --dest "$THEMES" &>> "$LOG"
-" Materia Materia-compact Materia-dark Materia-dark-compact Materia-light Materia-light-compact
+./install.sh --dest \"$THEMES\" &>> \"$LOG\"
+" \
+	Materia \
+	Materia-compact \
+	Materia-dark \
+	Materia-dark-compact \
+	Materia-light \
+	Materia-light-compact
 
 # Minwaita
 # https://github.com/godlyranchdressing/Minwaita
@@ -196,7 +231,11 @@ theme-script github nana-4 materia-theme master "
 #       MINWAITA_VARIANT=Minwaita-OSX \
 #       ./install-gnome-themes
 MINWAITA_VARIANT=${MINWAITA_VARIANT:-Minwaita}
-theme-tarball github godlyranchdressing Minwaita master Compiled.tar.gz "Compiled/$MINWAITA_VARIANT" Minwaita Minwaita-Dark Minwaita-Darker Minwaita-Light-Shell
+theme-tarball github godlyranchdressing Minwaita master Compiled.tar.gz "Compiled/$MINWAITA_VARIANT" \
+	Minwaita \
+	Minwaita-Dark \
+	Minwaita-Darker \
+	Minwaita-Light-Shell
 
 # Numix
 # https://github.com/numixproject/numix-gtk-theme
@@ -226,29 +265,50 @@ theme-mv github lassekongo83 plano-theme master Plano
 # Pocillo
 # https://github.com/UbuntuBudgie/pocillo-gtk-theme
 # Requirements: automake inkscape optipng ...
-theme-make-destdir github UbuntuBudgie pocillo-gtk-theme master Pocillo Pocillo-dark Pocillo-dark-slim Pocillo-light Pocillo-light-slim Pocillo-slim     
+theme-make-destdir github UbuntuBudgie pocillo-gtk-theme master \
+	Pocillo \
+	Pocillo-dark \
+	Pocillo-dark-slim \
+	Pocillo-light \
+	Pocillo-light-slim \
+	Pocillo-slim     
 
 # Pop
 # https://github.com/pop-os/gtk-theme
 # Requirements: automake sassc
-theme-make-destdir github pop-os gtk-theme master_bionic Pop Pop-compact Pop-dark Pop-dark-compact Pop-light Pop-light-compact
+theme-make-destdir github pop-os gtk-theme master_bionic \
+	Pop \
+	Pop-compact \
+	Pop-dark \
+	Pop-dark-compact \
+	Pop-light \
+	Pop-light-compact
 
 # Qogir
 # https://github.com/vinceliuice/Qogir-theme
 theme-script github vinceliuice Qogir-theme master "
 ./install.sh --dest \"$THEMES\"
-" Qogir Qogir-dark Qogir-light Qogir-win Qogir-dark-win Qogir-light-win
+" \
+	Qogir \
+	Qogir-dark \
+	Qogir-light \
+	Qogir-win \
+	Qogir-dark-win \
+	Qogir-light-win
 
 # Redmond-Themes
 # https://github.com/B00merang-Project/Redmond-Themes
-theme-cp github B00merang-Project Redmond-Themes master "Windows 3.11" "Windows 3.x" "Windows 8.1" "Windows 95" "Windows 9x" "Windows Vista"
+theme-cp github B00merang-Project Redmond-Themes master \
+	"Windows 3.11" \
+	"Windows 3.x" \
+	"Windows 8.1" \
+	"Windows 95" \
+	"Windows 9x" \
+	"Windows Vista"
 
 # Typewriter
 # https://github.com/logico-dev/typewriter-gtk/
-theme-script github logico-dev typewriter-gtk master "
-mv Typewriter/gtk-3.14 Typewriter/gtk-3.0 &&
- mv Typewriter \"$THEMES\"
-" Typewriter
+theme-mv-dir github logico-dev typewriter-gtk master Typewriter
 
 # United GNOME
 # https://github.com/godlyranchdressing/United-GNOME
@@ -259,9 +319,17 @@ mv Typewriter/gtk-3.14 Typewriter/gtk-3.0 &&
 #       ./install-gnome-themes
 UNITED_GNOME_VARIANT=${UNITED_GNOME_VARIANT:-$OS}
 theme-script github godlyranchdressing United-GNOME master "
-tar xf Compiled.tar.gz &>> "$LOG" &&
-cp --recursive "Compiled/United-$UNITED_GNOME_VARIANT/"* "$THEMES/" &>> "$LOG"
-" "United-$UNITED_GNOME_VARIANT" "United-$UNITED_GNOME_VARIANT-Light" "United-$UNITED_GNOME_VARIANT-Darker" "United-$UNITED_GNOME_VARIANT-Dark" "United-$UNITED_GNOME_VARIANT-alt" "United-$UNITED_GNOME_VARIANT-alt-Light" "United-$UNITED_GNOME_VARIANT-alt-Darker" "United-$UNITED_GNOME_VARIANT-alt-Dark" 
+tar xf Compiled.tar.gz &>> \"$LOG\" &&
+cp --recursive \"Compiled/United-$UNITED_GNOME_VARIANT/\"* \"$THEMES/\" &>> \"$LOG\"
+" \
+	"United-$UNITED_GNOME_VARIANT" \
+	"United-$UNITED_GNOME_VARIANT-Light" \
+	"United-$UNITED_GNOME_VARIANT-Darker" \
+	"United-$UNITED_GNOME_VARIANT-Dark" \
+	"United-$UNITED_GNOME_VARIANT-alt" \
+	"United-$UNITED_GNOME_VARIANT-alt-Light" \
+	"United-$UNITED_GNOME_VARIANT-alt-Darker" \
+	"United-$UNITED_GNOME_VARIANT-alt-Dark" 
 
 # Unity7
 # https://github.com/B00merang-Project/unity7
@@ -274,7 +342,10 @@ theme-mv github B00merang-Project unity8 master Unity8
 # Vertex
 # https://github.com/horst3180/vertex-theme
 # Requirements: autoconf automake pkg-config libgtk-3-dev gtk2-engines-murrine
-theme-autogen-prefix github horst3180 vertex-theme master Vertex Vertex-Light Vertex-Dark
+theme-autogen-prefix github horst3180 vertex-theme master \
+	Vertex \
+	Vertex-Light \
+	Vertex-Dark
 
 # Vimix
 # https://github.com/vinceliuice/vimix-gtk-themes
@@ -315,6 +386,9 @@ mv gnome-shell/theme/Yaru \"$THEMES\"/Yaru/gnome-shell
 # Zuki
 # https://github.com/lassekongo83/zuki-themes
 # Requirements: gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto
-theme-cp github lassekongo83 zuki-themes master Zukitre Zukitwo Zuki-shell
+theme-cp github lassekongo83 zuki-themes master \
+	Zukitre \
+	Zukitwo \
+	Zuki-shell
 
 message "Done!"

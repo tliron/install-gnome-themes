@@ -245,8 +245,10 @@ theme-cp github B00merang-Project Redmond-Themes master "Windows 3.11" "Windows 
 
 # Typewriter
 # https://github.com/logico-dev/typewriter-gtk/
-#theme-cp github logico-dev typewriter-gtk master Typewriter
-# See: https://github.com/logico-dev/typewriter-gtk/issues/1
+theme-script github logico-dev typewriter-gtk master "
+mv Typewriter/gtk-3.14 Typewriter/gtk-3.0 &&
+ mv Typewriter \"$THEMES\"
+" Typewriter
 
 # United GNOME
 # https://github.com/godlyranchdressing/United-GNOME

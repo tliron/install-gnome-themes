@@ -71,6 +71,7 @@ All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and
 * [Pocillo](https://github.com/UbuntuBudgie/pocillo-gtk-theme)
 * [Qogir](https://github.com/vinceliuice/Qogir-theme)
 * [Redmond-Themes](https://github.com/B00merang-Project/Redmond-Themes)
+* [Typewriter](https://github.com/logico-dev/typewriter-gtk/)
 * [United GNOME](https://github.com/godlyranchdressing/United-GNOME)
 * [Unity7](https://github.com/B00merang-Project/unity7)
 * [Unity8](https://github.com/B00merang-Project/unity8)

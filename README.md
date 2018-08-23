@@ -78,7 +78,7 @@ All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and
 * [Vertex](https://github.com/horst3180/vertex-theme)
 * [Vimix](https://github.com/vinceliuice/vimix-gtk-themes)
 * [Xenlism-Minimalism](https://github.com/xenlism/minimalism)
-* [Yaru](https://github.com/ubuntu/yaru)
+* [Yaru](https://github.com/ubuntu/yaru) (formerly Communitheme)
 * [Zuki](https://github.com/lassekongo83/zuki-themes)
 
 

@@ -287,7 +287,7 @@ theme-make-destdir github pop-os gtk-theme master_bionic \
 # Qogir
 # https://github.com/vinceliuice/Qogir-theme
 theme-script github vinceliuice Qogir-theme master "
-./install.sh --dest \"$THEMES\"
+./Install --dest \"$THEMES\"
 " \
 	Qogir \
 	Qogir-dark \

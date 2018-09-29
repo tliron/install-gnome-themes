@@ -214,6 +214,7 @@ theme-mv github Elbullazul macOS-Sierra master macOS-Sierra
 # Materia (formerly Flat-Plat)
 # https://github.com/nana-4/materia-theme
 theme-script github nana-4 materia-theme master "
+chmod +x install.sh &&
 ./install.sh --dest \"$THEMES\" &>> \"$LOG\"
 " \
 	Materia \

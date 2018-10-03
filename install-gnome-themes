@@ -352,22 +352,30 @@ theme-autogen-prefix github horst3180 vertex-theme master \
 # https://github.com/vinceliuice/vimix-gtk-themes
 # Requirements: gtk2-engines-murrine gtk2-engines-pixbuf
 theme-execute github vinceliuice vimix-gtk-themes master Install \
-	VimixDark \
-	VimixDark-Beryl \
-	VimixDark-Doder \
-	VimixDark-Laptop \
-	VimixDark-Laptop-Beryl \
-	VimixDark-Laptop-Doder \
-	VimixDark-Laptop-Ruby \
-	VimixDark-Ruby \
-	VimixLight \
-	VimixLight-Beryl \
-	VimixLight-Doder \
-	VimixLight-Laptop \
-	VimixLight-Laptop-Beryl \
-	VimixLight-Laptop-Doder \
-	VimixLight-Laptop-Ruby \
-	VimixLight-Ruby
+	vimix \
+	vimix-beryl \
+	vimix-dark \
+	vimix-dark-beryl \
+	vimix-dark-doder \
+	vimix-dark-laptop \
+	vimix-dark-laptop-beryl \
+	vimix-dark-laptop-doder \
+	vimix-dark-laptop-ruby \
+	vimix-dark-ruby \
+	vimix-doder \
+	vimix-laptop \
+	vimix-laptop-beryl \
+	vimix-laptop-doder \
+	vimix-laptop-ruby \
+	vimix-light \
+	vimix-light-beryl \
+	vimix-light-doder \
+	vimix-light-laptop \
+	vimix-light-laptop-beryl \
+	vimix-light-laptop-doder \
+	vimix-light-laptop-ruby \
+	vimix-light-ruby \
+	vimix-ruby
 
 # Xenlism-Minimalism
 # https://github.com/xenlism/minimalism

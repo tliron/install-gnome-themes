@@ -167,7 +167,9 @@ prepare () # [site] [account] [repo] [branch] [themes...]
 	else
 		message "  Last updated $(repository-timestamp)." "$BLUE"
 		message "  Installing..." "$BLUE"
-		if [ "$REPO" == Adapta ]; then
+		if [ "$REPO" == Adapta ] ||
+		   [ "$REPO" == pocillo-gtk-theme ] ||
+		   [ "$ACCOUNT" == pop-os ]; then
 			message "  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!" "$BLUE"
 		fi
 		cd "$THEMES"

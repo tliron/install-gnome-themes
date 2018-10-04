@@ -123,7 +123,7 @@ theme-autogen-prefix github horst3180 arc-theme master \
 AUTOGEN_ARGS=$ARC_FLATABULOUS_ARGS \
 theme-autogen-prefix github andreisergiu98 arc-flatabulous-theme master \
 	Arc-Flatabulous \
-	Arc-FlatabulousDark \
+	Arc-Flatabulous-Dark \
 	Arc-Flatabulous-Darker
 
 # Arc-Red
@@ -167,6 +167,7 @@ theme-script github vinceliuice Canta-theme master "
 " \
 	Canta \
 	Canta-compact \
+	Canta-square \
 	Canta-compact-square \
 	Canta-dark \
 	Canta-dark-square \
@@ -196,7 +197,9 @@ theme-cp github killhellokitty Cloak-3.22 master Cloak-3.22
 
 # EvoPop
 # https://github.com/solus-cold-storage/evopop-gtk-theme
-theme-autogen-destdir github solus-cold-storage evopop-gtk-theme master evopop
+theme-autogen-destdir github solus-cold-storage evopop-gtk-theme master \
+	EvoPop \
+	EvoPop-Azure	
 
 # Fresh-Finesse
 # https://github.com/Vistaus/Fresh-Finesse
@@ -205,7 +208,11 @@ theme-cp github Vistaus Fresh-Finesse master Fresh-Finesse
 # Greybird
 # https://github.com/shimmerproject/Greybird
 # Requirements: autoconf automake libgdk-pixbuf2.0-dev libglib2.0-bin sass
-theme-autogen-prefix github shimmerproject Greybird master Greybird
+theme-autogen-prefix github shimmerproject Greybird master \
+	Greybird \
+	Greybird-accessibility \
+	Greybird-bright \
+	Greybird-compact
 
 # macOS-Sierra
 # https://github.com/Elbullazul/macOS-Sierra
@@ -279,11 +286,11 @@ theme-make-destdir github UbuntuBudgie pocillo-gtk-theme master \
 # Requirements: automake sassc
 theme-make-destdir github pop-os gtk-theme master_bionic \
 	Pop \
-	Pop-compact \
+	Pop-slim \
 	Pop-dark \
-	Pop-dark-compact \
+	Pop-dark-slim \
 	Pop-light \
-	Pop-light-compact
+	Pop-light-slim
 
 # Qogir
 # https://github.com/vinceliuice/Qogir-theme
@@ -294,8 +301,8 @@ theme-script github vinceliuice Qogir-theme master "
 	Qogir-dark \
 	Qogir-light \
 	Qogir-gnome \
-	Qogir-dark-gnome \
-	Qogir-light-gnome
+	Qogir-gnome-dark \
+	Qogir-gnome-light
 
 # Redmond-Themes
 # https://github.com/B00merang-Project/Redmond-Themes
@@ -326,11 +333,7 @@ cp --recursive \"Compiled/United-$UNITED_GNOME_VARIANT/\"* \"$THEMES/\" &>> \"$L
 	"United-$UNITED_GNOME_VARIANT" \
 	"United-$UNITED_GNOME_VARIANT-Light" \
 	"United-$UNITED_GNOME_VARIANT-Darker" \
-	"United-$UNITED_GNOME_VARIANT-Dark" \
-	"United-$UNITED_GNOME_VARIANT-alt" \
-	"United-$UNITED_GNOME_VARIANT-alt-Light" \
-	"United-$UNITED_GNOME_VARIANT-alt-Darker" \
-	"United-$UNITED_GNOME_VARIANT-alt-Dark" 
+	"United-$UNITED_GNOME_VARIANT-Dark" 
 
 # Unity7
 # https://github.com/B00merang-Project/unity7

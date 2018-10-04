@@ -293,9 +293,9 @@ theme-script github vinceliuice Qogir-theme master "
 	Qogir \
 	Qogir-dark \
 	Qogir-light \
-	Qogir-win \
-	Qogir-dark-win \
-	Qogir-light-win
+	Qogir-gnome \
+	Qogir-dark-gnome \
+	Qogir-light-gnome
 
 # Redmond-Themes
 # https://github.com/B00merang-Project/Redmond-Themes

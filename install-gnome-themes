@@ -72,12 +72,11 @@ mkdir --parents "$THEMES"
 #
 #	ADAPTA_ARGS='
 #		--with-selection_color=#F44336
-#		--with-second_selection_color=#E57373
 #		--with-accent_color=#90A4AE
 #		--with-suggestion_color=#607D8B' \
 #		--with-destruction_color=#FF5252' \
 #	./install-gnome-themes
-AUTOGEN_ARGS="--disable-flashback --disable-unity --disable-xfce --disable-mate --disable-openbox --enable-chrome $ADAPTA_ARGS" \
+AUTOGEN_ARGS="--disable-cinnamon --disable-xfce --disable-mate --disable-openbox --enable-chrome-legacy $ADAPTA_ARGS" \
 theme-autogen-prefix github tista500 Adapta master \
 	Adapta \
 	Adapta-Eta \
@@ -269,6 +268,27 @@ theme-autogen-destdir github snwh paper-gtk-theme master Paper
 # https://github.com/lassekongo83/plano-theme
 # Requirements: gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto
 theme-mv github lassekongo83 plano-theme master Plano
+
+# Plata
+# https://gitlab.com/tista500/plata-theme
+# Requirements: autoconf automake inkscape libgdk-pixbuf2.0-dev libglib2.0-dev librsvg2-dev libsass0 libxml2-utils pkg-config sassc
+#
+# Supports configurations settings, e.g. a variant with colors red500, red300, bluegrey300, bluegrey500:
+#
+#	PLATA_ARGS='
+#		--with-selection_color=#F44336
+#		--with-accent_color=#90A4AE
+#		--with-suggestion_color=#607D8B' \
+#		--with-destruction_color=#FF5252' \
+#	./install-gnome-themes
+AUTOGEN_ARGS="--disable-cinnamon --disable-xfce --disable-mate --disable-openbox --enable-chrome $PLATA_ARGS" \
+theme-autogen-prefix gitlab tista500 plata-theme master \
+	Plata \
+	Plata-Compact \
+	Plata-Lumine \
+	Plata-Lumine-Compact \
+	Plata-Noir \
+	Plata-Noir-Compact
 
 # Pocillo
 # https://github.com/UbuntuBudgie/pocillo-gtk-theme

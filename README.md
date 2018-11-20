@@ -67,6 +67,7 @@ All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and
 * [OSX-Arc-Darker](https://github.com/rufkeya/OSX-Arc-Darker)
 * [Paper](https://github.com/snwh/paper-gtk-theme)
 * [Plano](https://github.com/lassekongo83/plano-theme)
+* [Plata](https://gitlab.com/tista500/plata-theme)
 * [Pop](https://github.com/pop-os/gtk-theme)
 * [Pocillo](https://github.com/UbuntuBudgie/pocillo-gtk-theme)
 * [Qogir](https://github.com/vinceliuice/Qogir-theme)

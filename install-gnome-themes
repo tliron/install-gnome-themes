@@ -87,6 +87,10 @@ theme-autogen-prefix github tista500 Adapta master \
 # https://github.com/Jazqa/adwaita-tweaks
 theme-mv github Jazqa adwaita-tweaks master Adwaita-tweaks
 
+# Amber
+# https://github.com/lassekongo83/amber-theme
+theme-mv github lassekongo83 amber-theme master Amber
+
 # Ant
 # https://github.com/EliverLara/Ant
 theme-mv github EliverLara Ant master Ant

@@ -169,6 +169,7 @@ prepare () # [site] [account] [repo] [branch] [themes...]
 		message "  Installing..." "$BLUE"
 		if [ "$REPO" == Adapta ] ||
 		   [ "$REPO" == pocillo-gtk-theme ] ||
+		   [ "$REPO" == plata-theme ] ||
 		   [ "$ACCOUNT" == pop-os ]; then
 			message "  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!" "$BLUE"
 		fi

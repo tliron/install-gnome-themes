@@ -308,7 +308,7 @@ theme-make-destdir github UbuntuBudgie pocillo-gtk-theme master \
 # Pop
 # https://github.com/pop-os/gtk-theme
 # Requirements: automake sassc
-theme-make-destdir github pop-os gtk-theme master_bionic \
+theme-make-destdir github pop-os gtk-theme master \
 	Pop \
 	Pop-slim \
 	Pop-dark \

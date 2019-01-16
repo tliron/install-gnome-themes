@@ -168,6 +168,7 @@ prepare () # [site] [account] [repo] [branch] [themes...]
 		message "  Last updated $(repository-timestamp)." "$BLUE"
 		message "  Installing..." "$BLUE"
 		if [ "$REPO" == Adapta ] ||
+		   [ "$REPO" == arc-theme ] ||
 		   [ "$REPO" == pocillo-gtk-theme ] ||
 		   [ "$REPO" == plata-theme ] ||
 		   [ "$ACCOUNT" == pop-os ]; then

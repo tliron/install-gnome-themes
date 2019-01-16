@@ -46,7 +46,7 @@ All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and
 * [Amber](https://github.com/lassekongo83/amber-theme)
 * [Ant](https://github.com/EliverLara/Ant)
 * [Aqua](https://github.com/EliverLara/Aqua)
-* [Arc](https://github.com/horst3180/arc-theme) (Firefox themes: [Arc](https://addons.mozilla.org/en-US/firefox/addon/arc-theme/), [Arc Darker](https://addons.mozilla.org/en-US/firefox/addon/arc-darker-theme/), [Arc Dark](https://addons.mozilla.org/en-US/firefox/addon/arc-dark-theme/))
+* [Arc](https://github.com/NicoHood/arc-theme) (Firefox themes: [Arc](https://addons.mozilla.org/en-US/firefox/addon/arc-theme/), [Arc Darker](https://addons.mozilla.org/en-US/firefox/addon/arc-darker-theme/), [Arc Dark](https://addons.mozilla.org/en-US/firefox/addon/arc-dark-theme/))
 * [Arc-Flatabulous](https://github.com/andreisergiu98/arc-flatabulous-theme)
 * [Arc-Red](https://github.com/mclmza/arc-theme-Red)
 * [Blue-Face](https://github.com/Vistaus/Blue-Face)

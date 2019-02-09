@@ -138,11 +138,11 @@ theme-autogen-prefix github andreisergiu98 arc-flatabulous-theme master \
 #       ARC_RED_ARGS='
 #               --disable-transparency' \
 #       ./install-gnome-themes
-AUTOGEN_ARGS=$ARC_RED_ARGS \
-theme-autogen-prefix github mclmza arc-theme-Red master \
-	Arc-Red \
-	Arc-Red-Dark \
-	Arc-Red-Darker
+#AUTOGEN_ARGS=$ARC_RED_ARGS \
+#theme-autogen-prefix github mclmza arc-theme-Red master \
+#	Arc-Red \
+#	Arc-Red-Dark \
+#	Arc-Red-Darker
 
 # Blue-Face
 # https://github.com/Vistaus/Blue-Face

@@ -32,6 +32,16 @@ WORK=/tmp/install-gnome-themes
 
 . "$HERE/utils.sh"
 
+function the-end () {
+	if [ $? == 0 ]; then
+		message "install-gnome-themes finished successfully"
+	else
+		message "install-gnome-themes failed!"
+	fi
+}
+
+trap the-end EXIT
+
 #
 # Preparation
 #
@@ -426,5 +436,3 @@ theme-cp github lassekongo83 zuki-themes master \
 	Zukitre \
 	Zukitwo \
 	Zuki-shell
-
-message "Done!"

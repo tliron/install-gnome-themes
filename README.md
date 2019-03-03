@@ -6,17 +6,27 @@ This script installs the latest git versions of some fine [GNOME](https://www.gn
 It supports GNOME versions 3.22 and above.
 
 
-Basic Usage
+Preparation
 -----------
 
-Get it:
+You need to install the requirements first. See [install-requirements-fedora](install-requirements-fedora) and
+[install-requirements-debian](install-requirements-debian). The Debian script should work for Ubuntu, too.
+We welcome contributions for other operating systems, too, especiall Arch Linux!
+
+In case your operating system doesn't have a `sassc` package, you can build it manually with [install-sassc](install-sassc).
+
+Now, get the script:
 
     git clone https://github.com/tliron/install-gnome-themes ~/install-gnome-themes
 
 If you already have themes of the same names installed in your `.themes` folder, they will be deleted, so backup the folder first if you want to keep them. Other themes will _not_ be touched.
 
-As long as you have the requirements (see below), you can update it to its latest version and run it like so:
-    
+
+Getting the Themes
+------------------
+
+You can update this script to its latest version and run it like so:
+
     git -C ~/install-gnome-themes pull
     ~/install-gnome-themes/install-gnome-themes
 
@@ -28,12 +38,19 @@ To change your theme, run the GNOME Tweak Tool and go to the Appearance tab. Or,
     gsettings set org.gnome.desktop.wm.preferences theme "Shell theme name"
 
 
-Requirements
-------------
+Problems?
+---------
 
-See [install-requirements-fedora](install-requirements-fedora) and [install-requirements-debian](install-requirements-debian).
+Because we are tracking the latest versions of themes, there is a chance something will break. Please help us fix it and
+[open an issue](https://github.com/tliron/install-gnome-themes/issues) with as much detail as you can!
 
-In case your operating system doesn't have a `sassc` package, you can build it manually with [install-sassc](install-sassc).
+By default the script avoids all build output, but you can send it to a file like so:
+
+    LOG=~/install-gnome-themes.log ~/install-gnome-themes/install-gnome-themes
+
+You can also send it to the console:
+
+    LOG=/dev/stdout ~/install-gnome-themes/install-gnome-themes
 
 
 Supported Themes
@@ -48,7 +65,6 @@ All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and
 * [Aqua](https://github.com/EliverLara/Aqua)
 * [Arc](https://github.com/NicoHood/arc-theme) (Firefox themes: [Arc](https://addons.mozilla.org/en-US/firefox/addon/arc-theme/), [Arc Darker](https://addons.mozilla.org/en-US/firefox/addon/arc-darker-theme/), [Arc Dark](https://addons.mozilla.org/en-US/firefox/addon/arc-dark-theme/))
 * [Arc-Flatabulous](https://github.com/andreisergiu98/arc-flatabulous-theme)
-* [Arc-Red](https://github.com/mclmza/arc-theme-Red)
 * [Blue-Face](https://github.com/Vistaus/Blue-Face)
 * [Breeze](https://github.com/dirruk1/gnome-breeze)
 * [Candra](https://github.com/killhellokitty/Candra-Themes-3.20)

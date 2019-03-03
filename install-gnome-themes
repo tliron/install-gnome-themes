@@ -139,20 +139,6 @@ theme-autogen-prefix github andreisergiu98 arc-flatabulous-theme master \
 	Arc-Flatabulous-Dark \
 	Arc-Flatabulous-Darker
 
-# Arc-Red
-# https://github.com/mclmza/arc-theme-Red
-# Requirements: autoconf automake pkg-config libgtk-3-dev gtk2-engines-murrine
-#
-# Supports configurations settings, e.g. a variant with transparency disabled:
-#
-#       ARC_RED_ARGS='
-#               --disable-transparency' \
-#       ./install-gnome-themes
-#AUTOGEN_ARGS=$ARC_RED_ARGS \
-#theme-autogen-prefix github mclmza arc-theme-Red master \
-#	Arc-Red \
-#	Arc-Red-Dark \
-#	Arc-Red-Darker
 
 # Blue-Face
 # https://github.com/Vistaus/Blue-Face
@@ -378,12 +364,13 @@ theme-mv github B00merang-Project unity7 master Unity7
 theme-mv github B00merang-Project unity8 master Unity8
 
 # Vertex
+# BROKEN: https://github.com/horst3180/vertex-theme/issues/227
 # https://github.com/horst3180/vertex-theme
 # Requirements: autoconf automake pkg-config libgtk-3-dev gtk2-engines-murrine
-theme-autogen-prefix github horst3180 vertex-theme master \
-	Vertex \
-	Vertex-Light \
-	Vertex-Dark
+#theme-autogen-prefix github horst3180 vertex-theme master \
+#	Vertex \
+#	Vertex-Light \
+#	Vertex-Dark
 
 # Vimix
 # https://github.com/vinceliuice/vimix-gtk-themes

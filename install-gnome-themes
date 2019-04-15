@@ -33,12 +33,13 @@ WORK=/tmp/install-gnome-themes
 . "$HERE/utils.sh"
 
 function the-end () {
-	if [ $? == 0 ]; then
+	local ERR=$?
+	if [ $ERR == 0 ]; then
 		message "install-gnome-themes finished successfully"
 	else
 		message "install-gnome-themes failed!"
-		exit $?
 	fi
+	exit $ERR
 }
 
 trap the-end EXIT

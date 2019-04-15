@@ -37,6 +37,7 @@ function the-end () {
 		message "install-gnome-themes finished successfully"
 	else
 		message "install-gnome-themes failed!"
+		exit $?
 	fi
 }
 

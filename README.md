@@ -1,7 +1,9 @@
 Install GNOME Themes
 ====================
 
-This script installs the latest git versions of some fine [GNOME](https://www.gnome.org/) themes into the current user's `.themes` folder. Run the script again whenever you want to get the latest theme updates. Many of these themes are updated frequently with bugfixes and enhancements.
+This script installs the latest git versions of some fine [GNOME](https://www.gnome.org/) themes
+into the current user's `.themes` folder. Run the script again whenever you want to get the latest
+theme updates. Many of these themes are updated frequently with bugfixes and enhancements.
 
 It supports GNOME versions 3.22 and above.
 
@@ -9,40 +11,64 @@ It supports GNOME versions 3.22 and above.
 Preparation
 -----------
 
-You need to install the requirements first. See [install-requirements-fedora](install-requirements-fedora) and
-[install-requirements-debian](install-requirements-debian). The Debian script should work for Ubuntu, too.
-We welcome contributions for other operating systems, too, especiall Arch Linux!
+You need to install the requirements first. See
+[install-requirements-fedora](install-requirements-fedora) and
+[install-requirements-debian](install-requirements-debian). The Debian script should work for
+Ubuntu, too. We welcome contributions for other operating systems, too, especiall Arch Linux!
 
-In case your operating system doesn't have a `sassc` package, you can build it manually with [install-sassc](install-sassc).
+In case your operating system doesn't have a `sassc` package you can build it manually with
+[install-sassc](install-sassc).
 
 Now, get the script:
 
     git clone https://github.com/tliron/install-gnome-themes ~/install-gnome-themes
 
-If you already have themes of the same names installed in your `.themes` folder, they will be deleted, so backup the folder first if you want to keep them. Other themes will _not_ be touched.
+If you already have themes of the same names installed in your `.themes` folder, they will be
+deleted, so backup the folder first if you want to keep them. Other themes will _not_ be touched.
 
 
-Getting the Themes
-------------------
+Installing Themes
+-----------------
 
 You can update this script to its latest version and run it like so:
 
     git -C ~/install-gnome-themes pull
     ~/install-gnome-themes/install-gnome-themes
 
-To avoid rebuilding themes if there was no change, the script caches identifiers in the file `.install-gnome-themes-cache` in the current user's `.themes` folder. Delete it to force rebuilding all themes.
+Note that it will take some time, because some themes render all their images during build.
 
-To change your theme, run the GNOME Tweak Tool and go to the Appearance tab. Or, you can use the command line:
+To change your theme, run the GNOME Tweak Tool and go to the Appearance tab. Or, you can use the
+command line:
 
     gsettings set org.gnome.desktop.interface gtk-theme "GTK theme name"
     gsettings set org.gnome.desktop.wm.preferences theme "Shell theme name"
+
+To avoid rebuilding themes if there was no change the script caches identifiers in the file
+`.install-gnome-themes-cache` in the current user's `.themes` folder. Delete it to force rebuilding
+all themes:
+
+    rm ~/.themes/.install-gnome-themes-cache
+
+
+Uninstalling Themes
+-------------------
+
+You can uninstall individual themes by deleting their directories in your `.themes` folder. To
+uninstall *all* user themes, *including themes not installed by this script*, delete the entire
+directory:
+
+    rm -r ~/.themes
+
+Note that themes take very little space (less than 300 MB for all themes combined) and do not slow
+down your system when unused.
 
 
 Problems?
 ---------
 
-Because we are tracking the latest versions of themes, there is a chance something will break. Please help us fix it and
-[open an issue](https://github.com/tliron/install-gnome-themes/issues) with as much detail as you can!
+Because we are tracking the latest versions of themes, there is a chance something will break.
+Please help us fix it and [open an issue](https://github.com/tliron/install-gnome-themes/issues)
+with as much detail as you can!
 
 By default the script avoids all build output, but you can send it to a file like so:
 
@@ -56,7 +82,12 @@ You can also send it to the console:
 Supported Themes
 ----------------
 
-All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and many also provide a shell theme. You are free to mix and match GTK+ themes with shell themes! Some themes also provide application theming (Firefox, Chrome, etc.) though you will have to install that separately. For Firefox, note that there is also a generic [GNOME 3 theme](https://addons.mozilla.org/en-US/firefox/addon/adwaita/) that might improve its appearance for some themes, though your mileage will vary.
+All of these themes provide at least GTK+ theming (for both GTK+3 and GTK+2) and many also provide a
+shell theme. You are free to mix and match GTK+ themes with shell themes! Some themes also provide
+application theming (Firefox, Chrome, etc.) though you will have to install that separately. For
+Firefox, note that there is also a generic
+[GNOME 3 theme](https://addons.mozilla.org/en-US/firefox/addon/adwaita/) that might improve its
+appearance for some themes, though your mileage will vary.
 
 * [Adapta](https://github.com/tista500/Adapta)
 * [Adwaita Tweaks](https://github.com/Jazqa/adwaita-tweaks)

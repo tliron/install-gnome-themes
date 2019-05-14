@@ -7,7 +7,7 @@ sudo dnf install \
 	gtk3-devel gdk-pixbuf2-xlib glib2-devel glib2 \
 	libxml2-devel librsvg2-devel \
 	gnome-themes-standard gtk-murrine-engine gtk2-engines \
-	google-roboto-fonts google-noto-sans-fonts google-noto-mono-fonts
+	google-roboto-fonts google-noto-sans-fonts google-noto-sans-mono-fonts
 
 # Some older operating systems don't have sass, in which case you can manually install:
 # sudo dnf install ruby rubygem-bundler ruby-devel

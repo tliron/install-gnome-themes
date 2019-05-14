@@ -8,7 +8,7 @@ RED='\033[0;31m'
 RESET='\033[0m'
 
 function message () {
-	COLOR=${2:-$CYAN}
+	local COLOR=${2:-$CYAN}
 	echo -e "${COLOR}$@$RESET"
 	if [ "$LOG" != '/dev/stdout' ]; then
 		echo "$1" >> "$LOG"

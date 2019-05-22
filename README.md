@@ -44,10 +44,15 @@ command line:
     gsettings set org.gnome.desktop.wm.preferences theme "Shell theme name"
 
 To avoid rebuilding themes if there was no change the script caches identifiers in the file
-`.install-gnome-themes-cache` in the current user's `.themes` folder. Delete it to force rebuilding
+`.install-gnome-themes.conf` in the current user's `.themes` folder. Delete it to force rebuilding
 all themes:
 
-    rm ~/.themes/.install-gnome-themes-cache
+    rm ~/.themes/.install-gnome-themes.conf
+
+You can also edit this file to skip themes. Just put the word "skip" instead of the git hash. For
+example, to skip Plano themes:
+
+    github|lassekongo83|plano-theme|master skip
 
 
 Uninstalling Themes
@@ -70,11 +75,8 @@ Because we are tracking the latest versions of themes, there is a chance somethi
 Please help us fix it and [open an issue](https://github.com/tliron/install-gnome-themes/issues)
 with as much detail as you can!
 
-By default the script avoids all build output, but you can send it to a file like so:
-
-    LOG=~/install-gnome-themes.log ~/install-gnome-themes/install-gnome-themes
-
-You can also send it to the console:
+By default the script logs all output to the file `.install-gnome-themes.log` in the current user's
+`.themes` folder, but you can also send it to the console like so:
 
     LOG=/dev/stdout ~/install-gnome-themes/install-gnome-themes
 

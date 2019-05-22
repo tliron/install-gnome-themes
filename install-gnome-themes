@@ -25,9 +25,9 @@ set -e
 #
 
 HERE=$(dirname "$(readlink -f "$0")")
-LOG=${LOG:-/dev/null}
 THEMES=~/.themes
-CACHE_FILE=${CACHE_FILE:-$THEMES/.install-gnome-themes-cache}
+LOG=${LOG:-$THEMES/.install-gnome-themes.log}
+CONFIG_FILE=${CONFIG_FILE:-$THEMES/.install-gnome-themes.conf}
 WORK=/tmp/install-gnome-themes
 
 . "$HERE/utils.sh"
@@ -71,6 +71,10 @@ OS=$(os-name)
 message "Detected $OS operating system."
 
 mkdir --parents "$THEMES"
+
+if [ -f "$LOG" ]; then
+	rm "$LOG"
+fi
 
 #
 # Themes
@@ -416,12 +420,21 @@ ninja install &&
 cd ../_deploy/share &&
 mv themes/Yaru \"$THEMES\" &&
 mv gnome-shell/theme/Yaru \"$THEMES\"/Yaru/gnome-shell
-" Yaru
+" \
+	Yaru
 
 # Zuki
 # https://github.com/lassekongo83/zuki-themes
 # Requirements: gtk2-engines-murrine gtk2-engines-pixbuf fonts-roboto
-theme-cp github lassekongo83 zuki-themes master \
+theme-script github lassekongo83 zuki-themes master "
+meson _build --prefix \"\$PWD\"/_deploy &&
+cd _build &&
+ninja install &&
+cd ../_deploy/share &&
+mv themes/* \"$THEMES\"
+" \
 	Zukitre \
+	Zukitre-dark \
 	Zukitwo \
+	Zukitwo-dark \
 	Zuki-shell

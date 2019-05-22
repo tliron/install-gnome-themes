@@ -130,10 +130,15 @@ function prepare () { # [site] [account] [repo] [branch] [themes...]
 
 	local URL="https://$SITE.com/$ACCOUNT/$REPO"
 	local KEY="$SITE|$ACCOUNT|$REPO|$BRANCH"
-	local LAST_ID=$(get-value "$KEY" "$CACHE_FILE")
+	local LAST_ID=$(get-value "$KEY" "$CONFIG_FILE")
 	local NAMES=$(comma-separated "${@:5}")
 
 	message "$NAMES:"
+
+	if [ "$LAST_ID" == 'skip' ]; then
+		message "  Configured to skip."
+		return 2
+	fi
 
 	message "  Fetching repository: $URL..."
 
@@ -176,7 +181,7 @@ function cleanup () { # [site] [account] [repo] [branch]
 	local KEY="$SITE|$ACCOUNT|$REPO|$BRANCH"
 
 	rm --recursive --force "$WORK/$REPO" &>> "$LOG"
-	set-value "$KEY" "$CURRENT_ID" "$CACHE_FILE"
+	set-value "$KEY" "$CURRENT_ID" "$CONFIG_FILE"
 }
 
 function theme-cp () { # [site] [account] [repo] [branch] [themes...]

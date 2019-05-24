@@ -30,6 +30,12 @@ LOG=${LOG:-$THEMES/.install-gnome-themes.log}
 CONFIG_FILE=${CONFIG_FILE:-$THEMES/.install-gnome-themes.conf}
 WORK=/tmp/install-gnome-themes
 
+mkdir --parents "$THEMES"
+
+if [ -f "$LOG" ]; then
+	rm "$LOG"
+fi
+
 . "$HERE/utils.sh"
 
 function the-end () {
@@ -69,12 +75,6 @@ fi
 OS=$(os-name)
 
 message "Detected $OS operating system."
-
-mkdir --parents "$THEMES"
-
-if [ -f "$LOG" ]; then
-	rm "$LOG"
-fi
 
 #
 # Themes

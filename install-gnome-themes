@@ -50,6 +50,14 @@ function the-end () {
 
 trap the-end EXIT
 
+function crtl-c () {
+	message "install-gnome-themes aborted!"
+	trap - EXIT
+	exit 1
+}
+
+trap crtl-c INT
+
 #
 # Preparation
 #

@@ -329,14 +329,14 @@ theme-make-destdir github pop-os gtk-theme master \
 # Qogir
 # https://github.com/vinceliuice/Qogir-theme
 theme-script github vinceliuice Qogir-theme master "
-./Install --dest \"$THEMES\"
+./install.sh --dest \"$THEMES\"
 " \
 	Qogir \
 	Qogir-dark \
 	Qogir-light \
-	Qogir-gnome \
-	Qogir-gnome-dark \
-	Qogir-gnome-light
+	Qogir-win \
+	Qogir-win-dark \
+	Qogir-win-light
 
 # Redmond-Themes
 # https://github.com/B00merang-Project/Redmond-Themes

@@ -40,18 +40,18 @@ fi
 
 function the-end () {
 	local ERR=$?
-	if [ $ERR == 0 ]; then
-		message "install-gnome-themes finished successfully"
+	if [ "$ERR" == 0 ]; then
+		message "install-gnome-themes finished successfully" "$GREEN"
 	else
-		message "install-gnome-themes failed!"
+		message "install-gnome-themes failed!" "$RED"
 	fi
-	exit $ERR
+	exit "$ERR"
 }
 
 trap the-end EXIT
 
 function crtl-c () {
-	message "install-gnome-themes aborted!"
+	message "install-gnome-themes aborted!" "$RED"
 	trap - EXIT
 	exit 1
 }
@@ -76,7 +76,7 @@ if [ "$GTK_VERSION" != '3.30' ] &&
    [ "$GTK_VERSION" != '3.26' ] &&
    [ "$GTK_VERSION" != '3.24' ] &&
    [ "$GTK_VERSION" != '3.22' ]; then
-	message "This script only support GTK versions 3.22 and up."
+	message "This script only supports GTK versions 3.22 and up."
 	exit 1
 fi
 
@@ -221,11 +221,18 @@ theme-cp github Vistaus Fresh-Finesse master Fresh-Finesse
 # Greybird
 # https://github.com/shimmerproject/Greybird
 # Requirements: autoconf automake libgdk-pixbuf2.0-dev libglib2.0-bin sass
-theme-autogen-prefix github shimmerproject Greybird master \
+theme-script github shimmerproject Greybird master "
+meson _build --prefix \"\$PWD\"/_deploy &&
+cd _build &&
+ninja install &&
+cd ../_deploy/share &&
+rsync --recursive themes/Greybird* \"$THEMES\"
+" \
 	Greybird \
 	Greybird-accessibility \
 	Greybird-bright \
-	Greybird-compact
+	Greybird-compact \
+	Greybird-dark
 
 # macOS-Sierra
 # https://github.com/Elbullazul/macOS-Sierra
@@ -426,8 +433,8 @@ meson _build --prefix \"\$PWD\"/_deploy &&
 cd _build &&
 ninja install &&
 cd ../_deploy/share &&
-mv themes/Yaru \"$THEMES\" &&
-mv gnome-shell/theme/Yaru \"$THEMES\"/Yaru/gnome-shell
+rsync --recursive themes/Yaru \"$THEMES\" &&
+rsync --recursive gnome-shell/theme/Yaru/ \"$THEMES\"/Yaru/gnome-shell
 " \
 	Yaru
 
@@ -439,7 +446,7 @@ meson _build --prefix \"\$PWD\"/_deploy &&
 cd _build &&
 ninja install &&
 cd ../_deploy/share &&
-mv themes/* \"$THEMES\"
+rsync --recursive themes/* \"$THEMES\"
 " \
 	Zukitre \
 	Zukitre-dark \

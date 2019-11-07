@@ -3,6 +3,7 @@
 #
 
 BLUE='\033[0;34m'
+GREEN='\033[0;32m'
 CYAN='\033[0;36m'
 RED='\033[0;31m'
 RESET='\033[0m'
@@ -82,7 +83,6 @@ function pacman-version () {
 	pacman -Si "$PKG" | grep Version | awk '{ print $3; }' | cut --delimiter='.' --fields=1,2
 }
 
-
 #
 # Git Repositories
 #
@@ -128,15 +128,15 @@ function prepare () { # [site] [account] [repo] [branch] [themes...]
 	local REPO=$3
 	local BRANCH=$4
 
-	local URL="https://$SITE.com/$ACCOUNT/$REPO"
+	local URL=https://$SITE.com/$ACCOUNT/$REPO
 	local KEY="$SITE|$ACCOUNT|$REPO|$BRANCH"
 	local LAST_ID=$(get-value "$KEY" "$CONFIG_FILE")
 	local NAMES=$(comma-separated "${@:5}")
 
 	message "$NAMES:"
 
-	if [ "$LAST_ID" == 'skip' ]; then
-		message "  Configured to skip."
+	if [ "$LAST_ID" == skip ]; then
+		message '  Configured to skip.'
 		return 2
 	fi
 
@@ -152,13 +152,14 @@ function prepare () { # [site] [account] [repo] [branch] [themes...]
 	CURRENT_ID=$(repository-id)
 	if [ "$CURRENT_ID" == "$LAST_ID" ]; then
 		message "  Last updated $(repository-timestamp)."
-		message "  Already installed."
+		message '  Already installed.'
 		cleanup "$@"
 		return 1
 	else
 		message "  Last updated $(repository-timestamp)." "$BLUE"
-		message "  Installing..." "$BLUE"
+		message '  Installing...' "$BLUE"
 		if [ "$REPO" == Adapta ] ||
+		   [ "$REPO" == arc-flatabulous-theme ] ||
 		   [ "$REPO" == arc-theme ] ||
 		   [ "$REPO" == pocillo-gtk-theme ] ||
 		   [ "$REPO" == plata-theme ] ||

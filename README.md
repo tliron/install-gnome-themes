@@ -12,9 +12,9 @@ Preparation
 -----------
 
 You need to install the requirements first. See
-[install-requirements-fedora](install-requirements-fedora) and
+[install-requirements-fedora](install-requirements-fedora), [install-requirements-arch](install-requirements-arch) and
 [install-requirements-debian](install-requirements-debian). The Debian script should work for
-Ubuntu, too. We welcome contributions for other operating systems, too, especiall Arch Linux!
+Ubuntu, too. We welcome contributions for other operating systems !
 
 In case your operating system doesn't have a `sassc` package you can build it manually with
 [install-sassc](install-sassc).

@@ -80,7 +80,7 @@ function rpm-version () {
 
 function pacman-version () {
 	local PKG=$1
-	pacman -Si "$PKG" | grep Version | awk '{ print $3; }' | cut --delimiter='.' --fields=1,2
+	pacman -Q "$PKG" | cut --delimiter=' ' --fields=2 | cut --delimiter=':' --fields=2 | cut --delimiter='.' --fields=1,2
 }
 
 #

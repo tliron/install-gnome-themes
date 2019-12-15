@@ -1,0 +1,13 @@
+#!/bin/bash
+
+sudo pacman -S \
+	git autoconf automake meson ninja pkgconf parallel ruby-sass sassc optipng \
+	inkscape \
+	gdk-pixbuf2 glib2 \
+	libxml2 librsvg \
+	gnome-themes-extra gtk-engine-murrine libcanberra \
+	ttf-roboto noto-fonts
+
+# Some older operating systems don't have sass, in which case you can manually install:
+# sudo pacman -S ruby ruby-bundler
+# gem install --user-install sass

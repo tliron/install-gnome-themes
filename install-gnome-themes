@@ -234,6 +234,19 @@ rsync --recursive themes/Greybird* \"$THEMES\"
 	Greybird-compact \
 	Greybird-dark
 
+# Layan
+# https://github.com/vinceliuice/Layan-gtk-theme
+theme-script github vinceliuice Layan-gtk-theme master "
+chmod +x install.sh &&
+./install.sh --dest \"$THEMES\" &>> \"$LOG\"
+" \
+	Layan \
+	Layan-dark \
+	Layan-dark-solid \
+	Layan-light \
+	Layan-light-solid \
+	Layan-solid
+
 # macOS-Sierra
 # https://github.com/Elbullazul/macOS-Sierra
 theme-mv github Elbullazul macOS-Sierra master macOS-Sierra
@@ -264,6 +277,21 @@ theme-tarball github godlyranchdressing Minwaita master Compiled.tar.gz "Compile
 	Minwaita-Dark \
 	Minwaita-Darker \
 	Minwaita-Light-Shell
+
+# Mojave
+# https://github.com/vinceliuice/Mojave-gtk-theme
+theme-script github vinceliuice Mojave-gtk-theme master "
+chmod +x install.sh &&
+./install.sh --dest \"$THEMES\" &>> \"$LOG\"
+" \
+	Mojave-dark \
+	Mojave-dark-alt \
+	Mojave-dark-solid \
+	Mojave-dark-solid-alt \
+	Mojave-light \
+	Mojave-light-alt \
+	Mojave-light-solid \
+	Mojave-light-solid-alt
 
 # Numix
 # https://github.com/numixproject/numix-gtk-theme

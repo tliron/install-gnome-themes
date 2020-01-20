@@ -112,6 +112,7 @@ appearance for some themes, though your mileage will vary.
 * [Layan](https://github.com/vinceliuice/Layan-gtk-theme)
 * [macOS-Sierra](https://github.com/Elbullazul/macOS-Sierra)
 * [Materia](https://github.com/nana-4/materia-theme) (formerly Flat-Plat)
+* [Materiav2](https://gitlab.com/Gsbhasin84/materiav2)
 * [Minwaita](https://github.com/godlyranchdressing/Minwaita)
 * [Mojave](https://github.com/vinceliuice/Mojave-gtk-theme)
 * [Numix](https://github.com/numixproject/numix-gtk-theme)

@@ -7,7 +7,7 @@
 #
 #     https://github.com/tliron/install-gnome-themes
 #
-# Copyright 2016-2019 by Tal Liron. MIT-style license:
+# Copyright 2016-2020 by Tal Liron. MIT-style license:
 #
 #     https://github.com/tliron/install-gnome-themes/blob/master/LICENSE
 #
@@ -263,6 +263,29 @@ chmod +x install.sh &&
 	Materia-dark-compact \
 	Materia-light \
 	Materia-light-compact
+
+# Materiav2
+# https://gitlab.com/Gsbhasin84/materiav2
+theme-script gitlab Gsbhasin84 materiav2 master "
+./install-user.sh \"$THEMES\"
+" \
+	materiav2-dark-aqua  \
+	materiav2-dark-fluent  \
+	materiav2-dark-maia  \
+	materiav2-dark-mate  \
+	materiav2-dark-orange  \
+	materiav2-dark-pocillo  \
+	materiav2-dark-purple  \
+	materiav2-dark-red  \
+	materiav2-greybird  \
+	materiav2-light-aqua  \
+	materiav2-light-fluent  \
+	materiav2-light-maia  \
+	materiav2-light-mate  \
+	materiav2-light-orange  \
+	materiav2-light-pocillo  \
+	materiav2-light-purple  \
+	materiav2-light-red
 
 # Minwaita
 # https://github.com/godlyranchdressing/Minwaita

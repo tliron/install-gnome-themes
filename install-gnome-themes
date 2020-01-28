@@ -375,14 +375,15 @@ theme-make-destdir github UbuntuBudgie pocillo-gtk-theme master \
 
 # Pop
 # https://github.com/pop-os/gtk-theme
-# Requirements: automake sassc
-theme-make-destdir github pop-os gtk-theme master \
+theme-script github pop-os gtk-theme master "
+meson _build --prefix \"\$PWD\"/_deploy &&
+cd _build &&
+ninja install &&
+cd ../_deploy/share &&
+rsync --recursive themes/Pop* \"$THEMES\"
+" \
 	Pop \
-	Pop-slim \
-	Pop-dark \
-	Pop-dark-slim \
-	Pop-light \
-	Pop-light-slim
+	Pop-dark
 
 # Qogir
 # https://github.com/vinceliuice/Qogir-theme

@@ -180,16 +180,22 @@ theme-script github vinceliuice Canta-theme master "
 " \
 	Canta \
 	Canta-compact \
-	Canta-square \
-	Canta-compact-square \
 	Canta-dark \
-	Canta-dark-square \
 	Canta-dark-compact \
-	Canta-dark-compact-square \
 	Canta-light \
-	Canta-light-square \
 	Canta-light-compact \
-	Canta-light-compact-square
+	Canta-blue \
+	Canta-blue-compact \
+	Canta-blue-dark \
+	Canta-blue-dark-compact \
+	Canta-blue-light \
+	Canta-blue-light-compact \
+	Canta-indigo \
+	Canta-indigo-compact \
+	Canta-indigo-dark \
+	Canta-indigo-dark-compact \
+	Canta-indigo-light \
+	Canta-indigo-light-compact
 
 # Chrome-OS
 # https://github.com/Elbullazul/Chrome-OS
@@ -232,13 +238,14 @@ rsync --recursive themes/Greybird* \"$THEMES\"
 	Greybird-accessibility \
 	Greybird-bright \
 	Greybird-compact \
-	Greybird-dark
+	Greybird-dark \
+	Greybird-dark-accessibility
 
 # Layan
 # https://github.com/vinceliuice/Layan-gtk-theme
 theme-script github vinceliuice Layan-gtk-theme master "
 chmod +x install.sh &&
-./install.sh --dest \"$THEMES\" &>> \"$LOG\"
+./install.sh --dest \"$THEMES\"
 " \
 	Layan \
 	Layan-dark \
@@ -255,7 +262,7 @@ theme-mv github Elbullazul macOS-Sierra master macOS-Sierra
 # https://github.com/nana-4/materia-theme
 theme-script github nana-4 materia-theme master "
 chmod +x install.sh &&
-./install.sh --dest \"$THEMES\" &>> \"$LOG\"
+./install.sh --dest \"$THEMES\"
 " \
 	Materia \
 	Materia-compact \
@@ -277,7 +284,6 @@ theme-script gitlab Gsbhasin84 materiav2 master "
 	materiav2-dark-pocillo  \
 	materiav2-dark-purple  \
 	materiav2-dark-red  \
-	materiav2-greybird  \
 	materiav2-light-aqua  \
 	materiav2-light-fluent  \
 	materiav2-light-maia  \
@@ -305,7 +311,7 @@ theme-tarball github godlyranchdressing Minwaita master Compiled.tar.gz "Compile
 # https://github.com/vinceliuice/Mojave-gtk-theme
 theme-script github vinceliuice Mojave-gtk-theme master "
 chmod +x install.sh &&
-./install.sh --dest \"$THEMES\" &>> \"$LOG\"
+./install.sh --dest \"$THEMES\"
 " \
 	Mojave-dark \
 	Mojave-dark-alt \
@@ -393,6 +399,18 @@ theme-script github vinceliuice Qogir-theme master "
 	Qogir \
 	Qogir-dark \
 	Qogir-light \
+	Qogir-manjaro \
+	Qogir-manjaro-dark \
+	Qogir-manjaro-light \
+	Qogir-manjaro-win \
+	Qogir-manjaro-win-dark \
+	Qogir-manjaro-win-light \
+	Qogir-ubuntu \
+	Qogir-ubuntu-dark \
+	Qogir-ubuntu-light \
+	Qogir-ubuntu-win \
+	Qogir-ubuntu-win-dark \
+	Qogir-ubuntu-win-light \
 	Qogir-win \
 	Qogir-win-dark \
 	Qogir-win-light
@@ -420,8 +438,8 @@ theme-mv-dir github logico-dev typewriter-gtk master Typewriter
 #       ./install-gnome-themes
 UNITED_GNOME_VARIANT=${UNITED_GNOME_VARIANT:-$OS}
 theme-script github godlyranchdressing United-GNOME master "
-tar xf Compiled.tar.gz &>> \"$LOG\" &&
-cp --recursive \"Compiled/United-$UNITED_GNOME_VARIANT/\"* \"$THEMES/\" &>> \"$LOG\"
+tar xf Compiled.tar.gz &&
+cp --recursive \"Compiled/United-$UNITED_GNOME_VARIANT/\"* \"$THEMES/\"
 " \
 	"United-$UNITED_GNOME_VARIANT" \
 	"United-$UNITED_GNOME_VARIANT-Light" \

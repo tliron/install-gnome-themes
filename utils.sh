@@ -140,7 +140,7 @@ function prepare () { # [site] [account] [repo] [branch] [themes...]
 		return 2
 	fi
 
-	message "  Fetching repository: $URL..."
+	message "  Fetching repository: $URL ..."
 
 	# Shallow git clone
 	cleanup "$@"
@@ -161,9 +161,10 @@ function prepare () { # [site] [account] [repo] [branch] [themes...]
 		if [ "$REPO" == Adapta ] ||
 		   [ "$REPO" == arc-flatabulous-theme ] ||
 		   [ "$REPO" == arc-theme ] ||
+		   [ "$REPO" == arc-theme ] ||
+		   [ "$REPO" == Cahuella ] ||
 		   [ "$REPO" == pocillo-gtk-theme ] ||
-		   [ "$REPO" == plata-theme ] ||
-		   [ "$ACCOUNT" == pop-os ]; then
+		   [ "$REPO" == plata-theme ]; then
 			message "  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!" "$BLUE"
 		fi
 		cd "$THEMES"

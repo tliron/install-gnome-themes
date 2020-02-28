@@ -24,7 +24,7 @@ set -e
 # 	LOG=output.log ./install-gnome-themes
 #
 
-HERE=$(dirname "$(readlink -f "$0")")
+HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
 THEMES=~/.themes
 LOG=${LOG:-$THEMES/.install-gnome-themes.log}
 CONFIG_FILE=${CONFIG_FILE:-$THEMES/.install-gnome-themes.conf}
@@ -359,7 +359,7 @@ theme-mv github lassekongo83 plano-theme master Plano
 #		--with-suggestion_color=#607D8B' \
 #		--with-destruction_color=#FF5252' \
 #	./install-gnome-themes
-AUTOGEN_ARGS="--disable-cinnamon --disable-xfce --disable-mate --disable-openbox --enable-chrome $PLATA_ARGS" \
+AUTOGEN_ARGS="--disable-cinnamon --disable-xfce --disable-mate --disable-openbox $PLATA_ARGS" \
 theme-autogen-prefix gitlab tista500 plata-theme master \
 	Plata \
 	Plata-Compact \
@@ -466,7 +466,7 @@ theme-mv github B00merang-Project unity8 master Unity8
 # Vimix
 # https://github.com/vinceliuice/vimix-gtk-themes
 # Requirements: gtk2-engines-murrine gtk2-engines-pixbuf
-theme-execute github vinceliuice vimix-gtk-themes master Install \
+theme-execute github vinceliuice vimix-gtk-themes master install.sh \
 	vimix \
 	vimix-beryl \
 	vimix-dark \

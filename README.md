@@ -14,7 +14,7 @@ Preparation
 You need to install the requirements first. See
 [install-requirements-fedora](install-requirements-fedora) and
 [install-requirements-debian](install-requirements-debian). The Debian script should work for
-Ubuntu, too. We welcome contributions for other operating systems, too, especiall Arch Linux!
+Ubuntu, too. We welcome contributions for other operating systems, too, especially Arch Linux!
 
 In case your operating system doesn't have a `sassc` package you can build it manually with
 [install-sassc](install-sassc).
@@ -49,8 +49,14 @@ all themes:
 
     rm ~/.themes/.install-gnome-themes.conf
 
-You can also edit this file to skip themes. Just put the word "skip" instead of the git hash. For
-example, to skip Plano themes:
+
+Disabling Themes
+----------------
+
+You can disable individual themes in case they're broken or you just don't want them built. 
+
+Edit the `.install-gnome-themes.conf` in the current user's `.themes` folder and put the word "skip"
+instead of the git hash. For example, to skip Plano themes:
 
     github|lassekongo83|plano-theme|master skip
 

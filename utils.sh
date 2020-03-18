@@ -170,6 +170,7 @@ function prepare () { # [site] [account] [repo] [branch] [themes...]
 		cd "$THEMES"
 		rm --recursive --force "${@:5}" &>> "$LOG"
 		cd "$WORK/$REPO"
+		fix-inkscape
 		return 0
 	fi
 }
@@ -307,4 +308,8 @@ function theme-autogen-destdir () { # [site] [account] [repo] [branch] [themes..
 	make install DESTDIR=$(pwd) &>> "$LOG"
 	cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/" &>> "$LOG"
 	cleanup "$@"
+}
+
+function fix-inkscape () {
+	find . -type f -exec sed --in-place 's/--export-png=/--export-type=png --export-file=/g' {} \;
 }

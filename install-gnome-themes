@@ -125,7 +125,7 @@ theme-mv github EliverLara Ant master Ant
 theme-mv github EliverLara Aqua master Aqua
 
 # Arc
-# https://github.com/arc-design/arc-theme
+# https://github.com/jnsh/arc-theme
 # Requirements: autoconf automake pkg-config libgtk-3-dev gtk2-engines-murrine
 #
 # Supports configurations settings, e.g. a variant with transparency disabled:
@@ -133,11 +133,12 @@ theme-mv github EliverLara Aqua master Aqua
 #	ARC_ARGS='
 #		--disable-transparency' \
 #	./install-gnome-themes
-AUTOGEN_ARGS=$ARC_ARGS \
-theme-autogen-prefix github arc-design arc-theme master \
+AUTOGEN_ARGS="--disable-cinnamon --disable-unity --disable-xfwm --disable-plank --disable-openbox $ARC_ARGS" \
+theme-autogen-prefix github jnsh arc-theme master \
 	Arc \
 	Arc-Dark \
-	Arc-Darker
+	Arc-Darker \
+	Arc-Lighter
 
 # Arc-Flatabulous
 # https://github.com/andreisergiu98/arc-flatabulous-theme

@@ -102,7 +102,7 @@ appearance for some themes, though your mileage will vary.
 * [Amber](https://github.com/lassekongo83/amber-theme)
 * [Ant](https://github.com/EliverLara/Ant)
 * [Aqua](https://github.com/EliverLara/Aqua)
-* [Arc](https://github.com/arc-design/arc-theme) (Firefox themes: [Arc](https://addons.mozilla.org/en-US/firefox/addon/arc-theme/), [Arc Darker](https://addons.mozilla.org/en-US/firefox/addon/arc-darker-theme/), [Arc Dark](https://addons.mozilla.org/en-US/firefox/addon/arc-dark-theme/))
+* [Arc](https://github.com/jnsh/arc-theme) (Firefox themes: [Arc](https://addons.mozilla.org/en-US/firefox/addon/arc-theme/), [Arc Darker](https://addons.mozilla.org/en-US/firefox/addon/arc-darker-theme/), [Arc Dark](https://addons.mozilla.org/en-US/firefox/addon/arc-dark-theme/))
 * [Arc-Flatabulous](https://github.com/andreisergiu98/arc-flatabulous-theme)
 * [Blue-Face](https://github.com/Vistaus/Blue-Face)
 * [Breeze](https://github.com/dirruk1/gnome-breeze)

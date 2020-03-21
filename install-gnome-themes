@@ -96,9 +96,9 @@ message "Detected $OS operating system."
 # Supports configurations settings, e.g. a variant with colors red500, red300, bluegrey300, bluegrey500:
 #
 #	ADAPTA_ARGS='
-#		--with-selection_color=#F44336
-#		--with-accent_color=#90A4AE
-#		--with-suggestion_color=#607D8B' \
+#		--with-selection_color=#F44336 \ 
+#		--with-accent_color=#90A4AE \
+#		--with-suggestion_color=#607D8B \
 #		--with-destruction_color=#FF5252' \
 #	./install-gnome-themes
 AUTOGEN_ARGS="--disable-cinnamon --disable-xfce --disable-mate --disable-openbox --enable-chrome-legacy $ADAPTA_ARGS" \
@@ -133,7 +133,7 @@ theme-mv github EliverLara Aqua master Aqua
 #	ARC_ARGS='
 #		--disable-transparency' \
 #	./install-gnome-themes
-AUTOGEN_ARGS="--disable-cinnamon --disable-unity --disable-xfwm --disable-plank --disable-openbox $ARC_ARGS" \
+AUTOGEN_ARGS="--disable-cinnamon --disable-unity --disable-plank --disable-openbox $ARC_ARGS" \
 theme-autogen-prefix github jnsh arc-theme master \
 	Arc \
 	Arc-Dark \
@@ -154,7 +154,6 @@ theme-autogen-prefix github andreisergiu98 arc-flatabulous-theme master \
 	Arc-Flatabulous \
 	Arc-Flatabulous-Dark \
 	Arc-Flatabulous-Darker
-
 
 # Blue-Face
 # https://github.com/Vistaus/Blue-Face

@@ -416,16 +416,6 @@ theme-script github vinceliuice Qogir-theme master "
 	Qogir-win-dark \
 	Qogir-win-light
 
-# Redmond-Themes
-# https://github.com/B00merang-Project/Redmond-Themes
-theme-cp github B00merang-Project Redmond-Themes master \
-	"Windows 3.11" \
-	"Windows 3.x" \
-	"Windows 8.1" \
-	"Windows 95" \
-	"Windows 9x" \
-	"Windows Vista"
-
 # Typewriter
 # https://github.com/logico-dev/typewriter-gtk/
 theme-mv-dir github logico-dev typewriter-gtk master Typewriter
@@ -492,6 +482,49 @@ theme-execute github vinceliuice vimix-gtk-themes master install.sh \
 	vimix-light-laptop-ruby \
 	vimix-light-ruby \
 	vimix-ruby
+
+# https://github.com/B00merang-Project/Windows-3.11
+theme-mv github B00merang-Project Windows-3.11 master "Windows 3.11"
+
+# https://github.com/B00merang-Project/Windows-7
+theme-mv github B00merang-Project Windows-7 master "Windows 7"
+
+# https://github.com/B00merang-Project/Windows-8.1
+theme-mv github B00merang-Project Windows-8.1 master "Windows 8.1"
+
+# https://github.com/B00merang-Project/Windows-8.1-Metro
+theme-mv github B00merang-Project Windows-8.1-Metro master "Windows 8.1 Metro"
+
+# https://github.com/B00merang-Project/Windows-10
+theme-mv github B00merang-Project Windows-10 master "Windows 10"
+
+# https://github.com/B00merang-Project/Windows-10-Acrylic
+theme-mv github B00merang-Project Windows-10-Acrylic master "Windows 10 Acrylic"
+
+# https://github.com/B00merang-Project/Windows-10-Acrylic-Dark
+theme-mv github B00merang-Project Windows-10-Acrylic-Dark master "Windows 10 Acrylic Dark"
+
+# https://github.com/B00merang-Project/Windows-10-Dark
+theme-mv github B00merang-Project Windows-10-Dark master "Windows 10 Dark"
+
+# https://github.com/B00merang-Project/Windows-95
+theme-mv github B00merang-Project Windows-95 master "Windows 95"
+
+# https://github.com/B00merang-Project/Windows-Phone-8.1
+theme-mv github B00merang-Project Windows-Phone-8.1 master "Windows Phone 8.1"
+
+# https://github.com/B00merang-Project/Windows-Vista
+theme-mv github B00merang-Project Windows-Vista master "Windows Vista"
+
+# https://github.com/B00merang-Project/Windows-XP
+theme-cp github B00merang-Project Windows-XP master \
+	"Windows XP Embedded" \
+	"Windows XP Homestead" \
+	"Windows XP Luna" \
+	"Windows XP Metallic" \
+	"Windows XP Royale" \
+	"Windows XP Royale Dark" \
+	"Windows XP Zune"
 
 # Xenlism-Minimalism
 # https://github.com/xenlism/minimalism

@@ -311,8 +311,7 @@ function theme-autogen-destdir () { # [site] [account] [repo] [branch] [themes..
 }
 
 function fix-inkscape () {
-	find . -type f -exec sed --in-place 's/--export-filename=/--export-file=/g' {} \;
-	if [[ "$(inkscape --version)" =~ "Inkspace 1." ]]; then
+	if [[ "$(inkscape --version 2> /dev/null)" =~ "Inkscape 1." ]]; then
 		find . -type f -exec sed --in-place 's/--export-png=/--export-type=png --export-file=/g' {} \;
 	fi
 }

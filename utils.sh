@@ -37,7 +37,7 @@ function sed-escape () {
 #
 
 function os-name () {
-	local OS=$(lsb_release --id --short)
+	local OS=$(lsb_release --id --short 2> /dev/null)
 	if [ -z "$OS" ]; then
 		OS=$(cat /etc/*-release | grep '^NAME=' | cut --delimiter='=' --fields=2 | sed -e 's/^"//' -e 's/"$//')
 	fi
@@ -163,6 +163,7 @@ function prepare () { # [site] [account] [repo] [branch] [themes...]
 		   [ "$REPO" == arc-theme ] ||
 		   [ "$REPO" == arc-theme ] ||
 		   [ "$REPO" == Cahuella ] ||
+		   [ "$REPO" == Mojave-gtk-theme ] || 
 		   [ "$REPO" == pocillo-gtk-theme ] ||
 		   [ "$REPO" == plata-theme ]; then
 			message "  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!" "$BLUE"
@@ -312,6 +313,6 @@ function theme-autogen-destdir () { # [site] [account] [repo] [branch] [themes..
 
 function fix-inkscape () {
 	if [[ "$(inkscape --version 2> /dev/null)" =~ "Inkscape 1." ]]; then
-		find . -type f -exec sed --in-place 's/--export-png=/--export-type=png --export-file=/g' {} \;
+		find . -type f -exec sed --in-place 's/--export-png=/--export-type=png --export-filename=/g' {} \;
 	fi
 }

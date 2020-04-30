@@ -71,7 +71,8 @@ else
 	message "Detected GNOME $GNOME_VERSION, GTK $GTK_VERSION."
 fi
 
-if [ "$GTK_VERSION" != '3.32' ] &&
+if [ "$GTK_VERSION" != '3.34' ] &&
+   [ "$GTK_VERSION" != '3.32' ] &&
    [ "$GTK_VERSION" != '3.30' ] &&
    [ "$GTK_VERSION" != '3.28' ] &&
    [ "$GTK_VERSION" != '3.26' ] &&

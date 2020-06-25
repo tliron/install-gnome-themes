@@ -10,6 +10,7 @@ RESET='\033[0m'
 
 function message () {
 	local COLOR=${2:-$CYAN}
+
 	echo -e "${COLOR}$@$RESET"
 	if [ "$LOG" != '/dev/stdout' ]; then
 		echo "$1" >> "$LOG"
@@ -18,6 +19,7 @@ function message () {
 
 function comma-separated () {
 	local R
+
 	for A in "$@"; do
 		if [ -z "$R" ]; then
 			R=$1
@@ -38,6 +40,7 @@ function sed-escape () {
 
 function os-name () {
 	local OS=$(lsb_release --id --short 2> /dev/null)
+
 	if [ -z "$OS" ]; then
 		OS=$(cat /etc/*-release | grep '^NAME=' | cut --delimiter='=' --fields=2 | sed -e 's/^"//' -e 's/"$//')
 	fi
@@ -53,6 +56,7 @@ function gnome-version () {
 
 function gtk-version () {
 	local VERSION=$(dpkg-version libgtk-3-0)
+
 	if [ -z "$VERSION" ]; then
 		VERSION=$(dpkg-version libgtk2.0-0)
 	fi
@@ -70,16 +74,19 @@ function gtk-version () {
 
 function dpkg-version () {
 	local PKG=$1
+
 	dpkg -s "$PKG" 2> /dev/null | grep '^Version' | cut --delimiter=' ' --fields=2- | cut --delimiter='.' --fields=1,2
 }
 
 function rpm-version () {
 	local PKG=$1
+
 	rpm --query --queryformat %{VERSION} "$PKG" 2> /dev/null | cut --delimiter='.' --fields=1,2
 }
 
 function pacman-version () {
 	local PKG=$1
+
 	pacman -Si "$PKG" | grep Version | awk '{ print $3; }' | cut --delimiter='.' --fields=1,2
 }
 
@@ -102,6 +109,7 @@ function repository-id () {
 function get-value () { # [key] [db]
 	local KEY=$1
 	local DB=$2
+
 	if [ -f "$DB" ]; then
 		sed --quiet "s/^$KEY \(.*\)/\1/p" "$DB"
 	fi
@@ -111,6 +119,7 @@ function set-value () { # [key] [value] [db]
 	local KEY=$1
 	local VALUE=$2
 	local DB=$3
+
 	if grep --quiet --no-messages "^$KEY " "$DB"; then
 		sed --in-place "s/^\($KEY \)\(.*\)/\1$(sed-escape "$VALUE")/" "$DB" &>> "$LOG"
 	else
@@ -145,9 +154,9 @@ function prepare () { # [site] [account] [repo] [branch] [themes...]
 	# Shallow git clone
 	cleanup "$@"
 	mkdir --parents "$WORK" &>> "$LOG"
-	cd "$WORK"
+	cd "$WORK" &>> "$LOG"
 	git clone "$URL" --branch "$BRANCH" --depth 1 "$REPO" &>> "$LOG"
-	cd "$WORK/$REPO"
+	cd "$WORK/$REPO" &>> "$LOG"
 
 	CURRENT_ID=$(repository-id)
 	if [ "$CURRENT_ID" == "$LAST_ID" ]; then
@@ -161,16 +170,15 @@ function prepare () { # [site] [account] [repo] [branch] [themes...]
 		if [ "$REPO" == Adapta ] ||
 		   [ "$REPO" == arc-flatabulous-theme ] ||
 		   [ "$REPO" == arc-theme ] ||
-		   [ "$REPO" == arc-theme ] ||
 		   [ "$REPO" == Cahuella ] ||
 		   [ "$REPO" == Mojave-gtk-theme ] || 
 		   [ "$REPO" == pocillo-gtk-theme ] ||
 		   [ "$REPO" == plata-theme ]; then
 			message "  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!" "$BLUE"
 		fi
-		cd "$THEMES"
+		cd "$THEMES" &>> "$LOG"
 		rm --recursive --force "${@:5}" &>> "$LOG"
-		cd "$WORK/$REPO"
+		cd "$WORK/$REPO" &>> "$LOG"
 		fix-inkscape
 		return 0
 	fi
@@ -191,10 +199,14 @@ function cleanup () { # [site] [account] [repo] [branch]
 function theme-cp () { # [site] [account] [repo] [branch] [themes...]
 	local SITE=$1
 	local REPO=$3
+
 	if ! prepare "$@"; then
-		return
+		return 0
 	fi
-	cp --recursive "${@:5}" "$THEMES/" &>> "$LOG"
+	if ! cp --recursive "${@:5}" "$THEMES/" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
 	cleanup "$@"
 }
 
@@ -202,10 +214,14 @@ function theme-mv () { # [site] [account] [repo] [branch] [theme]
 	local SITE=$1
 	local REPO=$3
 	local THEME=$5
+
 	if ! prepare "$@"; then
-		return
+		return 0
 	fi
-	mv "$WORK/$REPO" "$THEMES/$THEME" &>> "$LOG"
+	if ! mv "$WORK/$REPO" "$THEMES/$THEME" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
 	cleanup "$@"
 }
 
@@ -213,10 +229,14 @@ function theme-mv-dir () { # [site] [account] [repo] [branch] [theme]
 	local SITE=$1
 	local REPO=$3
 	local THEME=$5
+
 	if ! prepare "$1" "$2" "$3" "$4" "$(basename "$THEME")"; then
-		return
+		return 0
 	fi
-	mv "$WORK/$REPO/$THEME" "$THEMES/" &>> "$LOG"
+	if ! mv "$WORK/$REPO/$THEME" "$THEMES/" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
 	cleanup "$@"
 }
 
@@ -225,13 +245,26 @@ function theme-tarball () { # [site] [account] [repo] [branch] [file] [dir] [the
 	local REPO=$3
 	local FILE=$5
 	local DIR=$6
+
 	if ! prepare "$1" "$2" "$3" "$4" "${@:7}"; then
-		return
+		return 0
 	fi
-	cd "$WORK/$REPO" &>> "$LOG"
-	tar xvf "$FILE" "$DIR" &>> "$LOG"
-	cd "$DIR" &>> "$LOG"
-	mv * "$THEMES/" &>> "$LOG" 
+	if ! cd "$WORK/$REPO" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
+	if ! tar xvf "$FILE" "$DIR" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
+	if ! cd "$DIR" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
+	if ! mv * "$THEMES/" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi 
 	cleanup "$@"
 }
 
@@ -239,12 +272,22 @@ function theme-execute () { # [site] [account] [repo] [branch] [file] [themes...
 	local SITE=$1
 	local REPO=$3
 	local FILE=$5
+
 	if ! prepare "$1" "$2" "$3" "$4" "${@:6}"; then
-		return
+		return 0
 	fi
-	cd "$WORK/$REPO" &>> "$LOG"
-	chmod +x "$FILE" &>> "$LOG"
-	"./$FILE" &>> "$LOG"
+	if ! cd "$WORK/$REPO" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
+	if ! chmod +x "$FILE" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
+	if ! "./$FILE" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
 	cleanup "$@"
 }
 
@@ -252,11 +295,18 @@ function theme-script () { # [site] [account] [repo] [branch] [script] [themes..
 	local SITE=$1
 	local REPO=$3
 	local SCRIPT=$5
+
 	if ! prepare "$1" "$2" "$3" "$4" "${@:6}"; then
-		return
+		return 0
 	fi
-	cd "$WORK/$REPO" &>> "$LOG"
-	eval $SCRIPT &>> "$LOG"
+	if ! cd "$WORK/$REPO" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
+	if ! eval $SCRIPT &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
 	cleanup "$@"
 }
 
@@ -264,10 +314,14 @@ function theme-make () { # [site] [account] [repo] [branch] [theme]
 	local SITE=$1
 	local REPO=$3
 	local THEME=$5
+
 	if ! prepare "$@"; then
-		return
+		return 0
 	fi
-	make install INSTALL_DIR="$THEMES/$THEME" &>> "$LOG"
+	if ! make install INSTALL_DIR="$THEMES/$THEME" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
 	cleanup "$@"
 }
 
@@ -275,26 +329,49 @@ function theme-make-destdir () { # [site] [account] [repo] [branch] [theme]
 	local SITE=$1
 	local REPO=$3
 	local THEME=$5
+
 	if ! prepare "$@"; then
-		return
+		return 0
 	fi
-	mkdir --parents "$WORK/$REPO/usr/share/themes" &>> "$LOG"
-	make &>> "$LOG"
-	make install DESTDIR="$WORK/$REPO" &>> "$LOG"
-	cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/" &>> "$LOG"
+	if ! mkdir --parents "$WORK/$REPO/usr/share/themes" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
+	if ! make &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
+	if ! make install DESTDIR="$WORK/$REPO" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
+	if ! cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
 	cleanup "$@"
 }
 
 function theme-autogen-prefix () { # [site] [account] [repo] [branch] [themes...]
 	local SITE=$1
 	local REPO=$3
+
 	if ! prepare "$@"; then
-		return
+		return 0
 	fi
-	./autogen.sh --enable-parallel --prefix=$(pwd) $AUTOGEN_ARGS &>> "$LOG"
-	make &>> "$LOG"
+	if ! ./autogen.sh --enable-parallel --prefix=$(pwd) $AUTOGEN_ARGS &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
+	if ! make &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
 	# Adapta/Pop need to run "make install" separately
-	make install &>> "$LOG"
+	if ! make install &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
 	cp --recursive "$WORK/$REPO/share/themes/"* "$THEMES/" &>> "$LOG"
 	cleanup "$@"
 }
@@ -302,12 +379,22 @@ function theme-autogen-prefix () { # [site] [account] [repo] [branch] [themes...
 function theme-autogen-destdir () { # [site] [account] [repo] [branch] [themes...]
 	local SITE=$1
 	local REPO=$3
+
 	if ! prepare "$@"; then
-		return
+		return 0
 	fi
-	./autogen.sh --enable-parallel $AUTOGEN_ARGS &>> "$LOG"
-	make install DESTDIR=$(pwd) &>> "$LOG"
-	cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/" &>> "$LOG"
+	if ! ./autogen.sh --enable-parallel $AUTOGEN_ARGS &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
+	if ! make install DESTDIR=$(pwd) &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
+	if ! cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/" &>> "$LOG"; then
+		message "  Failed!" "$RED"
+		return 0
+	fi
 	cleanup "$@"
 }
 

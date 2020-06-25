@@ -15,13 +15,11 @@
 set -e
 
 #
-# Build output is supressed by default. If you want to see it, set the LOG environment var:
+# By default the build output is send to: ~/.themes/.install-gnome-themes.conf
+#
+# You can change this using the LOG environment variable, including setting it to stdout:
 #
 # 	LOG=/dev/stdout ./install-gnome-themes
-#
-# Or:
-#
-# 	LOG=output.log ./install-gnome-themes
 #
 
 HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
@@ -43,7 +41,7 @@ function the-end () {
 	if [ "$ERR" == 0 ]; then
 		message "install-gnome-themes finished successfully" "$GREEN"
 	else
-		message "install-gnome-themes failed!" "$RED"
+		message "install-gnome-themes failed! err=$ERR" "$RED"
 	fi
 	exit "$ERR"
 }
@@ -62,14 +60,21 @@ trap crtl-c INT
 # Preparation
 #
 
+message 'Paths:'
+message "  Log file: $LOG"
+message "  Configuration file: $CONFIG_FILE"
+message "  Target directory: $THEMES"
+message "  Work directory: $WORK"
+
 GNOME_VERSION=$(gnome-version)
 GTK_VERSION=$(gtk-version)
 
-if [ -z "$GNOME_VERSION" ]; then
-	message "Detected GTK $GTK_VERSION."
-else
-	message "Detected GNOME $GNOME_VERSION, GTK $GTK_VERSION."
+message 'Environment:'
+
+if [ -n "$GNOME_VERSION" ]; then
+	message "  GNOME: $GNOME_VERSION"
 fi
+message "  GTK: $GTK_VERSION"
 
 if [ "$GTK_VERSION" != '3.34' ] &&
    [ "$GTK_VERSION" != '3.32' ] &&
@@ -78,13 +83,13 @@ if [ "$GTK_VERSION" != '3.34' ] &&
    [ "$GTK_VERSION" != '3.26' ] &&
    [ "$GTK_VERSION" != '3.24' ] &&
    [ "$GTK_VERSION" != '3.22' ]; then
-	message "This script only supports GTK versions 3.22 and up."
+	message "This script only supports GTK versions 3.22 and up." "$RED"
 	exit 1
 fi
 
 OS=$(os-name)
 
-message "Detected $OS operating system."
+message "  Operating system: $OS"
 
 #
 # Themes

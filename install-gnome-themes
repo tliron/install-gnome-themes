@@ -108,6 +108,7 @@ message "  Operating system: $OS"
 #		--with-destruction_color=#FF5252' \
 #	./install-gnome-themes
 AUTOGEN_ARGS="--disable-cinnamon --disable-xfce --disable-mate --disable-openbox --enable-chrome-legacy $ADAPTA_ARGS" \
+SLOW=true \
 theme-autogen-prefix github tista500 Adapta master \
 	Adapta \
 	Adapta-Eta \
@@ -140,6 +141,7 @@ theme-mv github EliverLara Aqua master Aqua
 #		--disable-transparency' \
 #	./install-gnome-themes
 AUTOGEN_ARGS="--disable-cinnamon --disable-unity --disable-plank --disable-openbox $ARC_ARGS" \
+SLOW=true \
 theme-autogen-prefix github jnsh arc-theme master \
 	Arc \
 	Arc-Dark \
@@ -156,6 +158,7 @@ theme-autogen-prefix github jnsh arc-theme master \
 #		--disable-transparency' \
 #	./install-gnome-themes
 AUTOGEN_ARGS=$ARC_FLATABULOUS_ARGS \
+SLOW=true \
 theme-autogen-prefix github andreisergiu98 arc-flatabulous-theme master \
 	Arc-Flatabulous \
 	Arc-Flatabulous-Dark \
@@ -316,6 +319,7 @@ theme-tarball github godlyranchdressing Minwaita master Compiled.tar.gz "Compile
 
 # Mojave
 # https://github.com/vinceliuice/Mojave-gtk-theme
+SLOW=true \
 theme-script github vinceliuice Mojave-gtk-theme master "
 chmod +x install.sh &&
 ./install.sh --dest \"$THEMES\"
@@ -366,6 +370,7 @@ theme-mv github lassekongo83 plano-theme master Plano
 #		--with-suggestion_color=#607D8B' \
 #		--with-destruction_color=#FF5252' \
 #	./install-gnome-themes
+SLOW=true \
 AUTOGEN_ARGS="--disable-cinnamon --disable-xfce --disable-mate --disable-openbox $PLATA_ARGS" \
 theme-autogen-prefix gitlab tista500 plata-theme master \
 	Plata \
@@ -378,6 +383,7 @@ theme-autogen-prefix gitlab tista500 plata-theme master \
 # Pocillo
 # https://github.com/UbuntuBudgie/pocillo-gtk-theme
 # Requirements: automake inkscape optipng ...
+SLOW=true \
 theme-make-destdir github UbuntuBudgie pocillo-gtk-theme master \
 	Pocillo \
 	Pocillo-dark \

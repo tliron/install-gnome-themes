@@ -167,13 +167,7 @@ function prepare () { # [site] [account] [repo] [branch] [themes...]
 	else
 		message "  Last updated $(repository-timestamp)." "$BLUE"
 		message '  Installing...' "$BLUE"
-		if [ "$REPO" == Adapta ] ||
-		   [ "$REPO" == arc-flatabulous-theme ] ||
-		   [ "$REPO" == arc-theme ] ||
-		   [ "$REPO" == Cahuella ] ||
-		   [ "$REPO" == Mojave-gtk-theme ] || 
-		   [ "$REPO" == pocillo-gtk-theme ] ||
-		   [ "$REPO" == plata-theme ]; then
+		if [ "$SLOW" == true ]; then
 			message "  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!" "$BLUE"
 		fi
 		cd "$THEMES" &>> "$LOG"

@@ -32,7 +32,7 @@ Installing Themes
 
 You can update this script to its latest version and run it like so:
 
-    git -C ~/install-gnome-themes pull
+    git -C ~/install-gnome-themes pull --ff-only
     ~/install-gnome-themes/install-gnome-themes
 
 Note that it will take some time, because some themes render all their images during build.

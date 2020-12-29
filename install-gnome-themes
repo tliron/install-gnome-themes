@@ -68,6 +68,7 @@ message "  Work directory: $WORK"
 
 GNOME_VERSION=$(gnome-version)
 GTK_VERSION=$(gtk-version)
+OS=$(os-name)
 
 message 'Environment:'
 
@@ -75,20 +76,6 @@ if [ -n "$GNOME_VERSION" ]; then
 	message "  GNOME: $GNOME_VERSION"
 fi
 message "  GTK: $GTK_VERSION"
-
-if [ "$GTK_VERSION" != '3.34' ] &&
-   [ "$GTK_VERSION" != '3.32' ] &&
-   [ "$GTK_VERSION" != '3.30' ] &&
-   [ "$GTK_VERSION" != '3.28' ] &&
-   [ "$GTK_VERSION" != '3.26' ] &&
-   [ "$GTK_VERSION" != '3.24' ] &&
-   [ "$GTK_VERSION" != '3.22' ]; then
-	message "This script only supports GTK versions 3.22 and up." "$RED"
-	exit 1
-fi
-
-OS=$(os-name)
-
 message "  Operating system: $OS"
 
 #

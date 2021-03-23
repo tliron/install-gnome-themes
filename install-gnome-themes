@@ -127,9 +127,14 @@ theme-mv github EliverLara Aqua master Aqua
 #	ARC_ARGS='
 #		--disable-transparency' \
 #	./install-gnome-themes
-AUTOGEN_ARGS="--disable-cinnamon --disable-unity --disable-plank --disable-openbox $ARC_ARGS" \
 SLOW=true \
-theme-autogen-prefix github jnsh arc-theme master \
+theme-script github jnsh arc-theme master "
+meson _build --prefix \"\$PWD\"/_deploy -Dthemes=gtk3,gnome-shell &&
+cd _build &&
+ninja install &&
+cd ../_deploy/share &&
+rsync --recursive themes/Arc* \"$THEMES\"
+" \
 	Arc \
 	Arc-Dark \
 	Arc-Darker \
@@ -198,13 +203,15 @@ theme-script github vinceliuice Canta-theme master "
 # https://github.com/Elbullazul/Chrome-OS
 theme-mv github Elbullazul Chrome-OS master Chrome-OS
 
+# TODO: move to https://github.com/zagortenay333/gnome_shell_and_cinnamon_themes
+
 # Ciliora-Secunda
 # https://github.com/zagortenay333/ciliora-secunda-shell
-theme-cp github zagortenay333 ciliora-secunda-shell master Ciliora-Secunda
+#theme-cp github zagortenay333 ciliora-secunda-shell master Ciliora-Secunda
 
 # Ciliora-Tertia
 # https://github.com/zagortenay333/ciliora-tertia-shell
-theme-cp github zagortenay333 ciliora-tertia-shell master Ciliora-Tertia
+#theme-cp github zagortenay333 ciliora-tertia-shell master Ciliora-Tertia
 
 # Cloak
 # https://github.com/killhellokitty/Cloak-3.22
@@ -258,8 +265,11 @@ theme-mv github Elbullazul macOS-Sierra master macOS-Sierra
 # Materia (formerly Flat-Plat)
 # https://github.com/nana-4/materia-theme
 theme-script github nana-4 materia-theme master "
-chmod +x install.sh &&
-./install.sh --dest \"$THEMES\"
+meson _build --prefix \"\$PWD\"/_deploy &&
+cd _build &&
+ninja install &&
+cd ../_deploy/share &&
+rsync --recursive themes/Materia* \"$THEMES\"
 " \
 	Materia \
 	Materia-compact \
@@ -306,7 +316,6 @@ theme-tarball github godlyranchdressing Minwaita master Compiled.tar.gz "Compile
 
 # Mojave
 # https://github.com/vinceliuice/Mojave-gtk-theme
-SLOW=true \
 theme-script github vinceliuice Mojave-gtk-theme master "
 chmod +x install.sh &&
 ./install.sh --dest \"$THEMES\"

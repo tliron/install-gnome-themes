@@ -339,6 +339,19 @@ theme-make github numixproject numix-gtk-theme master Numix
 # Requirements: automake libglib2.0-bin libgdk-pixbuf2.0-dev sass
 theme-make gitlab commonacc numix-base16-ocean master Numix-Base16-Ocean
 
+# Orchis
+# https://github.com/vinceliuice/Orchis-theme
+theme-script github vinceliuice Orchis-theme master "
+chmod +x install.sh &&
+./install.sh --dest \"$THEMES\"
+" \
+	Orchis \
+	Orchis-dark \
+	Orchis-light \
+	Orchis-compact \
+	Orchis-dark-compact \
+	Orchis-light-compact
+
 # OSX-Arc-Darker
 # https://github.com/rufkeya/OSX-Arc-Darker
 # Requirements: gnome-themes-standard gtk2-engines-murrine

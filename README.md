@@ -123,6 +123,7 @@ appearance for some themes, though your mileage will vary.
 * [Mojave](https://github.com/vinceliuice/Mojave-gtk-theme) ([Firefox theme](https://github.com/vinceliuice/Mojave-gtk-theme/blob/master/src/other/firefox))
 * [Numix](https://github.com/numixproject/numix-gtk-theme)
 * [Numix-Base16-Ocean](https://gitlab.com/commonacc/numix-base16-ocean)
+* [Orchis](https://github.com/vinceliuice/Orchis-theme)
 * [OSX-Arc-Darker](https://github.com/rufkeya/OSX-Arc-Darker)
 * [Paper](https://github.com/snwh/paper-gtk-theme)
 * [Plano](https://github.com/lassekongo83/plano-theme)

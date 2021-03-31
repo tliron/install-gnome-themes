@@ -343,14 +343,56 @@ theme-make gitlab commonacc numix-base16-ocean master Numix-Base16-Ocean
 # https://github.com/vinceliuice/Orchis-theme
 theme-script github vinceliuice Orchis-theme master "
 chmod +x install.sh &&
-./install.sh --dest \"$THEMES\"
+./install.sh --theme all --dest \"$THEMES\"
 " \
 	Orchis \
 	Orchis-dark \
 	Orchis-light \
 	Orchis-compact \
 	Orchis-dark-compact \
-	Orchis-light-compact
+	Orchis-light-compact \
+	Orchis-purple \
+	Orchis-purple-dark \
+	Orchis-purple-light \
+	Orchis-purple-compact \
+	Orchis-purple-dark-compact \
+	Orchis-purple-light-compact \
+	Orchis-pink \
+	Orchis-pink-dark \
+	Orchis-pink-light \
+	Orchis-pink-compact \
+	Orchis-pink-dark-compact \
+	Orchis-pink-light-compact \
+	Orchis-red \
+	Orchis-red-dark \
+	Orchis-red-light \
+	Orchis-red-compact \
+	Orchis-red-dark-compact \
+	Orchis-red-light-compact \
+	Orchis-orange \
+	Orchis-orange-dark \
+	Orchis-orange-light \
+	Orchis-orange-compact \
+	Orchis-orange-dark-compact \
+	Orchis-orange-light-compact \
+	Orchis-yellow \
+	Orchis-yellow-dark \
+	Orchis-yellow-light \
+	Orchis-yellow-compact \
+	Orchis-yellow-dark-compact \
+	Orchis-yellow-light-compact \
+	Orchis-green \
+	Orchis-green-dark \
+	Orchis-green-light \
+	Orchis-green-compact \
+	Orchis-green-dark-compact \
+	Orchis-green-light-compact \
+	Orchis-grey \
+	Orchis-grey-dark \
+	Orchis-grey-light \
+	Orchis-grey-compact \
+	Orchis-grey-dark-compact \
+	Orchis-grey-light-compact
 
 # OSX-Arc-Darker
 # https://github.com/rufkeya/OSX-Arc-Darker

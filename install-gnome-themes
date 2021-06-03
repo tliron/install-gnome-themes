@@ -433,15 +433,19 @@ theme-autogen-prefix gitlab tista500 plata-theme master \
 
 # Pocillo
 # https://github.com/UbuntuBudgie/pocillo-gtk-theme
-# Requirements: automake inkscape optipng ...
-SLOW=true \
-theme-make-destdir github UbuntuBudgie pocillo-gtk-theme master \
-	Pocillo \
-	Pocillo-dark \
-	Pocillo-dark-slim \
-	Pocillo-light \
-	Pocillo-light-slim \
-	Pocillo-slim     
+theme-script github UbuntuBudgie pocillo-gtk-theme master "
+meson _build --prefix \"\$PWD\"/_deploy &&
+cd _build &&
+ninja install &&
+cd ../_deploy/share &&
+rsync --recursive themes/NewPocillo* \"$THEMES\"
+" \
+	NewPocillo \
+	NewPocillo-dark \
+	NewPocillo-dark-slim \
+	NewPocillo-light \
+	NewPocillo-light-slim \
+	NewPocillo-slim     
 
 # Pop
 # https://github.com/pop-os/gtk-theme

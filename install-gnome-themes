@@ -343,7 +343,7 @@ theme-make gitlab commonacc numix-base16-ocean master Numix-Base16-Ocean
 # https://github.com/vinceliuice/Orchis-theme
 theme-script github vinceliuice Orchis-theme master "
 chmod +x install.sh &&
-./install.sh --theme default --theme purple --theme pink --theme red --theme orange --theme yellow --theme green --theme grey --dest \"$THEMES\"
+./install-all.sh --dest \"$THEMES\"
 " \
 	Orchis \
 	Orchis-dark \

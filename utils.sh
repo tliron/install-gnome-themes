@@ -394,6 +394,6 @@ function theme-autogen-destdir () { # [site] [account] [repo] [branch] [themes..
 
 function fix-inkscape () {
 	if [[ "$(inkscape --version 2> /dev/null)" =~ "Inkscape 1." ]]; then
-		find . -type f -exec sed --in-place 's/--export-png=/--export-type=png --export-filename=/g' {} \;
+		find . -type f ! -name '*.png' -exec sed --in-place 's/--export-png=/--export-type=png --export-filename=/g' {} \;
 	fi
 }

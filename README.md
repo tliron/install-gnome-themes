@@ -131,6 +131,7 @@ appearance for some themes, though your mileage will vary.
 * [Pocillo](https://github.com/UbuntuBudgie/pocillo-gtk-theme)
 * [Pop](https://github.com/pop-os/gtk-theme)
 * [Qogir](https://github.com/vinceliuice/Qogir-theme)
+* [Skeuos](https://github.com/daniruiz/skeuos-gtk)
 * [Typewriter](https://github.com/logico-dev/typewriter-gtk/)
 * [United GNOME](https://github.com/godlyranchdressing/United-GNOME)
 * [Unity7](https://github.com/B00merang-Project/unity7)

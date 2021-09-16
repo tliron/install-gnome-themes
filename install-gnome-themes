@@ -483,6 +483,36 @@ theme-script github vinceliuice Qogir-theme master "
 	Qogir-win-dark \
 	Qogir-win-light
 
+# Skeuos
+# https://github.com/daniruiz/skeuos-gtk
+theme-cp github daniruiz skeuos-gtk master \
+	Skeuos-Black-Dark \
+	Skeuos-Black-Light \
+	Skeuos-Blue-Dark \
+	Skeuos-Blue-Light \
+	Skeuos-Brown-Dark \
+	Skeuos-Brown-Light \
+	Skeuos-Cyan-Dark \
+	Skeuos-Cyan-Light \
+	Skeuos-Green-Dark \
+	Skeuos-Green-Light \
+	Skeuos-Grey-Dark \
+	Skeuos-Grey-Light \
+	Skeuos-Magenta-Dark \
+	Skeuos-Magenta-Light \
+	Skeuos-Orange-Dark \
+	Skeuos-Orange-Light \
+	Skeuos-Red-Dark \
+	Skeuos-Red-Light \
+	Skeuos-Teal-Dark \
+	Skeuos-Teal-Light \
+	Skeuos-Violet-Dark \
+	Skeuos-Violet-Light \
+	Skeuos-White-Dark \
+	Skeuos-White-Light \
+	Skeuos-Yellow-Dark \
+	Skeuos-Yellow-Light
+
 # Typewriter
 # https://github.com/logico-dev/typewriter-gtk/
 theme-mv-dir github logico-dev typewriter-gtk master Typewriter

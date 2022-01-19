@@ -329,6 +329,11 @@ chmod +x install.sh &&
 	Mojave-light-solid \
 	Mojave-light-solid-alt
 
+
+# Nordic
+# https://github.com/EliverLara/Nordic
+theme-mv github EliverLara Nordic master Nordic
+
 # Numix
 # https://github.com/numixproject/numix-gtk-theme
 # Requirements: automake libglib2.0-bin libgdk-pixbuf2.0-dev sass

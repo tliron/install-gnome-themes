@@ -12,7 +12,7 @@ function message () {
 	local COLOR=${2:-$CYAN}
 
 	echo -e "${COLOR}$@$RESET"
-	if [ "$LOG" != '/dev/stdout' ]; then
+	if [ "$LOG" != /dev/stdout ]; then
 		echo "$1" >> "$LOG"
 	fi
 }
@@ -166,9 +166,9 @@ function prepare () { # [site] [account] [repo] [branch] [themes...]
 		return 1
 	else
 		message "  Last updated $(repository-timestamp)." "$BLUE"
-		message '  Installing...' "$BLUE"
+		message '  Installing...' "$GREEN"
 		if [ "$SLOW" == true ]; then
-			message "  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!" "$BLUE"
+			message '  WARNING: Installation takes an especially long time due to rendering of all assets, please be patient!' "$BLUE"
 		fi
 		cd "$THEMES" &>> "$LOG"
 		rm --recursive --force "${@:5}" &>> "$LOG"
@@ -198,7 +198,7 @@ function theme-cp () { # [site] [account] [repo] [branch] [themes...]
 		return 0
 	fi
 	if ! cp --recursive "${@:5}" "$THEMES/" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	cleanup "$@"
@@ -213,7 +213,7 @@ function theme-mv () { # [site] [account] [repo] [branch] [theme]
 		return 0
 	fi
 	if ! mv "$WORK/$REPO" "$THEMES/$THEME" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	cleanup "$@"
@@ -228,7 +228,7 @@ function theme-mv-dir () { # [site] [account] [repo] [branch] [theme]
 		return 0
 	fi
 	if ! mv "$WORK/$REPO/$THEME" "$THEMES/" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	cleanup "$@"
@@ -244,19 +244,19 @@ function theme-tarball () { # [site] [account] [repo] [branch] [file] [dir] [the
 		return 0
 	fi
 	if ! cd "$WORK/$REPO" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	if ! tar xvf "$FILE" "$DIR" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	if ! cd "$DIR" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	if ! mv * "$THEMES/" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi 
 	cleanup "$@"
@@ -271,15 +271,15 @@ function theme-execute () { # [site] [account] [repo] [branch] [file] [themes...
 		return 0
 	fi
 	if ! cd "$WORK/$REPO" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	if ! chmod +x "$FILE" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	if ! "./$FILE" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	cleanup "$@"
@@ -294,11 +294,11 @@ function theme-script () { # [site] [account] [repo] [branch] [script] [themes..
 		return 0
 	fi
 	if ! cd "$WORK/$REPO" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	if ! eval $SCRIPT &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	cleanup "$@"
@@ -313,7 +313,7 @@ function theme-make () { # [site] [account] [repo] [branch] [theme]
 		return 0
 	fi
 	if ! make install INSTALL_DIR="$THEMES/$THEME" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	cleanup "$@"
@@ -328,19 +328,19 @@ function theme-make-destdir () { # [site] [account] [repo] [branch] [theme]
 		return 0
 	fi
 	if ! mkdir --parents "$WORK/$REPO/usr/share/themes" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	if ! make &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	if ! make install DESTDIR="$WORK/$REPO" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	if ! cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	cleanup "$@"
@@ -354,16 +354,16 @@ function theme-autogen-prefix () { # [site] [account] [repo] [branch] [themes...
 		return 0
 	fi
 	if ! ./autogen.sh --enable-parallel --prefix=$(pwd) $AUTOGEN_ARGS &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	if ! make &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	# Adapta/Pop need to run "make install" separately
 	if ! make install &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	cp --recursive "$WORK/$REPO/share/themes/"* "$THEMES/" &>> "$LOG"
@@ -378,22 +378,22 @@ function theme-autogen-destdir () { # [site] [account] [repo] [branch] [themes..
 		return 0
 	fi
 	if ! ./autogen.sh --enable-parallel $AUTOGEN_ARGS &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	if ! make install DESTDIR=$(pwd) &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	if ! cp --recursive "$WORK/$REPO/usr/share/themes/"* "$THEMES/" &>> "$LOG"; then
-		message "  Failed!" "$RED"
+		message '  Failed!' "$RED"
 		return 0
 	fi
 	cleanup "$@"
 }
 
 function fix-inkscape () {
-	if [[ "$(inkscape --version 2> /dev/null)" =~ "Inkscape 1." ]]; then
+	if [[ "$(inkscape --version 2> /dev/null)" =~ 'Inkscape 1.' ]]; then
 		find . -type f ! -name '*.png' -exec sed --in-place 's/--export-png=/--export-type=png --export-filename=/g' {} \;
 	fi
 }

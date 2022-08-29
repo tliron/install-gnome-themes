@@ -121,6 +121,7 @@ appearance for some themes, though your mileage will vary.
 * [Materiav2](https://gitlab.com/Gsbhasin84/materiav2)
 * [Minwaita](https://github.com/godlyranchdressing/Minwaita)
 * [Mojave](https://github.com/vinceliuice/Mojave-gtk-theme) ([Firefox theme](https://github.com/vinceliuice/Mojave-gtk-theme/blob/master/src/other/firefox))
+* [Nephrite](https://github.com/vinceliuice/Nephrite-gtk-theme)
 * [Nordic](https://github.com/EliverLara/Nordic)
 * [Numix](https://github.com/numixproject/numix-gtk-theme)
 * [Numix-Base16-Ocean](https://gitlab.com/commonacc/numix-base16-ocean)

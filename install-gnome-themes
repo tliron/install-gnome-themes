@@ -329,6 +329,20 @@ chmod +x install.sh &&
 	Mojave-light-solid \
 	Mojave-light-solid-alt
 
+# Nephrite
+# https://github.com/vinceliuice/Nephrite-gtk-theme
+theme-script github vinceliuice Nephrite-gtk-theme main "
+./install.sh --dest \"$THEMES\"
+" \
+	Nephrite \
+	Nephrite-Dark \
+	Nephrite-Dark-hdpi \
+	Nephrite-Dark-xhdpi \
+	Nephrite-hdpi \
+	Nephrite-Light \
+	Nephrite-Light-hdpi \
+	Nephrite-Light-xhdpi \
+	Nephrite-xhdpi
 
 # Nordic
 # https://github.com/EliverLara/Nordic

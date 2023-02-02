@@ -99,6 +99,7 @@ appearance for some themes, though your mileage will vary.
 
 * [Adapta](https://github.com/tista500/Adapta)
 * [Adwaita Tweaks](https://github.com/Jazqa/adwaita-tweaks)
+* [adw-gtk3](https://github.com/lassekongo83/adw-gtk3)
 * [Amber](https://github.com/lassekongo83/amber-theme)
 * [Ant](https://github.com/EliverLara/Ant)
 * [Aqua](https://github.com/EliverLara/Aqua)

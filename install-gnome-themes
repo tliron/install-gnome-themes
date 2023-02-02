@@ -106,6 +106,19 @@ theme-autogen-prefix github tista500 Adapta master \
 # https://github.com/Jazqa/adwaita-tweaks
 theme-mv github Jazqa adwaita-tweaks master Adwaita-tweaks
 
+# adw-gtk3
+# https://github.com/lassekongo83/adw-gtk3
+SLOW=true \
+theme-script github lassekongo83 adw-gtk3 main "
+meson _build --prefix \"\$PWD\"/_deploy &&
+cd _build &&
+ninja install &&
+cd ../_deploy/share &&
+rsync --recursive themes/adw-gtk3* \"$THEMES\"
+" \
+	adw-gtk3 \
+	adw-gtk3-dark
+
 # Amber
 # https://github.com/lassekongo83/amber-theme
 theme-mv github lassekongo83 amber-theme master Amber
